@@ -1,21 +1,14 @@
 namespace :cache do
   desc 'Load our cache of server advisories'
   task advisories: :environment do
-    require 'open3'
+    # TODO: Having some trouble calling the other ruby app directly, so for
+    #       now I'm instead having it generate a file via cron and this just
+    #       copy it into place.
 
     # Default settings.
     cachefile = 'lib/assets/advisories.yaml'
-    command = 'cd /home/reporting/server-reports/current && bin/rake report:feeder'
+    source = '/home/reporting/advisories.yaml'
 
-    # Actually run the remctl command and handle output, saving to file.
-    output, error, status = Open3.capture3(command)
-    if status != 0
-      raise "command failed: #{error}"
-    end
-    if output == ''
-      raise "no output: #{error}"
-    else
-      File.write(cachefile, output)
-    end
+    File.copy(source, cachefile)
   end
 end
