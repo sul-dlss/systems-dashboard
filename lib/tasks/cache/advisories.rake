@@ -9,6 +9,6 @@ namespace :cache do
     cachefile = 'lib/assets/advisories.yaml'
     source = '/home/reporting/advisories.yaml'
 
-    File.copy(source, cachefile)
+    FileUtils.copy(source, cachefile)
   end
 end
