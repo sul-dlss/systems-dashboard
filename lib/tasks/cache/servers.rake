@@ -4,7 +4,7 @@ namespace :cache do
     require 'open3'
 
     # Default settings.
-    cachefile = 'lib/assets/servers.yaml'
+    cachefile = '/var/lib/systems-dashboard/servers.yaml'
     command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /opt/app/reports/systeam-reporting/server-status --yaml'
 
     # Actually run the remctl command and handle output, saving to file.

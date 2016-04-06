@@ -2,7 +2,7 @@
 # servers.
 class OssecController < ApplicationController
   def index
-    @ossec = YAML.load_file('lib/assets/ossec.yaml')
+    @ossec = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
   end
 
   def show
@@ -11,7 +11,7 @@ class OssecController < ApplicationController
       @host <<'.stanford.edu'
     end
 
-    ossec_all = YAML.load_file('lib/assets/ossec.yaml')
+    ossec_all = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
     if ossec_all.key?(@host)
       @ossec = ossec_all[@host]
     else

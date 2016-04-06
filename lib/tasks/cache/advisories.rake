@@ -6,7 +6,7 @@ namespace :cache do
     #       copy it into place.
 
     # Default settings.
-    cachefile = 'lib/assets/advisories.yaml'
+    cachefile = '/var/lib/systems-dashboard/advisories.yaml'
     source = '/home/reporting/advisories.yaml'
 
     FileUtils.copy(source, cachefile)

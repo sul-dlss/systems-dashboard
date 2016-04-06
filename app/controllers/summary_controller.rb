@@ -11,9 +11,9 @@ class SummaryController < ApplicationController
     end
 
     # Load our data from the source files.
-    base = YAML.load_file('lib/assets/servers.yaml')
-    advisories = YAML.load_file('lib/assets/advisories.yaml')
-    ossec = YAML.load_file('lib/assets/ossec.yaml')
+    base = YAML.load_file('/var/lib/systems-dashboard/servers.yaml')
+    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories.yaml')
+    ossec = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
 
     # Flags will be marked on any host that has a field or fields that have
     # actionable data.  It will mirror the main servers hash separately.

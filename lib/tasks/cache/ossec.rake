@@ -4,7 +4,7 @@ namespace :cache do
     require 'open3'
 
     # Default settings.
-    cachefile = 'lib/assets/ossec.yaml'
+    cachefile = '/var/lib/systems-dashboard/ossec.yaml'
     server = 'sul-ossec.stanford.edu'
     args = %w{ossec status}
     command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args.join(' ')
