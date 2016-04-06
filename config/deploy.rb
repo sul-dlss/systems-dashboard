@@ -6,6 +6,8 @@ set :repo_url, 'http://github.com/sul-dlss/systems-dashboard.git'
 
 set :branch, 'master'
 
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+
 #:user
 #:home_dir
 #:repository - try to not include sunetid in this url
