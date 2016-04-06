@@ -13,6 +13,8 @@
     <td><pre><%= ossec_files(@ossec['changed']) %></pre></td>
   </tr>
 </table>
+<p>To clear these changes, run the following with your root principal:</p>
+<pre>remctl sul-ossec.stanford.edu ossec clean <%= @host %></pre>
 <% else %>
   <p>No changed files found for <%= @host %>.</p>
 <% end %>
