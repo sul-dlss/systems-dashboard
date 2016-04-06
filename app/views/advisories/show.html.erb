@@ -1,0 +1,25 @@
+<h1><%= @host %></h2>
+<table id="advisories_list" class="display">
+  <tr>
+    <td>Package</td>
+    <td>Vulnerability</td>
+    <td>Severity</td>
+    <td>Kind</td>
+    <td>Synopsis</td>
+    <td>References</td>
+  </tr>
+  <% @advisories.keys.sort.each do |package| %>
+    <% @advisories[package].keys.sort.each do |version| %>
+      <% @advisories[package][version].each do |adv| %>
+        <tr>
+          <td><%= package %></td>
+          <td><%= adv['name'] %></td>
+          <td><%= adv['severity'] %></td>
+          <td><%= adv['kind'] %></td>
+          <td><%= adv['synopsis'] %></td>
+          <td><%= raw(parse_links(adv['references'])) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+</table>

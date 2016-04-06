@@ -1,0 +1,15 @@
+<table border="1">
+  <% @servers.keys.sort.each do |hostname| %>
+    <tr>
+      <td><%= hostname %></td>
+      <td><%= @servers[:hostname][:alive] %></td>
+      <td><%= @servers[:hostname][:cobbler] %></td>
+      <td><%= @servers[:hostname][:vmware] %></td>
+      <td><%= @servers[:hostname][:netdb] %></td>
+      <td><%= @servers[:hostname][:puppetdb] %></td>
+      <td><%= @servers[:hostname][:vmware][:status] %></td>
+      <td><%= @servers[:hostname][:vmware][:cpus] %></td>
+      <td><%= @servers[:hostname][:vmware][:memory] %></td>
+    </tr>
+  <% end %>
+</table>

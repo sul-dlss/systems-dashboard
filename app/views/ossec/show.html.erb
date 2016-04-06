@@ -1,0 +1,18 @@
+<% if @ossec %>
+<table id="ossec_show" class="cell-border">
+  <tr>
+    <td>Host</td>
+    <td>Last Run</td>
+    <td>Last Clean</td>
+    <td>Changed Files</td>
+  </tr>
+  <tr>
+    <td><%= shorthost(@host) %></td>
+    <td><%= date_only(@ossec['lastrun']) %></td>
+    <td><%= date_only(@ossec['lastclean']) %></td>
+    <td><pre><%= ossec_files(@ossec['changed']) %></pre></td>
+  </tr>
+</table>
+<% else %>
+  <p>No changed files found for <%= @host %>.</p>
+<% end %>

@@ -1,0 +1,16 @@
+<table id="ossec_list" class="display">
+  <tr>
+    <td>Host</td>
+    <td>Last Run</td>
+    <td>Last Clean</td>
+    <td>Changed Files</td>
+  </tr>
+  <% @ossec.keys.sort.each do |hostname| %>
+    <tr>
+      <td><%= shorthost(hostname) %></td>
+      <td><%= date_only(check_child(@ossec[hostname], 'lastrun')) %></td>
+      <td><%= date_only(check_child(@ossec[hostname], 'lastclean')) %></td>
+      <td><pre><%= ossec_files(check_child(@ossec[hostname], 'changed')) %></pre></td>
+    </tr>
+  <% end %>
+</table>

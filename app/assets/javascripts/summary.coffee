@@ -1,0 +1,19 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://coffeescript.org/
+jQuery ->
+  $("#server_list").dataTable(
+    { "lengthMenu": [[100, -1], [100, "All"]] }
+  )
+
+  $("#advisories_list").dataTable(
+    { "lengthMenu": [[100, -1], [100, "All"]] }
+  )
+
+  $("#ossec_list").dataTable(
+    { "lengthMenu": [[100, -1], [100, "All"]] }
+  )
+
+  $("#ossec_show").dataTable(
+    { "lengthMenu": [[100, -1], [100, "All"]] }
+  )

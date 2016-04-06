@@ -1,0 +1,59 @@
+<p>
+  <%= form_tag('/', method: 'get') do %>
+    <%= label_tag(:show_only_flagged, 'View only flagged servers:') %>
+    <%= check_box_tag(:show_only_flagged, 1, @options['show_only_flagged']) %>
+    <%= submit_tag('Search') %>
+  <% end %>
+</p>
+
+<table id="server_list" class="display">
+  <thead>
+    <tr>
+      <td>Host</td>
+      <td>NetDB</td>
+      <td>Resolves</td>
+      <td>Cobbler</td>
+      <td>PuppetDB</td>
+      <td>VMWare</td>
+      <td>Status</td>
+      <td>Memory</td>
+      <td>CPUs</td>
+      <td>Advisories</td>
+      <td>OSSEC</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @servers.keys.sort.each do |hostname| %>
+      <% next if @options['show_only_flagged'] == 1 && @flags[hostname].empty? %>
+      <tr>
+        <td><%= hostname %></td>
+        <td><%= asterisk(@servers[hostname]['netdb']) %></td>
+        <td><%= asterisk(@servers[hostname]['alive']) %></td>
+        <td><%= asterisk(@servers[hostname]['cobbler']) %></td>
+        <td><%= asterisk(@servers[hostname]['puppetdb']) %></td>
+        <td><%= asterisk(@servers[hostname]['vmware']) %></td>
+        <td><%= status(check_child(@servers[hostname]['vmware'], 'status')) %></td>
+        <td><%= check_child(@servers[hostname]['vmware'], 'memory') %></td>
+        <td><%= check_child(@servers[hostname]['vmware'], 'cpus') %></td>
+        <td><%=
+          if @servers[hostname]['advisories']
+            link_to(@servers[hostname]['advisories'], advisory_path(hostname))
+          else
+            '-'
+          end
+        %></td>
+        <td><%=
+          if @servers[hostname]['ossec']
+            if @servers[hostname]['ossec'] > 0
+              link_to(@servers[hostname]['ossec'], ossec_path(hostname))
+            else
+              @servers[hostname]['ossec']
+            end
+          else
+            '-'
+          end
+        %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

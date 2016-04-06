@@ -1,0 +1,2 @@
+module OssecHelper
+end
