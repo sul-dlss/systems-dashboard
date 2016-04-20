@@ -7,9 +7,9 @@ class AdvisoriesController < ApplicationController
       @host <<'.stanford.edu'
     end
 
-    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories.yaml')
-    if advisories.key?(@host)
-      @advisories = advisories[@host]
+    fname = '/var/lib/systems-dashboard/advisories/' + @host + '.yaml'
+    if File.exists?(fname)
+      @advisories = YAML.load_file(fname)
     else
       @advisories = {}
     end

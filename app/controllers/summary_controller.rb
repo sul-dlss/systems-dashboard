@@ -12,7 +12,7 @@ class SummaryController < ApplicationController
 
     # Load our data from the source files.
     base = YAML.load_file('/var/lib/systems-dashboard/servers.yaml')
-    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories.yaml')
+    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories-summary.yaml')
     ossec = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
 
     # Flags will be marked on any host that has a field or fields that have
@@ -22,7 +22,9 @@ class SummaryController < ApplicationController
     advisories.keys.each do |host|
       shorthost = host.sub(/\.stanford\.edu$/, '')
       next unless base.key?(shorthost)
-      base[shorthost]['advisories'] = advisories[host].keys.count
+      base[shorthost]['advisories'] = {}
+      base[shorthost]['advisories']['count'] = advisories[host]['count']
+      base[shorthost]['advisories']['highest'] = advisories[host]['highest']
     end
 
     ossec.keys.each do |host|
@@ -37,8 +39,9 @@ class SummaryController < ApplicationController
       if flag_positive?(base[host]['ossec'])
         @flags[host]['ossec'] = 1
       end
-      if flag_positive?(base[host]['advisories'])
-        @flags[host]['advisories'] = 1
+      if base[host].key?('advisories') && flag_positive?(base[host]['advisories']['count'])
+        @flags[host]['advisories'] = {}
+        @flags[host]['advisories']['count'] = 1
       end
       if flag_cobbler_only?(base[host])
         @flags[host]['cobbler'] = 1
