@@ -16,6 +16,11 @@ every '*/10 * * * *' do
   rake 'cache:ossec'
 end
 
+# Puppet facts are fairly low resource.
+every '*/10 * * * *' do
+  rake 'cache:puppetfacts'
+end
+
 # The advisories don't actually get updated more than once a day, but
 # grabbing the file is low-op and this way we don't have to care as much about
 # when that update happens.
