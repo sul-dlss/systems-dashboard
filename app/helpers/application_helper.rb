@@ -48,6 +48,7 @@ module ApplicationHelper
   # actual links.
   def parse_links (urls)
     links = []
+    return '' if urls.nil?
     urls.split(' ').each do |url|
       links << "<a href='#{url}' target='_blank'>#{url}</a>"
     end
@@ -57,6 +58,14 @@ module ApplicationHelper
   # Shorten a hostname by removing the stanford.edu domain for display.
   def shorthost (hostname)
     hostname.sub(/\.stanford\.edu$/, '')
+  end
+
+  def status_flag (flags, host, field)
+    if flags[host].key?(field)
+      return 'flagged'
+    else
+      return 'normal'
+    end
   end
 
 end

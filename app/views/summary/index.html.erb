@@ -29,20 +29,20 @@
         <td><%= hostname %></td>
         <td><%= asterisk(@servers[hostname]['netdb']) %></td>
         <td><%= asterisk(@servers[hostname]['alive']) %></td>
-        <td><%= asterisk(@servers[hostname]['cobbler']) %></td>
+        <td class="<% status_flag(@flags, hostname, 'cobbler') %>"><%= asterisk(@servers[hostname]['cobbler']) %>"</td>
         <td><%= asterisk(@servers[hostname]['puppetdb']) %></td>
         <td><%= asterisk(@servers[hostname]['vmware']) %></td>
         <td><%= status(check_child(@servers[hostname]['vmware'], 'status')) %></td>
         <td><%= check_child(@servers[hostname]['vmware'], 'memory') %></td>
         <td><%= check_child(@servers[hostname]['vmware'], 'cpus') %></td>
-        <td><%=
+        <td class="<% status_flag(@flags, hostname, 'advisories') %>"><%=
           if @servers[hostname]['advisories']
             link_to(@servers[hostname]['advisories'], advisory_path(hostname))
           else
             '-'
           end
         %></td>
-        <td><%=
+        <td class="<% status_flag(@flags, hostname, 'ossec') %>">
           if @servers[hostname]['ossec']
             if @servers[hostname]['ossec'] > 0
               link_to(@servers[hostname]['ossec'], ossec_path(hostname))
