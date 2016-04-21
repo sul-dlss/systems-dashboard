@@ -14,6 +14,7 @@ class SummaryController < ApplicationController
     base = YAML.load_file('/var/lib/systems-dashboard/servers.yaml')
     advisories = YAML.load_file('/var/lib/systems-dashboard/advisories-summary.yaml')
     ossec = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
+    puppetstate = YAML.load_file('/var/lib/systems-dashboard/puppetstate.yaml')
 
     # Flags will be marked on any host that has a field or fields that have
     # actionable data.  It will mirror the main servers hash separately.
@@ -33,6 +34,12 @@ class SummaryController < ApplicationController
       base[shorthost]['ossec'] = ossec[host]['changed'].keys.count
     end
 
+    puppetstate.keys.each do |host|
+      shorthost = host.sub(/\.stanford\.edu$/, '')
+      next unless base.key?(shorthost)
+      base[shorthost]['puppetstate'] = puppetstate[host]
+    end
+
     # Check for any flagged fields.
     base.keys.each do |host|
       @flags[host] = {}
@@ -46,9 +53,26 @@ class SummaryController < ApplicationController
       if flag_cobbler_only?(base[host])
         @flags[host]['cobbler'] = 1
       end
+      if base[host].key?('puppetstate')
+        if flag_content?(base[host]['puppetstate']['too_quiet'])
+          @flags[host]['puppetstate'] = {}
+          @flags[host]['puppetstate']['too_quiet'] = 1
+        end
+        if flag_content?(base[host]['puppetstate']['failed'])
+          @flags[host]['puppetstate'] = {} unless @flags[host].key?('puppetstate')
+          @flags[host]['puppetstate']['failed'] = 1
+        end
+      end
     end
 
     @servers = base
+  end
+
+  # Flag for any field that should only be either nil or ''.
+  def flag_content? (value)
+    return false if value.nil?
+    return false if value == ''
+    return true
   end
 
   # Flag for any field that should never actually have a count on it.
