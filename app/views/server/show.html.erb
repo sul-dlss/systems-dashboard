@@ -1,0 +1,125 @@
+<h1><%= @host %></h1>
+
+<h2>System Information</h2>
+<table id="server_show">
+  <tr>
+    <td>NetDB</td>
+    <td><%= asterisk(@server['base']['netdb']) %></td>
+  </tr>
+  <tr>
+    <td>Resolves</td>
+    <td><%= asterisk(@server['base']['alive']) %></td>
+  </tr>
+  <tr>
+    <td>Cobbler</td>
+    <td><%= asterisk(@server['base']['cobbler']) %></td>
+  </tr>
+  <tr>
+    <td>PuppetDB</td>
+    <td><%= asterisk(@server['base']['puppetdb']) %></td>
+  </tr>
+  <tr>
+    <td>VMWare</td>
+    <td><%= asterisk(@server['base']['vmware']) %></td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td><%= status(check_child(@server['base']['vmware'], 'status')) %></td>
+  </tr>
+  <tr>
+    <td>Memory</td>
+    <td><%= check_child(@server['base']['vmware'], 'memory') %></td>
+  </tr>
+  <tr>
+    <td>CPUs</td>
+    <td><%= check_child(@server['base']['vmware'], 'cpus') %></td>
+  </tr>
+<% if @server['base']['netdb'] && @server['base']['netdb'].count > 0 %>
+  <tr>
+    <td>Host Aliases</td>
+    <td><%= @server['base']['netdb'].join('<br />') %></td>
+  </tr>
+<% end %>
+</table>
+
+<h2>Puppet Status</h2>
+<% if @server['puppetstate'].key?('failed') || @server['puppetstate'].key?('too_quiet') %>
+  <% if @server['puppetstate'].key?('failed') %>
+    <p class="error">Last puppet run failed.</p>
+  <% end %>
+  <% if @server['puppetstate'].key?('too_quiet') %>
+    <p class="error">Puppet has not run lately, last run at <%= @server['puppetstate']['too_quiet'] %>.</p>
+  <% end %>
+<% else %>
+  <p>Last run successful.</p>
+<% end %>
+
+<h2>Puppet Facts</h2>
+<table id="server_show" class="cell-border">
+  <% @server['facts'].keys.sort.each do |factname| %>
+  <tr>
+    <td><%= factname %></td>
+    <td><%= @server['facts'][factname] %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h2>Advisories</h2>
+<% if @server['advisories'] %>
+<table id="server_show" class="cell-border">
+  <tr>
+    <td>Count</td>
+    <td><%= @server['advisories']['count'] %></td>
+  </tr>
+  <tr>
+    <td>Highest</td>
+    <td><%= @server['advisories']['highest'] %></td>
+  </tr>
+</table>
+<% else %>
+  <p>No advisories found for <%= @host %>.</p>
+<% end %>
+
+<h2>OSSEC</h2>
+<% if @server['ossec'] %>
+<table id="server_show" class="cell-border">
+  <tr>
+    <td>Last Run</td>
+    <td><%= date_only(@server['ossec']['lastrun']) %></td>
+  </tr>
+  <tr>
+    <td>Last Clean</td>
+    <td><%= date_only(@server['ossec']['lastclean']) %></td>
+  </tr>
+  <tr>
+    <td>Changed Files</td>
+    <td><pre><%= ossec_files(@server['ossec']['changed']) %></pre></td>
+  </tr>
+</table>
+<p>To clear these changes, run the following with your root principal:</p>
+<pre>remctl sul-ossec.stanford.edu ossec clean <%= @host %></pre>
+<% else %>
+  <p>No changed files found for <%= @host %>.</p>
+<% end %>
+
+<h2>Firewall</h2>
+<table id="server_show" class="cell-border">
+  <thead>
+    <td>Source Zone</td>
+    <td>Source Addresses</td>
+    <td>Destination Zone</td>
+    <td>Destination Addresses</td>
+    <td>Ports</td>
+    <td>Status</td>
+  </thead>
+  <% @server['firewall'].each do |f| %>
+  <tr>
+    <td><%= raw(f['src_zone'].join('<br />')) %></td>
+    <td><%= raw(f['src_addr'].join('<br />')) %></td>
+    <td><%= raw(f['dst_zone'].join('<br />')) %></td>
+    <td><%= raw(f['dst_addr'].join('<br />')) %></td>
+    <td><%= raw(f['ports'].join('<br />')) %></td>
+    <td><%= f['status'] %></td>
+  </tr>
+  <% end %>
+</table>
