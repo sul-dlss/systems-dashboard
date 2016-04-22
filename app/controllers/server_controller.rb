@@ -4,9 +4,7 @@ class ServerController < ApplicationController
 
   def show
     @host = params[:id]
-    unless /\.stanford\.edu$/ =~ @host
-      @host <<'.stanford.edu'
-    end
+    @host << '.stanford.edu' unless /\.stanford\.edu$/ =~ @host
     shorthost = @host.sub(/\.stanford\.edu$/, '')
 
     # Load our data from the source files.
@@ -17,6 +15,7 @@ class ServerController < ApplicationController
     puppetstate = YAML.load_file(YAML_DIR + 'puppetstate.yaml')
     facts = YAML.load_file(YAML_DIR + 'facts.yaml')
 
+    @server = nil
     if servers.key?(shorthost)
       @server = {}
       @server['base'] = servers[shorthost]
@@ -25,8 +24,6 @@ class ServerController < ApplicationController
       @server['puppetstate'] = puppetstate[@host]
       @server['facts'] = facts[@host]
       @server['ossec'] = ossec[@host]
-    else
-      @server = nil
     end
   end
 end

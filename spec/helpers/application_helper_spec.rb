@@ -1,10 +1,9 @@
 require 'rails_helper'
 RSpec.describe ApplicationHelper, type: :helper do
-
   # Asterisk translates various data into '' or '*'.
   describe "#asterisk" do
     it "returns an asterisk when given an array" do
-      value = %w[test this array]
+      value = %w(test this array)
       expect(helper.asterisk(value)).to eq '*'
     end
     it "returns an asterisk when given a hash" do
@@ -84,12 +83,12 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.ossec_files(changed_files)).to eq 'No changed files found'
     end
     it "returns proper string if given a hash" do
-      changed_files = {'file1' => 'data', 'file2' => 'otherdata'}
+      changed_files = { 'file1' => 'data', 'file2' => 'otherdata' }
       expected = "file1: data\nfile2: otherdata"
       expect(helper.ossec_files(changed_files)).to eq expected
     end
     it "returns proper sorted string if given a hash" do
-      changed_files = {'file99' => 'data', 'file2' => 'otherdata'}
+      changed_files = { 'file99' => 'data', 'file2' => 'otherdata' }
       expected = "file2: otherdata\nfile99: data"
       expect(helper.ossec_files(changed_files)).to eq expected
     end
@@ -117,7 +116,9 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
     it "splits and makes the urls actual links separated by a linebreak" do
       urls = 'http://fun.com https://sul.stanford.edu'
-      expected = "<a href='http://fun.com' target='_blank'>http://fun.com</a><br /><a href='https://sul.stanford.edu' target='_blank'>https://sul.stanford.edu</a>"
+      expected = "<a href='http://fun.com' target='_blank'>http://fun.com</a>"\
+        "<br /><a href='https://sul.stanford.edu' target='_blank'>"\
+        "https://sul.stanford.edu</a>"
       expect(helper.parse_links(urls)).to eq expected
     end
   end

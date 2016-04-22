@@ -70,5 +70,4 @@ RSpec.describe OssecController, type: :controller do
       end
     end
   end
-
 end

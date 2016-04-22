@@ -7,15 +7,10 @@ class OssecController < ApplicationController
 
   def show
     @host = params[:id]
-    unless /\.stanford\.edu$/ =~ @host
-      @host <<'.stanford.edu'
-    end
+    @host << '.stanford.edu' unless /\.stanford\.edu$/ =~ @host
 
+    @ossec = nil
     ossec_all = YAML.load_file(YAML_DIR + 'ossec.yaml')
-    if ossec_all.key?(@host)
-      @ossec = ossec_all[@host]
-    else
-      @ossec = nil
-    end
+    @ossec = ossec_all[@host] if ossec_all.key?(@host)
   end
 end
