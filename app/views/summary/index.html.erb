@@ -30,13 +30,13 @@
         <td><%= hostname %></td>
         <td><%= asterisk(@servers[hostname]['netdb']) %></td>
         <td><%= asterisk(@servers[hostname]['alive']) %></td>
-        <td class="<% status_flag(@flags, hostname, 'cobbler') %>"><%= asterisk(@servers[hostname]['cobbler']) %></td>
+        <td class="<%= status_flag(@flags, hostname, 'cobbler') %>"><%= asterisk(@servers[hostname]['cobbler']) %></td>
         <td><%= asterisk(@servers[hostname]['puppetdb']) %></td>
         <td><%= asterisk(@servers[hostname]['vmware']) %></td>
         <td><%= status(check_child(@servers[hostname]['vmware'], 'status')) %></td>
         <td><%= asterisk(check_child(@servers[hostname]['puppetstate'], 'failed')) %></td>
         <td><%= check_child(@servers[hostname]['puppetstate'], 'too_quiet') %></td>
-        <td class="<% status_flag(@flags, hostname, 'advisories') %>"><%=
+        <td class="<%= status_flag(@flags, hostname, 'advisories') %>"><%=
           if @servers[hostname].key?('advisories') && @servers[hostname]['advisories']['count'] > 0
             link_to(@servers[hostname]['advisories']['count'], advisory_path(hostname))
           else
@@ -44,7 +44,7 @@
           end
         %></td>
         <td><%= check_child(@servers[hostname]['advisories'], 'highest') %></td>
-        <td class="<% status_flag(@flags, hostname, 'ossec') %>"><%=
+        <td class="<%= status_flag(@flags, hostname, 'ossec') %>"><%=
           if @servers[hostname]['ossec']
             if @servers[hostname]['ossec'] > 0
               link_to(@servers[hostname]['ossec'], ossec_path(hostname))
