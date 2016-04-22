@@ -5,16 +5,16 @@ class SummaryController < ApplicationController
 
   def index
     # Set options for viewing.
-    @options = {}
+    @opt = {}
     if params['show_only_flagged']
-      @options['show_only_flagged'] = 1
+      @opt['show_only_flagged'] = 1
     end
 
     # Load our data from the source files.
-    base = YAML.load_file('/var/lib/systems-dashboard/servers.yaml')
-    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories-summary.yaml')
-    ossec = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
-    puppetstate = YAML.load_file('/var/lib/systems-dashboard/puppetstate.yaml')
+    base = YAML.load_file(YAML_DIR + 'servers.yaml')
+    advisories = YAML.load_file(YAML_DIR + 'advisories-summary.yaml')
+    ossec = YAML.load_file(YAML_DIR + 'ossec.yaml')
+    puppetstate = YAML.load_file(YAML_DIR + 'puppetstate.yaml')
 
     # Flags will be marked on any host that has a field or fields that have
     # actionable data.  It will mirror the main servers hash separately.
@@ -31,7 +31,11 @@ class SummaryController < ApplicationController
     ossec.keys.each do |host|
       shorthost = host.sub(/\.stanford\.edu$/, '')
       next unless base.key?(shorthost)
-      base[shorthost]['ossec'] = ossec[host]['changed'].keys.count
+      if ossec[host]['changed']
+        base[shorthost]['ossec'] = ossec[host]['changed'].keys.count
+      else
+        base[shorthost]['ossec'] = 0
+      end
     end
 
     puppetstate.keys.each do |host|

@@ -1,4 +1,4 @@
-<% if @ossec %>
+<% unless @ossec.nil?  %>
 <table id="ossec_show" class="cell-border">
   <tr>
     <td>Host</td>
@@ -16,5 +16,5 @@
 <p>To clear these changes, run the following with your root principal:</p>
 <pre>remctl sul-ossec.stanford.edu ossec clean <%= @host %></pre>
 <% else %>
-  <p>No changed files found for <%= @host %>.</p>
+  <p>No information found for <%= @host %>.</p>
 <% end %>

@@ -1,0 +1,10 @@
+---
+example.stanford.edu:
+  class-diamond: 1
+  class-mcollective: 1
+  failed: 1
+  too_quiet: 2016-04-11 02:27:20 PDT
+  bad_environment: jonroberTest
+test.stanford.edu:
+  class-diamond: 1
+  class-mcollective: 1

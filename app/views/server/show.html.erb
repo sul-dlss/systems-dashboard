@@ -1,5 +1,9 @@
 <h1><%= @host %></h1>
 
+<% if @server.nil? %>
+  <p>Could not find any information for this host.</p>
+
+<% else %>
 <h2>System Information</h2>
 <table id="server_show">
   <tr>
@@ -103,6 +107,7 @@
 <% end %>
 
 <h2>Firewall</h2>
+  <% if @server['firewall'] %>
 <table id="server_show" class="cell-border">
   <thead>
     <td>Source Zone</td>
@@ -112,7 +117,7 @@
     <td>Ports</td>
     <td>Status</td>
   </thead>
-  <% @server['firewall'].each do |f| %>
+    <% @server['firewall'].each do |f| %>
   <tr>
     <td><%= raw(f['src_zone'].join('<br />')) %></td>
     <td><%= raw(f['src_addr'].join('<br />')) %></td>
@@ -121,5 +126,9 @@
     <td><%= raw(f['ports'].join('<br />')) %></td>
     <td><%= f['status'] %></td>
   </tr>
-  <% end %>
+    <% end %>
 </table>
+  <% else %>
+  <p>No firewall information found for this host.</p>
+  <% end %>
+<% end %>

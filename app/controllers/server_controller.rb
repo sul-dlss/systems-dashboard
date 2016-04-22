@@ -10,19 +10,23 @@ class ServerController < ApplicationController
     shorthost = @host.sub(/\.stanford\.edu$/, '')
 
     # Load our data from the source files.
-    servers = YAML.load_file('/var/lib/systems-dashboard/servers.yaml')
-    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories-summary.yaml')
-    ossec = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
-    firewall = YAML.load_file('/var/lib/systems-dashboard/firewall.yaml')
-    puppetstate = YAML.load_file('/var/lib/systems-dashboard/puppetstate.yaml')
-    facts = YAML.load_file('/var/lib/systems-dashboard/facts.yaml')
+    servers = YAML.load_file(YAML_DIR + 'servers.yaml')
+    advisories = YAML.load_file(YAML_DIR + 'advisories-summary.yaml')
+    ossec = YAML.load_file(YAML_DIR + 'ossec.yaml')
+    firewall = YAML.load_file(YAML_DIR + 'firewall.yaml')
+    puppetstate = YAML.load_file(YAML_DIR + 'puppetstate.yaml')
+    facts = YAML.load_file(YAML_DIR + 'facts.yaml')
 
-    @server = {}
-    @server['base'] = servers[shorthost]
-    @server['advisories'] = advisories[@host]
-    @server['firewall'] = firewall[shorthost]
-    @server['puppetstate'] = puppetstate[@host]
-    @server['facts'] = facts[@host]
-    @server['ossec'] = ossec[@host]
+    if servers.key?(shorthost)
+      @server = {}
+      @server['base'] = servers[shorthost]
+      @server['advisories'] = advisories[@host]
+      @server['firewall'] = firewall[shorthost]
+      @server['puppetstate'] = puppetstate[@host]
+      @server['facts'] = facts[@host]
+      @server['ossec'] = ossec[@host]
+    else
+      @server = nil
+    end
   end
 end

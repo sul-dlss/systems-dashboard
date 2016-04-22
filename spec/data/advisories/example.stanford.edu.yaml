@@ -1,0 +1,38 @@
+---
+nss-tools:
+  0:3.19.1-8.el6_7:
+  - id: 8803
+    name: CESA-2016--0591
+    description: Not available
+    issue_date: '2016-04-05 12:27:24'
+    references: https://rhn.redhat.com/errata/RHSA-2016-0591.html http://lists.centos.org/pipermail/centos-announce/2016-April/021807.html
+      http://lists.centos.org/pipermail/centos-announce/2016-April/021808.html http://lists.centos.org/pipermail/centos-announce/2016-April/021809.html
+    kind: Security Advisory
+    synopsis: Moderate CentOS nspr Security Update
+    severity: Moderate
+    os_family: centos
+    fix_versions: |-
+      nspr-4.11.0-0.1.el6_7.i686.rpm
+      nspr-4.11.0-0.1.el6_7.src.rpm
+      nspr-4.11.0-0.1.el6_7.x86_64.rpm
+      nspr-devel-4.11.0-0.1.el6_7.i686.rpm
+      nspr-devel-4.11.0-0.1.el6_7.x86_64.rpm
+      nss-3.21.0-0.3.el6_7.i686.rpm
+      nss-3.21.0-0.3.el6_7.src.rpm
+      nss-3.21.0-0.3.el6_7.x86_64.rpm
+      nss-devel-3.21.0-0.3.el6_7.i686.rpm
+      nss-devel-3.21.0-0.3.el6_7.x86_64.rpm
+      nss-pkcs11-devel-3.21.0-0.3.el6_7.i686.rpm
+      nss-pkcs11-devel-3.21.0-0.3.el6_7.x86_64.rpm
+      nss-sysinit-3.21.0-0.3.el6_7.i686.rpm
+      nss-sysinit-3.21.0-0.3.el6_7.x86_64.rpm
+      nss-tools-3.21.0-0.3.el6_7.i686.rpm
+      nss-tools-3.21.0-0.3.el6_7.x86_64.rpm
+      nss-util-3.21.0-0.3.el6_7.i686.rpm
+      nss-util-3.21.0-0.3.el6_7.src.rpm
+      nss-util-3.21.0-0.3.el6_7.x86_64.rpm
+      nss-util-devel-3.21.0-0.3.el6_7.i686.rpm
+      nss-util-devel-3.21.0-0.3.el6_7.x86_64.rpm
+    created_at: 2016-04-06 09:36:36.969213000 Z
+    updated_at: 2016-04-06 09:36:36.969213000 Z
+    fix_versions_filtered: 3.21.0-0.3.el6_7

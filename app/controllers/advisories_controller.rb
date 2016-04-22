@@ -7,11 +7,11 @@ class AdvisoriesController < ApplicationController
       @host <<'.stanford.edu'
     end
 
-    fname = '/var/lib/systems-dashboard/advisories/' + @host + '.yaml'
+    fname = YAML_DIR + 'advisories/' + @host + '.yaml'
     if File.exists?(fname)
       @advisories = YAML.load_file(fname)
     else
-      @advisories = {}
+      @advisories = nil
     end
   end
 end

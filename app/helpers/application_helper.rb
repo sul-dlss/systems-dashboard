@@ -28,20 +28,29 @@ module ApplicationHelper
 
   # Format the ossec files listing hash into text suited for display.
   def ossec_files (changed_files)
-    return '' unless changed_files.kind_of?(Hash)
+    return 'No changed files found' unless changed_files.kind_of?(Hash)
     text = []
     changed_files.keys.sort.each do |fname|
       text << fname + ': ' + changed_files[fname]
     end
 
-    return text.join("\n")
+    if (text.count > 0)
+      return text.join("\n")
+    else
+      return 'No changed files found'
+    end
   end
 
   # Given a full date and time string, return only the date itself, for things
   # that we don't need full precision on for normal display.
   def date_only (timestamp)
     return '' if timestamp == ''
-    return Date.strptime(timestamp, '%Y-%m-%d')
+    begin
+      date = Date.parse(timestamp).strftime('%Y-%m-%d')
+    rescue ArgumentError
+      date = ''
+    end
+    date
   end
 
   # Given a string of one or more URLs, separate them out and then make them
@@ -52,7 +61,7 @@ module ApplicationHelper
     urls.split(' ').each do |url|
       links << "<a href='#{url}' target='_blank'>#{url}</a>"
     end
-    return links.join('<br />')
+    links.join('<br />')
   end
 
   # Shorten a hostname by removing the stanford.edu domain for display.
@@ -61,11 +70,10 @@ module ApplicationHelper
   end
 
   def status_flag (flags, host, field)
-    if flags[host].key?(field)
+    if flags.key?(host) && flags[host].key?(field)
       return 'flagged'
-    else
-      return 'normal'
     end
+    'normal'
   end
 
 end

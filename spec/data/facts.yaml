@@ -1,0 +1,15 @@
+---
+example.stanford.edu:
+  department:
+  technical_team:
+  user_advocate:
+  project:
+  sla_level:
+  environment: production
+test.stanford.edu:
+  department: dlss
+  technical_team: dlss
+  user_advocate: Julian
+  project: testing
+  sla_level: low
+  environment: production
