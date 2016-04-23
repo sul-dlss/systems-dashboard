@@ -77,7 +77,7 @@
   </tr>
   <tr>
     <td>Highest</td>
-    <td><%= @server['advisories']['highest'] %></td>
+    <td><%= cvss_score_to_text(@server['advisories']['highest']) %></td>
   </tr>
 </table>
 <% else %>

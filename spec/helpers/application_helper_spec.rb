@@ -162,4 +162,56 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.status_flag(flags, host, field)).to eq 'flagged'
     end
   end
+
+  describe "#cvss_score_to_text" do
+    it "returns empty string for bad data" do
+      expect(helper.cvss_score_to_text('fancy')).to eq ''
+    end
+    it "returns empty string for no severity" do
+      expect(helper.cvss_score_to_text(0)).to eq ''
+    end
+    it "returns low severity" do
+      expect(helper.cvss_score_to_text(2.1)).to eq '2.1 - Low'
+    end
+    it "returns medium severity" do
+      expect(helper.cvss_score_to_text(5.5)).to eq '5.5 - Medium'
+    end
+    it "returns high severity" do
+      expect(helper.cvss_score_to_text(8.6)).to eq '8.6 - High'
+    end
+    it "returns critical severity" do
+      expect(helper.cvss_score_to_text(9.9)).to eq '9.9 - Critical'
+    end
+  end
+
+  describe "#cvss_text_to_score" do
+    it "returns the level if given a number" do
+      expect(helper.cvss_text_to_score(8.8)).to eq 8.8
+    end
+    it "returns low severity" do
+      expect(helper.cvss_text_to_score('Low')).to eq 1.0
+    end
+    it "returns moderate severity" do
+      expect(helper.cvss_text_to_score('Moderate')).to eq 4.0
+    end
+    it "returns high severity" do
+      expect(helper.cvss_text_to_score('High')).to eq 7.0
+    end
+    it "returns important severity" do
+      expect(helper.cvss_text_to_score('Important')).to eq 7.0
+    end
+    it "returns critical severity" do
+      expect(helper.cvss_text_to_score('Critical')).to eq 9.0
+    end
+    it "returns unknown severity as low" do
+      expect(helper.cvss_text_to_score('Unknown')).to eq 1.0
+    end
+    it "returns no severity as 0" do
+      expect(helper.cvss_text_to_score('')).to eq 0
+    end
+    it "returns invalid severity as low" do
+      expect(helper.cvss_text_to_score('Hamburgers')).to eq 1.0
+    end
+
+  end
 end

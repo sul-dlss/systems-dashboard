@@ -43,7 +43,7 @@
             '-'
           end
         %></td>
-        <td><%= check_child(@servers[hostname]['advisories'], 'highest') %></td>
+        <td><%= cvss_score_to_text(check_child(@servers[hostname]['advisories'], 'highest')) %></td>
         <td class="<%= status_flag(@flags, hostname, 'ossec') %>"><%=
           if @servers[hostname]['ossec']
             if @servers[hostname]['ossec'] > 0

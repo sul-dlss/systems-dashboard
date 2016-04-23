@@ -9,7 +9,7 @@ nss-tools:
       http://lists.centos.org/pipermail/centos-announce/2016-April/021808.html http://lists.centos.org/pipermail/centos-announce/2016-April/021809.html
     kind: Security Advisory
     synopsis: Moderate CentOS nspr Security Update
-    severity: Moderate
+    severity: 9.3
     os_family: centos
     fix_versions: |-
       nspr-4.11.0-0.1.el6_7.i686.rpm

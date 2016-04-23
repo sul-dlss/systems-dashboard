@@ -1,6 +1,9 @@
 namespace :cache do
   desc 'Load our cache of server advisories'
   task advisories: :environment do
+    require "#{Rails.root}/app/helpers/application_helper"
+    include ApplicationHelper
+
     require 'open3'
     require 'yaml'
 
@@ -11,21 +14,14 @@ namespace :cache do
     args = %w{advisories report:feeder}
     command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args.join(' ')
 
-    # Map the severities to numbers to more easily sort and compare them.
-    severity_ordering = { 'Critical'  => 1,
-                          'Important' => 2,
-                          'Moderate'  => 3,
-                          'Low'       => 4,
-                          'Unknown'   => 4,
-                          ''          => 99 }
-
     # Run the remctl and handle output problems.
-    output, error, status = Open3.capture3(command)
-    if status != 0
-      raise "command failed: #{error}"
-    elsif output == ''
-      raise "no output: #{error}"
-    end
+    #output, error, status = Open3.capture3(command)
+    #if status != 0
+    #  raise "command failed: #{error}"
+    #elsif output == ''
+    #  raise "no output: #{error}"
+    #end
+    output = File.open('/tmp/advisories.yaml').read
 
     # The advisories file is large enough to cause speed problems with the
     # dashboard.  Go through and separate it out by server, with summary data
@@ -40,24 +36,16 @@ namespace :cache do
       # Calculate the summary count and highest patch severity for the server.
       summary[host] = {}
       summary[host]['count'] = servers[host].keys.count
-      summary[host]['highest'] = ''
+      summary[host]['highest'] = 0
       servers[host].keys.each do |package|
         servers[host][package].keys.each do |version|
           servers[host][package][version].each do |advisory|
-            severity = advisory['severity']
-            severity_level = severity_ordering[severity] || 99
-            cached_severity = summary[host]['highest']
-            cached_level = severity_ordering[cached_severity]
-            next if cached_level <= severity_level
-            summary[host]['highest'] = severity
+            severity_level = cvss_text_to_score(advisory['severity'])
+            cached_level = summary[host]['highest']
+            next if cached_level >= severity_level
+            summary[host]['highest'] = severity_level
           end
         end
-      end
-
-      # Then play with the severity to give it a prefix for sorting.
-      if summary[host]['highest'] != ''
-        numeric = severity_ordering[summary[host]['highest']]
-        summary[host]['highest'] = numeric.to_s + ': ' + summary[host]['highest']
       end
     end
 

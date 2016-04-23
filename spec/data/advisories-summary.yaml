@@ -1,7 +1,7 @@
 ---
 example.stanford.edu:
   count: 1
-  highest: '1: Critical'
+  highest: 9.3
 test.stanford.edu:
   count: 0
   highest:

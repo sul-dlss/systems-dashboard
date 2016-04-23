@@ -14,7 +14,7 @@ RSpec.describe AdvisoriesController, type: :controller do
       it "gets the right output" do
         expect(response.body).to match(/<td>nss-tools</)
         expect(response.body).to match(/<td>CESA-2016--0591</)
-        expect(response.body).to match(/<td>Moderate</)
+        expect(response.body).to match(/<td>9.3 - Critical</)
         expect(response.body).to match(/<td>Security Advisory</)
         expect(response.body).to match(/<td>Moderate CentOS nspr Security Update</)
         expect(response.body).to match(/https:\/\/rhn.redhat.com\/errata\/RHSA-2016-0591.html/)

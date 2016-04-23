@@ -66,9 +66,42 @@ module ApplicationHelper
     hostname.sub(/\.stanford\.edu$/, '')
   end
 
+  # Return a CSS value saying if a field should be marked specially.
   def status_flag(flags, host, field)
     return 'flagged' if flags.key?(host) && flags[host].key?(field)
     'normal'
+  end
+
+  # Given an ossec severity rating (0..10), convert it into a text display for
+  # users that includes the numeric plus text.
+  def cvss_score_to_text(score)
+    return '' unless score.is_a?(Fixnum) || score.is_a?(Float)
+    if score == 0
+      return ''
+    elsif score < 4.0
+      return score.to_s + ' - Low'
+    elsif score < 7.0
+      return score.to_s + ' - Medium'
+    elsif score < 9.0
+      return score.to_s + ' - High'
+    else
+      return score.to_s + ' - Critical'
+    end
+  end
+
+  # Given a textual severity rating, turn it into an OSSEC score.
+  def cvss_text_to_score(level)
+    return level if level.is_a?(Fixnum) || level.is_a?(Float)
+
+    severity_ordering = { 'Critical'  => 9.0,
+                          'Important' => 7.0,
+                          'High'      => 7.0,
+                          'Moderate'  => 4.0,
+                          'Low'       => 1.0,
+                          'Unknown'   => 1.0,
+                          ''          => 0 }
+    return 1.0 unless severity_ordering.key?(level)
+    severity_ordering[level]
   end
 
 end
