@@ -27,7 +27,7 @@
     <% @servers.keys.sort.each do |hostname| %>
       <% next if @opt['show_only_flagged'] == 1 && @flags[hostname].empty? %>
       <tr>
-        <td><%= hostname %></td>
+        <td><%= shorthost(hostname) %></td>
         <td><%= asterisk(@servers[hostname]['netdb']) %></td>
         <td><%= asterisk(@servers[hostname]['alive']) %></td>
         <td class="<%= status_flag(@flags, hostname, 'cobbler') %>"><%= asterisk(@servers[hostname]['cobbler']) %></td>
@@ -38,7 +38,7 @@
         <td><%= check_child(@servers[hostname]['puppetstate'], 'too_quiet') %></td>
         <td class="<%= status_flag(@flags, hostname, 'advisories') %>"><%=
           if @servers[hostname].key?('advisories') && @servers[hostname]['advisories']['count'] > 0
-            link_to(@servers[hostname]['advisories']['count'], advisory_path(hostname))
+            link_to(@servers[hostname]['advisories']['count'], advisory_path(shorthost(hostname)))
           else
             '-'
           end
@@ -47,7 +47,7 @@
         <td class="<%= status_flag(@flags, hostname, 'ossec') %>"><%=
           if @servers[hostname]['ossec']
             if @servers[hostname]['ossec'] > 0
-              link_to(@servers[hostname]['ossec'], ossec_path(hostname))
+              link_to(@servers[hostname]['ossec'], ossec_path(shorthost(hostname)))
             else
               @servers[hostname]['ossec']
             end

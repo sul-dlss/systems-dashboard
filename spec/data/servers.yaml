@@ -1,5 +1,5 @@
 ---
-example:
+example.stanford.edu:
   alive: 1
   cobbler: 1
   netdb: []
@@ -9,7 +9,7 @@ example:
     memory: 4
     status: On
     template: False
-test:
+test.stanford.edu:
   alive: 1
   cobbler: 1
   netdb: []

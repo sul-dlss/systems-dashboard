@@ -25,11 +25,10 @@ class SummaryController < ApplicationController
   def load_advisories(hosts)
     advisories = YAML.load_file(YAML_DIR + 'advisories-summary.yaml')
     advisories.keys.each do |host|
-      shorthost = host.sub(/\.stanford\.edu$/, '')
-      next unless hosts.key?(shorthost)
-      hosts[shorthost]['advisories'] = {}
-      hosts[shorthost]['advisories']['count'] = advisories[host]['count']
-      hosts[shorthost]['advisories']['highest'] = advisories[host]['highest']
+      next unless hosts.key?(host)
+      hosts[host]['advisories'] = {}
+      hosts[host]['advisories']['count'] = advisories[host]['count']
+      hosts[host]['advisories']['highest'] = advisories[host]['highest']
     end
     hosts
   end
@@ -38,12 +37,11 @@ class SummaryController < ApplicationController
   def load_ossec(hosts)
     ossec = YAML.load_file(YAML_DIR + 'ossec.yaml')
     ossec.keys.each do |host|
-      shorthost = host.sub(/\.stanford\.edu$/, '')
-      next unless hosts.key?(shorthost)
+      next unless hosts.key?(host)
       if ossec[host]['changed']
-        hosts[shorthost]['ossec'] = ossec[host]['changed'].keys.count
+        hosts[host]['ossec'] = ossec[host]['changed'].keys.count
       else
-        hosts[shorthost]['ossec'] = 0
+        hosts[host]['ossec'] = 0
       end
     end
     hosts
@@ -53,9 +51,8 @@ class SummaryController < ApplicationController
   def load_puppetstate(hosts)
     puppetstate = YAML.load_file(YAML_DIR + 'puppetstate.yaml')
     puppetstate.keys.each do |host|
-      shorthost = host.sub(/\.stanford\.edu$/, '')
-      next unless hosts.key?(shorthost)
-      hosts[shorthost]['puppetstate'] = puppetstate[host]
+      next unless hosts.key?(host)
+      hosts[host]['puppetstate'] = puppetstate[host]
     end
     hosts
   end

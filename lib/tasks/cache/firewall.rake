@@ -56,7 +56,6 @@ namespace :cache do
 
     firewalls = {}
     hosts.each do |hostname|
-      puts hostname
       begin
         host_ip = IPSocket.getaddress(hostname)
       rescue SocketError
