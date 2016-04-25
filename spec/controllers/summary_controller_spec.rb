@@ -14,8 +14,8 @@ RSpec.describe SummaryController, type: :controller do
 
       it "gets the right output" do
         # Two hosts.
-        expect(response.body).to match(/<td>example<\/td>/)
-        expect(response.body).to match(/<td>test<\/td>/)
+        expect(response.body).to match(/<td><a href="\/server\/example">example</)
+        expect(response.body).to match(/<td><a href="\/server\/test">test</)
 
         # For the first host, several fields that should show.
         expect(response.body).to match(/<td class="flagged"><a href="\/ossec\/example">2<\/a><\/td>/)
@@ -34,8 +34,8 @@ RSpec.describe SummaryController, type: :controller do
 
         it "gets the right output" do
           # Only one host.
-          expect(response.body).to match(/<td>example<\/td>/)
-          expect(response.body).not_to match(/<td>test<\/td>/)
+          expect(response.body).to match(/<td><a href="\/server\/example">example</)
+          expect(response.body).not_to match(/<td><a href="\/server\/test">test</)
 
           # And the flagged data for it again.
           expect(response.body).to match(/<td class="flagged"><a href="\/ossec\/example">2<\/a><\/td>/)
