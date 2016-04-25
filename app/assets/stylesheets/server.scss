@@ -1,0 +1,12 @@
+// Place all the styles related to the server controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+table.server_show {
+    border-collapse: collapse;
+}
+
+.server_show th, .server_show td {
+    border: 1px solid black;
+    vertical-align: text-top;
+    padding: 5px;
+}

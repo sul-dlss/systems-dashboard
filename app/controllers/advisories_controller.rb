@@ -3,15 +3,10 @@ class AdvisoriesController < ApplicationController
 
   def show
     @host = params[:id]
-    unless /\.stanford\.edu$/ =~ @host
-      @host <<'.stanford.edu'
-    end
+    @host << '.stanford.edu' unless /\.stanford\.edu$/ =~ @host
 
-    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories.yaml')
-    if advisories.key?(@host)
-      @advisories = advisories[@host]
-    else
-      @advisories = {}
-    end
+    @advisories = nil
+    fname = YAML_DIR + 'advisories/' + @host + '.yaml'
+    @advisories = YAML.load_file(fname) if File.exist?(fname)
   end
 end

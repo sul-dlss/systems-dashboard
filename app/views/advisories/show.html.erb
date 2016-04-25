@@ -1,3 +1,4 @@
+<% unless @advisories.nil? || @advisories.empty? %>
 <h1><%= @host %></h2>
 <table id="advisories_list" class="display">
   <tr>
@@ -14,7 +15,7 @@
         <tr>
           <td><%= package %></td>
           <td><%= adv['name'] %></td>
-          <td><%= adv['severity'] %></td>
+          <td><%= cvss_score_to_text(adv['severity']) %></td>
           <td><%= adv['kind'] %></td>
           <td><%= adv['synopsis'] %></td>
           <td><%= raw(parse_links(adv['references'])) %></td>
@@ -23,3 +24,6 @@
     <% end %>
   <% end %>
 </table>
+<% else %>
+  <p>No advisories found for <%= @host %>.</p>
+<% end %>
