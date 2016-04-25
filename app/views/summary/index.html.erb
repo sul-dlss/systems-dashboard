@@ -34,8 +34,12 @@
         <td><%= asterisk(@servers[hostname]['puppetdb']) %></td>
         <td><%= asterisk(@servers[hostname]['vmware']) %></td>
         <td><%= status(check_child(@servers[hostname]['vmware'], 'status')) %></td>
-        <td><%= asterisk(check_child(@servers[hostname]['puppetstate'], 'failed')) %></td>
-        <td><%= check_child(@servers[hostname]['puppetstate'], 'too_quiet') %></td>
+        <td class="<%= status_flag(@flags, hostname, ['puppetstate', 'failed']) %>">
+            <%= asterisk(check_child(@servers[hostname]['puppetstate'], 'failed')) %>
+        </td>
+        <td class="<%= status_flag(@flags, hostname, ['puppetstate', 'too_quiet']) %>">
+            <%= check_child(@servers[hostname]['puppetstate'], 'too_quiet') %>
+        </td>
         <td class="<%= status_flag(@flags, hostname, 'advisories') %>"><%=
           if @servers[hostname].key?('advisories') && @servers[hostname]['advisories']['count'] > 0
             link_to(@servers[hostname]['advisories']['count'], advisory_path(shorthost(hostname)))

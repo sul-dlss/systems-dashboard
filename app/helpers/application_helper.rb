@@ -66,9 +66,10 @@ module ApplicationHelper
     hostname.sub(/\.stanford\.edu$/, '')
   end
 
-  # Return a CSS value saying if a field should be marked specially.
-  def status_flag(flags, host, field)
-    return 'flagged' if flags.key?(host) && flags[host].key?(field)
+  # Return a CSS value saying if a field should be marked specially for having
+  # been flagged.
+  def status_flag(flags, host, fields)
+    return 'flagged' if flags.key?(host) && flags[host].key?(fields)
     'normal'
   end
 

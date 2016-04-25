@@ -70,12 +70,12 @@ class SummaryController < ApplicationController
       end
       if hosts[host].key?('puppetstate')
         if flag_content?(hosts[host]['puppetstate']['too_quiet'])
-          flags[host]['puppetstate'] = {}
-          flags[host]['puppetstate']['too_quiet'] = 1
+          fields = %w(puppetstate too_quiet)
+          flags[host][fields] = 1
         end
         if flag_content?(hosts[host]['puppetstate']['failed'])
-          flags[host]['puppetstate'] = {} unless flags[host].key?('puppetstate')
-          flags[host]['puppetstate']['failed'] = 1
+          fields = %w(puppetstate failed)
+          flags[host][fields] = 1
         end
       end
     end

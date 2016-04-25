@@ -18,6 +18,8 @@ RSpec.describe SummaryController, type: :controller do
         expect(response.body).to match(/<td><a href="\/server\/test">test</)
 
         # For the first host, several fields that should show.
+        expect(response.body).to match(/<td class="flagged">\s+\*\s+</)
+        expect(response.body).to match(/<td class="flagged">\s+2016-04-10 /)
         expect(response.body).to match(/<td class="flagged"><a href="\/ossec\/example">2<\/a><\/td>/)
         expect(response.body).to match(/<td class="flagged"><a href="\/advisories\/example">1<\/a><\/td>/)
         expect(response.body).to match(/<td>9.3 - Critical<\/td>/)

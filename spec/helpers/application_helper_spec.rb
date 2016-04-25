@@ -142,24 +142,24 @@ RSpec.describe ApplicationHelper, type: :helper do
     it "doesn't flag a host with no flags" do
       flags = {}
       host = 'sul.stanford.edu'
-      field = 'puppetdb'
-      expect(helper.status_flag(flags, host, field)).to eq 'normal'
+      fields = %w(puppetdb)
+      expect(helper.status_flag(flags, host, fields)).to eq 'normal'
     end
     it "doesn't flag a host flagged for some other field" do
       flags = {}
       host = 'sul.stanford.edu'
       flags[host] = {}
       flags[host]['otherfield'] = 1
-      field = 'puppetdb'
-      expect(helper.status_flag(flags, host, field)).to eq 'normal'
+      fields = %w(puppetdb)
+      expect(helper.status_flag(flags, host, fields)).to eq 'normal'
     end
     it "flags a host that has been flagged for a field" do
       flags = {}
       host = 'sul.stanford.edu'
       flags[host] = {}
-      field = 'puppetdb'
-      flags[host][field] = 1
-      expect(helper.status_flag(flags, host, field)).to eq 'flagged'
+      fields = %w(puppetdb)
+      flags[host][fields] = 1
+      expect(helper.status_flag(flags, host, fields)).to eq 'flagged'
     end
   end
 
