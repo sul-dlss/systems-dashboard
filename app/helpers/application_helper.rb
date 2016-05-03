@@ -1,11 +1,14 @@
 module ApplicationHelper
+  require 'yaml'
+
   # Given a piece of data that could be 0, 1, a list, or nil, translate it to an
   # asterisk if 1 or an array and empty string otherwise.
   def asterisk(data)
     return '' if data.nil?
-    return '*' if data.is_a?(Array)
-    return '*' if data.is_a?(Hash)
+    return '*' if data.is_a?(Array) && !data.empty?
+    return '*' if data.is_a?(Hash) && !data.empty?
     return '*' if data.is_a?(Fixnum) && data == 1
+    return '*' if data.is_a?(String) && data == "1"
 
     ''
   end
@@ -41,7 +44,7 @@ module ApplicationHelper
   # Given a full date and time string, return only the date itself, for things
   # that we don't need full precision on for normal display.
   def date_only(timestamp)
-    return '' if timestamp == ''
+    return '' if timestamp == '' || timestamp.nil?
     begin
       date = Date.parse(timestamp).strftime('%Y-%m-%d')
     rescue ArgumentError
@@ -104,5 +107,4 @@ module ApplicationHelper
     return 1.0 unless severity_ordering.key?(level)
     severity_ordering[level]
   end
-
 end

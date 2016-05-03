@@ -6,23 +6,12 @@ class ServerController < ApplicationController
     @host = params[:id]
     @host << '.stanford.edu' unless /\.stanford\.edu$/ =~ @host
 
-    # Load our data from the source files.
-    servers = YAML.load_file(YAML_DIR + 'servers.yaml')
-    advisories = YAML.load_file(YAML_DIR + 'advisories-summary.yaml')
-    ossec = YAML.load_file(YAML_DIR + 'ossec.yaml')
-    firewall = YAML.load_file(YAML_DIR + 'firewall.yaml')
-    puppetstate = YAML.load_file(YAML_DIR + 'puppetstate.yaml')
-    facts = YAML.load_file(YAML_DIR + 'facts.yaml')
-
-    @server = nil
-    if servers.key?(@host)
-      @server = {}
-      @server['base'] = servers[@host]
-      @server['advisories'] = advisories[@host]
-      @server['firewall'] = firewall[@host]
-      @server['puppetstate'] = puppetstate[@host]
-      @server['facts'] = facts[@host]
-      @server['ossec'] = ossec[@host]
+    records = Server.where('hostname' => @host).includes(:details)
+    if records.nil? || records.count == 0
+      @server = nil
+    else
+      # Convert the YAML and then make sure we have some defaults set.
+      @server = convert_yaml(records)
     end
   end
 end

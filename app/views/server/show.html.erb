@@ -8,76 +8,84 @@
 <table class="server_show">
   <tr>
     <td>NetDB</td>
-    <td><%= asterisk(@server['base']['netdb']) %></td>
+    <td><%= asterisk(@server[@host]['netdb']) %></td>
   </tr>
   <tr>
     <td>Resolves</td>
-    <td><%= asterisk(@server['base']['alive']) %></td>
+    <td><%= asterisk(@server[@host]['general']['alive']) %></td>
   </tr>
   <tr>
     <td>Cobbler</td>
-    <td><%= asterisk(@server['base']['cobbler']) %></td>
+    <td><%= asterisk(@server[@host]['general']['cobbler']) %></td>
   </tr>
   <tr>
     <td>PuppetDB</td>
-    <td><%= asterisk(@server['base']['puppetdb']) %></td>
+    <td><%= asterisk(@server[@host]['general']['puppetdb']) %></td>
   </tr>
   <tr>
     <td>VMWare</td>
-    <td><%= asterisk(@server['base']['vmware']) %></td>
+    <td><%= asterisk(@server[@host]['vmware']) %></td>
   </tr>
   <tr>
     <td>Status</td>
-    <td><%= status(check_child(@server['base']['vmware'], 'status')) %></td>
+    <td><%= status(check_child(@server[@host]['vmware'], 'status')) %></td>
   </tr>
   <tr>
     <td>Memory</td>
-    <td><%= check_child(@server['base']['vmware'], 'memory') %></td>
+    <td><%= check_child(@server[@host]['vmware'], 'memory') %></td>
   </tr>
   <tr>
     <td>CPUs</td>
-    <td><%= check_child(@server['base']['vmware'], 'cpus') %></td>
+    <td><%= check_child(@server[@host]['vmware'], 'cpus') %></td>
   </tr>
-<% if @server['base']['netdb'] && @server['base']['netdb'].count > 0 %>
+<% if @server[@host]['netdb']['aliases'] && @server[@host]['netdb']['aliases'].count > 0 %>
   <tr>
     <td>Host Aliases</td>
-    <td><%= @server['base']['netdb'].join('<br />') %></td>
+    <td><%= @server[@host]['netdb']['aliases'].join('<br />') %></td>
   </tr>
 <% end %>
 </table>
 
 <h2>Puppet Status</h2>
-<% if @server['puppetstate'].key?('failed') || @server['puppetstate'].key?('too_quiet') %>
-  <% if @server['puppetstate'].key?('failed') %>
-    <p class="error">Last puppet run failed.</p>
-  <% end %>
-  <% if @server['puppetstate'].key?('too_quiet') %>
-    <p class="error">Puppet has not run lately, last run at <%= @server['puppetstate']['too_quiet'] %>.</p>
+<% if @server[@host].key?('puppetstatus') %>
+  <% if @server[@host]['puppetstatus'].key?('failed') || @server[@host]['puppetstatus'].key?('too_quiet') %>
+    <% if @server[@host]['puppetstatus'].key?('failed') %>
+      <p class="error">Last puppet run failed.</p>
+    <% end %>
+    <% if @server[@host]['puppetstatus'].key?('too_quiet') %>
+      <p class="error">Puppet has not run lately, last run at <%= @server[@host]['puppetstatus']['too_quiet'] %>.</p>
+    <% end %>
+  <% else %>
+    <p>Last run successful.</p>
   <% end %>
 <% else %>
-  <p>Last run successful.</p>
+  <p>No puppet state data found.</p>
 <% end %>
 
 <h2>Puppet Facts</h2>
+<% if @server[@host].key?('puppetfacts') %>
 <table class="server_show">
-  <% @server['facts'].keys.sort.each do |factname| %>
+  <% @server[@host]['puppetfacts'].keys.sort.each do |factname| %>
   <tr>
     <td><%= factname %></td>
-    <td><%= @server['facts'][factname] %></td>
+    <td><%= @server[@host]['puppetfacts'][factname] %></td>
   </tr>
   <% end %>
 </table>
+<% else %>
+  <p>No puppet facts found.</p>
+<% end %>
 
 <h2>Advisories</h2>
-<% if @server['advisories'] %>
+<% if @server[@host].key?('advisories') && !@server[@host]['advisories'].empty? %>
 <table class="server_show">
   <tr>
     <td>Count</td>
-    <td><%= @server['advisories']['count'] %></td>
+    <td><%= @server[@host]['advisories']['count'] %></td>
   </tr>
   <tr>
     <td>Highest</td>
-    <td><%= cvss_score_to_text(@server['advisories']['highest']) %></td>
+    <td><%= cvss_score_to_text(@server[@host]['advisories']['highest']) %></td>
   </tr>
 </table>
 <% else %>
@@ -85,19 +93,19 @@
 <% end %>
 
 <h2>OSSEC</h2>
-<% if @server['ossec'] %>
+<% if @server[@host].key?('ossec') && @server[@host]['ossec'] %>
 <table class="server_show">
   <tr>
     <td>Last Run</td>
-    <td><%= date_only(@server['ossec']['lastrun']) %></td>
+    <td><%= date_only(@server[@host]['ossec']['lastrun']) %></td>
   </tr>
   <tr>
     <td>Last Clean</td>
-    <td><%= date_only(@server['ossec']['lastclean']) %></td>
+    <td><%= date_only(@server[@host]['ossec']['lastclean']) %></td>
   </tr>
   <tr>
     <td>Changed Files</td>
-    <td><pre><%= ossec_files(@server['ossec']['changed']) %></pre></td>
+    <td><pre><%= ossec_files(@server[@host]['ossec']['changed']) %></pre></td>
   </tr>
 </table>
 <p>To clear these changes, run the following with your root principal:</p>
@@ -107,7 +115,7 @@
 <% end %>
 
 <h2>Firewall</h2>
-  <% if @server['firewall'] %>
+  <% if @server[@host]['firewall'].key?('rules') %>
 <table class="server_show">
   <thead>
     <td>Source Zone</td>
@@ -117,7 +125,7 @@
     <td>Ports</td>
     <td>Status</td>
   </thead>
-    <% @server['firewall'].each do |f| %>
+    <% @server[@host]['firewall']['rules'].each do |f| %>
   <tr>
     <td><%= raw(f['src_zone'].join('<br />')) %></td>
     <td><%= raw(f['src_addr'].join('<br />')) %></td>

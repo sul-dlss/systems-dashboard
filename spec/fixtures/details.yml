@@ -1,0 +1,271 @@
+example-alive:
+  server_id: 1
+  category: general
+  name: alive
+  value: 1
+example-cobbler:
+  server_id: 1
+  category: general
+  name: cobbler
+  value: 1
+example-netdb:
+  server_id: 1
+  category: netdb
+  name: aliases
+  value: []
+example-puppetdb:
+  server_id: 1
+  category: general
+  name: puppetdb
+  value: 1
+example-vmware-cpus:
+  server_id: 1
+  category: vmware
+  name: cpus
+  value: 8
+example-vmware-memory:
+  server_id: 1
+  category: vmware
+  name: memory
+  value: 4
+example-vmware-status:
+  server_id: 1
+  category: vmware
+  name: status
+  value: t
+example-vmware-template:
+  server_id: 1
+  category: vmware
+  name: template
+  value: f
+test-alive:
+  server_id: 2
+  category: general
+  name: alive
+  value: 1
+test-cobbler:
+  server_id: 2
+  category: general
+  name: cobbler
+  value: 1
+test-netdb:
+  server_id: 2
+  category: netdb
+  name: aliases
+  value: []
+example-ossec-lastrun:
+  server_id: 1
+  category: ossec
+  name: lastrun
+  value: '2016-03-31 17:38:04 -0700'
+example-ossec-changed:
+  server_id: 1
+  category: ossec
+  name: changed
+  value: |
+    ---
+    "/etc/sysctl.conf": '2016-03-31 17:38:04 -0700'
+    "/etc/mcollective/facts.yaml": '2016-03-21 11:23:43 -0700'
+example-ossec-lastclean:
+  server_id: 1
+  category: ossec
+  name: lastclean
+  value: '2016-03-18 16:14:30 -0700'
+test-ossec-lastrun:
+  server_id: 2
+  category: ossec
+  name: lastrun
+  value: '2016-03-31 17:38:04 -0700'
+test-ossec-changed:
+  server_id: 2
+  category: ossec
+  name: changed
+  value:
+test-ossec-lastclean:
+  server_id: 2
+  category: ossec
+  name: lastclean
+  value: '2016-03-18 16:14:30 -0700'
+
+example-puppetstatus-diamond:
+  server_id: 1
+  category: puppetstatus
+  name: class-diamond
+  value: 1
+example-puppetstatus-mcollective:
+  server_id: 1
+  category: puppetstatus
+  name: class-mcollective
+  value: 1
+example-puppetstatus-failed:
+  server_id: 1
+  category: puppetstatus
+  name: failed
+  value: 1
+example-puppetstatus-tooquiet:
+  server_id: 1
+  category: puppetstatus
+  name: too_quiet
+  value: 2016-04-11 02:27:20 PDT
+example-puppetstatus-badenvironment:
+  server_id: 1
+  category: puppetstatus
+  name: bad_environment
+  value: jonroberTest
+test-puppetstatus-failed:
+  server_id: 2
+  category: puppetstatus
+  name: class-diamond
+  value: 1
+test-puppetstatus-failed:
+  server_id: 2
+  category: puppetstatus
+  name: class-mcollective
+  value: 1
+
+example-puppetfacts-department:
+  server_id: 1
+  category: puppetfacts
+  name: department
+  value:
+example-puppetfacts-technicalteam:
+  server_id: 1
+  category: puppetfacts
+  name: technical_team
+  value:
+example-puppetfacts-useradvocate:
+  server_id: 1
+  category: puppetfacts
+  name: user_advocate
+  value:
+example-puppetfacts-slalevel:
+  server_id: 1
+  category: puppetfacts
+  name: sla_level
+  value:
+example-puppetfacts-project:
+  server_id: 1
+  category: puppetfacts
+  name: project
+  value:
+example-puppetfacts-environment:
+  server_id: 1
+  category: puppetfacts
+  name: environment
+  value: production
+test-puppetfacts-department:
+  server_id: 2
+  category: puppetfacts
+  name: department
+  value: dlss
+test-puppetfacts-technicalteam:
+  server_id: 2
+  category: puppetfacts
+  name: technical_team
+  value: dlss
+test-puppetfacts-useradvocate:
+  server_id: 2
+  category: puppetfacts
+  name: user_advocate
+  value: Julian
+test-puppetfacts-project:
+  server_id: 2
+  category: puppetfacts
+  name: project
+  value: testing
+test-puppetfacts-slalevel:
+  server_id: 2
+  category: puppetfacts
+  name: sla_level
+  value: low
+test-puppetfacts-environment:
+  server_id: 2
+  category: puppetfacts
+  name: environment
+  value: production
+
+example-firewall-state:
+  server_id: 1
+  category: firewall
+  name: rules
+  value: |
+    ---
+      - src_zone:
+        - any
+        dst_zone:
+          - any
+        src_addr:
+          - any
+        dst_addr:
+          - any
+        ports:
+          - ping
+          - ipv6-icmp
+          - icmp
+          - icmp_type8
+          - udp/33434-33534
+        status: allow
+
+example-advisories-count:
+  server_id: 1
+  category: general
+  name: advisory-count
+  value: 1
+example-advisories-highest:
+  server_id: 1
+  category: general
+  name: advisory-highest
+  value: 9.3
+example-advisories-details:
+  server_id: 1
+  category: advisories
+  name: details
+  value: |
+    ---
+    nss-tools:
+      0:3.19.1-8.el6_7:
+        - id: 8803
+          name: CESA-2016--0591
+          description: Not available
+          issue_date: '2016-04-05 12:27:24'
+          references: https://rhn.redhat.com/errata/RHSA-2016-0591.html http://lists.centos.org/pipermail/centos-announce/2016-April/021807.html
+            http://lists.centos.org/pipermail/centos-announce/2016-April/021808.html http://lists.centos.org/pipermail/centos-announce/2016-April/021809.html
+          kind: Security Advisory
+          synopsis: Moderate CentOS nspr Security Update
+          severity: 9.3
+          os_family: centos
+          fix_versions: |-
+            nspr-4.11.0-0.1.el6_7.i686.rpm
+            nspr-4.11.0-0.1.el6_7.src.rpm
+            nspr-4.11.0-0.1.el6_7.x86_64.rpm
+            nspr-devel-4.11.0-0.1.el6_7.i686.rpm
+            nspr-devel-4.11.0-0.1.el6_7.x86_64.rpm
+            nss-3.21.0-0.3.el6_7.i686.rpm
+            nss-3.21.0-0.3.el6_7.src.rpm
+            nss-3.21.0-0.3.el6_7.x86_64.rpm
+            nss-devel-3.21.0-0.3.el6_7.i686.rpm
+            nss-devel-3.21.0-0.3.el6_7.x86_64.rpm
+            nss-pkcs11-devel-3.21.0-0.3.el6_7.i686.rpm
+            nss-pkcs11-devel-3.21.0-0.3.el6_7.x86_64.rpm
+            nss-sysinit-3.21.0-0.3.el6_7.i686.rpm
+            nss-sysinit-3.21.0-0.3.el6_7.x86_64.rpm
+            nss-tools-3.21.0-0.3.el6_7.i686.rpm
+            nss-tools-3.21.0-0.3.el6_7.x86_64.rpm
+            nss-util-3.21.0-0.3.el6_7.i686.rpm
+            nss-util-3.21.0-0.3.el6_7.src.rpm
+            nss-util-3.21.0-0.3.el6_7.x86_64.rpm
+            nss-util-devel-3.21.0-0.3.el6_7.i686.rpm
+            nss-util-devel-3.21.0-0.3.el6_7.x86_64.rpm
+          created_at: 2016-04-06 09:36:36.969213000 Z
+          updated_at: 2016-04-06 09:36:36.969213000 Z
+          fix_versions_filtered: 3.21.0-0.3.el6_7
+test-advisories-count:
+  server_id: 2
+  category: general
+  name: advisory-count
+  value: 0
+test-advisories-highest:
+  server_id: 2
+  category: general
+  name: advisory-highest
+  value:
