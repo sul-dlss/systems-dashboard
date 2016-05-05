@@ -185,6 +185,11 @@ example-puppetfacts-environment:
   category: puppetfacts
   name: environment
   value: production
+example-puppetfacts-iptables:
+  server_id: 1
+  category: puppetfacts
+  name: iptables
+  value: lotsofiptablesinfo
 test-puppetfacts-department:
   server_id: 2
   category: puppetfacts
@@ -215,6 +220,11 @@ test-puppetfacts-environment:
   category: puppetfacts
   name: environment
   value: production
+test-puppetfacts-iptables:
+  server_id: 2
+  category: puppetfacts
+  name: iptables
+  value: 
 
 example-firewall-state:
   server_id: 1
