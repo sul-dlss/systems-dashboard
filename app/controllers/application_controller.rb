@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   YAML_DIR = '/var/lib/systems-dashboard/'.freeze
   YAML_FIELDS = { 'ossec'      => [ 'changed' ],
-                  'netdb'      => [ 'aliases' ],
+                  'netdb'      => [ 'aliases', 'addresses' ],
                   'firewall'   => [ 'rules' ],
                   'advisories' => [ 'details' ],
                 }.freeze

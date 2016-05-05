@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AdvisoriesController, type: :controller do
+  fixtures :servers
+  fixtures :details
   describe 'GET #show' do
     context 'displays the main page with all items correctly' do
       before do

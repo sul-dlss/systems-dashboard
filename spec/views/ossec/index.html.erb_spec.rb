@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'ossec/index.html.erb' do
+  fixtures :servers
+  fixtures :details
   require 'yaml'
 
   # Just make sure it doesn't crash if given no reports, everything else done
