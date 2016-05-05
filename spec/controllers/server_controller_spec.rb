@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ServerController, type: :controller do
+  fixtures :servers
+  fixtures :details
   require 'yaml'
   describe 'GET #show' do
     context 'displays status for a server' do
@@ -21,6 +23,10 @@ RSpec.describe ServerController, type: :controller do
         expect(response.body).to match(/<td>Status<\/td>\s+<td>On</)
         expect(response.body).to match(/<td>Memory<\/td>\s+<td>4</)
         expect(response.body).to match(/<td>CPUs<\/td>\s+<td>8</)
+        expect(response.body).to match(/<td>Host Aliases<\/td>\s+<td>example2<br \/>example3</)
+        expect(response.body).to match(/<td>IPs<\/td>\s+<td>192.168.1.3<br \/>192.168.1.4</)
+        expect(response.body).to match(/<td>Model \(netdb\)<\/td>\s+<td>Raspberry Pi</)
+        expect(response.body).to match(/<td>OS \(netdb\)<\/td>\s+<td>Linux-Redhat</)
         expect(response.body).to match(/Last puppet run failed/)
         expect(response.body).to match(/Puppet has not run lately, last run at /)
         expect(response.body).to match(/<td>environment<\/td>\s+<td>production</)
@@ -50,6 +56,10 @@ RSpec.describe ServerController, type: :controller do
         expect(response.body).to match(/<td>Status<\/td>\s+<td></)
         expect(response.body).to match(/<td>Memory<\/td>\s+<td>/)
         expect(response.body).to match(/<td>CPUs<\/td>\s+<td>/)
+        expect(response.body).not_to match(/<td>Host Aliases<\/td>/)
+        expect(response.body).to match(/<td>IPs<\/td>\s+<td>192.168.1.5</)
+        expect(response.body).to match(/<td>Model \(netdb\)<\/td>\s+<td>TRS80 Coco2</)
+        expect(response.body).to match(/<td>OS \(netdb\)<\/td>\s+<td>Linux-Centos</)
         expect(response.body).to match(/Last run successful/)
         expect(response.body).to match(/<td>department<\/td>\s+<td>dlss</)
         expect(response.body).to match(/<td>environment<\/td>\s+<td>production</)

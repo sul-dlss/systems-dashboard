@@ -8,11 +8,6 @@ example-cobbler:
   category: general
   name: cobbler
   value: 1
-example-netdb:
-  server_id: 1
-  category: netdb
-  name: aliases
-  value: []
 example-puppetdb:
   server_id: 1
   category: general
@@ -48,11 +43,48 @@ test-cobbler:
   category: general
   name: cobbler
   value: 1
-test-netdb:
+
+example-netdb-aliases:
+  server_id: 1
+  category: netdb
+  name: aliases
+  value: ['example2', 'example3']
+example-netdb-addresses:
+  server_id: 1
+  category: netdb
+  name: addresses
+  value: ['192.168.1.3', '192.168.1.4']
+example-netdb-os:
+  server_id: 1
+  category: netdb
+  name: os
+  value: 'Linux-Redhat'
+example-netdb-model:
+  server_id: 1
+  category: netdb
+  name: model
+  value: 'Raspberry Pi'
+test-netdb-aliases:
   server_id: 2
   category: netdb
   name: aliases
   value: []
+test-netdb-addresses:
+  server_id: 2
+  category: netdb
+  name: addresses
+  value: ['192.168.1.5']
+test-netdb-os:
+  server_id: 2
+  category: netdb
+  name: os
+  value: 'Linux-Centos'
+test-netdb-model:
+  server_id: 2
+  category: netdb
+  name: model
+  value: 'TRS80 Coco2'
+
 example-ossec-lastrun:
   server_id: 1
   category: ossec

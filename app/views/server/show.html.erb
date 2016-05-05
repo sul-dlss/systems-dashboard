@@ -38,10 +38,28 @@
     <td>CPUs</td>
     <td><%= check_child(@server[@host]['vmware'], 'cpus') %></td>
   </tr>
+<% if @server[@host]['netdb'].key?('addresses') && @server[@host]['netdb']['addresses'].count > 0 %>
+  <tr>
+    <td>IPs</td>
+    <td><%= raw(@server[@host]['netdb']['addresses'].join('<br />')) %></td>
+  </tr>
+<% end %>
 <% if @server[@host]['netdb']['aliases'] && @server[@host]['netdb']['aliases'].count > 0 %>
   <tr>
     <td>Host Aliases</td>
-    <td><%= @server[@host]['netdb']['aliases'].join('<br />') %></td>
+    <td><%= raw(@server[@host]['netdb']['aliases'].join('<br />')) %></td>
+  </tr>
+<% end %>
+<% if @server[@host]['netdb'].key?('model') %>
+  <tr>
+    <td>Model (netdb)</td>
+    <td><%= @server[@host]['netdb']['model'] %></td>
+  </tr>
+<% end %>
+<% if @server[@host]['netdb'].key?('os') %>
+  <tr>
+    <td>OS (netdb)</td>
+    <td><%= @server[@host]['netdb']['os'] %></td>
   </tr>
 <% end %>
 </table>

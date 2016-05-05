@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe SummaryController, type: :controller do
+  fixtures :servers
+  fixtures :details
   require 'yaml'
   describe 'GET #index' do
     context 'displays a list of all servers' do
