@@ -29,7 +29,6 @@ namespace :download do
 
     # Now for each host find all the facts for that host.
     hosts.keys.each do |hostname|
-      next unless hostname == 'dlss-dev-jonrober.stanford.edu'
       facts.each do |fact|
         hosts[hostname][fact] = get_fact_value(hostname, fact)
       end
