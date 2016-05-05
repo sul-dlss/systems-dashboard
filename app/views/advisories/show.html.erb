@@ -9,9 +9,9 @@
     <td>Synopsis</td>
     <td>References</td>
   </tr>
-  <% @advisories.keys.sort.each do |package| %>
-    <% @advisories[package].keys.sort.each do |version| %>
-      <% @advisories[package][version].each do |adv| %>
+  <% @advisories[@host]['advisories']['details'].keys.sort.each do |package| %>
+    <% @advisories[@host]['advisories']['details'][package].keys.sort.each do |version| %>
+      <% @advisories[@host]['advisories']['details'][package][version].each do |adv| %>
         <tr>
           <td><%= package %></td>
           <td><%= adv['name'] %></td>

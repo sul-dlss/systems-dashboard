@@ -5,8 +5,13 @@ class AdvisoriesController < ApplicationController
     @host = params[:id]
     @host << '.stanford.edu' unless /\.stanford\.edu$/ =~ @host
 
-    @advisories = nil
-    fname = YAML_DIR + 'advisories/' + @host + '.yaml'
-    @advisories = YAML.load_file(fname) if File.exist?(fname)
+    records = Server.where('hostname' => @host).includes(:details)
+                    .where('details.category' => 'advisories')
+    all_advisories = convert_yaml(records)
+    if records.count == 0 || all_advisories[@host]['advisories']['details'].nil?
+      @advisories = nil
+    else
+      @advisories = all_advisories
+    end
   end
 end

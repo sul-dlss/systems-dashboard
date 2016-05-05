@@ -8,53 +8,16 @@ class SummaryController < ApplicationController
     @opt = {}
     @opt['show_only_flagged'] = 1 if params['show_only_flagged']
 
-    # Load our data from the source files.
-    base = YAML.load_file(YAML_DIR + 'servers.yaml')
-    base = load_advisories(base)
-    base = load_ossec(base)
-    base = load_puppetstate(base)
+    # Find all data except for the advisory details, as that contains a lot of
+    # data sometimes.  Potentially we could reverse this and look for specific
+    # fields, but there are a lot of fields we care about.
+    records = Server.includes(:details)
+      .where(details: {category: %w(general netdb puppetstatus ossec vmware)})
+    @servers = convert_yaml(records)
 
     # Flags will be marked on any host that has a field or fields that have
     # actionable data.  It will mirror the main servers hash separately.
-    @flags = check_flags(base)
-
-    @servers = base
-  end
-
-  # Load the advisories data and add it to the hosts.
-  def load_advisories(hosts)
-    advisories = YAML.load_file(YAML_DIR + 'advisories-summary.yaml')
-    advisories.keys.each do |host|
-      next unless hosts.key?(host)
-      hosts[host]['advisories'] = {}
-      hosts[host]['advisories']['count'] = advisories[host]['count']
-      hosts[host]['advisories']['highest'] = advisories[host]['highest']
-    end
-    hosts
-  end
-
-  # Load the ossec data and add it to the hosts.
-  def load_ossec(hosts)
-    ossec = YAML.load_file(YAML_DIR + 'ossec.yaml')
-    ossec.keys.each do |host|
-      next unless hosts.key?(host)
-      if ossec[host]['changed']
-        hosts[host]['ossec'] = ossec[host]['changed'].keys.count
-      else
-        hosts[host]['ossec'] = 0
-      end
-    end
-    hosts
-  end
-
-  # Load the puppet state data and add it to the hosts.
-  def load_puppetstate(hosts)
-    puppetstate = YAML.load_file(YAML_DIR + 'puppetstate.yaml')
-    puppetstate.keys.each do |host|
-      next unless hosts.key?(host)
-      hosts[host]['puppetstate'] = puppetstate[host]
-    end
-    hosts
+    @flags = check_flags(@servers)
   end
 
   # Check all hosts for any flagged fields, returning the flags.
@@ -62,19 +25,27 @@ class SummaryController < ApplicationController
     flags = {}
     hosts.keys.each do |host|
       flags[host] = {}
-      flags[host]['ossec'] = 1 if flag_positive?(hosts[host]['ossec'])
-      flags[host]['cobbler'] = 1 if flag_cobbler_only?(hosts[host])
-      if hosts[host].key?('advisories') && flag_positive?(hosts[host]['advisories']['count'])
-        flags[host]['advisories'] = {}
-        flags[host]['advisories']['count'] = 1
-      end
-      if hosts[host].key?('puppetstate')
-        if flag_content?(hosts[host]['puppetstate']['too_quiet'])
-          fields = %w(puppetstate too_quiet)
+      if hosts[host].key?('ossec') && hosts[host]['ossec'].key?('changed')
+        if flag_positive?(hosts[host]['ossec']['changed'].keys.count)
+          fields = %w(ossec changed)
           flags[host][fields] = 1
         end
-        if flag_content?(hosts[host]['puppetstate']['failed'])
-          fields = %w(puppetstate failed)
+      end
+      if flag_cobbler_only?(hosts[host])
+        fields = %w(general advisory-count)
+        flags[host][fields] = 1
+      end
+      if hosts[host].key?('general') && flag_positive?(hosts[host]['general']['advisory-count'])
+        fields = %w(general advisory-count)
+        flags[host][fields] = 1
+      end
+      if hosts[host].key?('puppetstatus')
+        if flag_content?(hosts[host]['puppetstatus']['too_quiet'])
+          fields = %w(puppetstatus too_quiet)
+          flags[host][fields] = 1
+        end
+        if flag_content?(hosts[host]['puppetstatus']['failed'])
+          fields = %w(puppetstatus failed)
           flags[host][fields] = 1
         end
       end
@@ -105,5 +76,4 @@ class SummaryController < ApplicationController
 
     true
   end
-
 end

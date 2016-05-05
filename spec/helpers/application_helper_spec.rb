@@ -212,6 +212,5 @@ RSpec.describe ApplicationHelper, type: :helper do
     it "returns invalid severity as low" do
       expect(helper.cvss_text_to_score('Hamburgers')).to eq 1.0
     end
-
   end
 end

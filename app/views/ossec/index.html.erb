@@ -8,9 +8,9 @@
   <% @ossec.keys.sort.each do |hostname| %>
     <tr>
       <td><%= shorthost(hostname) %></td>
-      <td><%= date_only(check_child(@ossec[hostname], 'lastrun')) %></td>
-      <td><%= date_only(check_child(@ossec[hostname], 'lastclean')) %></td>
-      <td><pre><%= ossec_files(check_child(@ossec[hostname], 'changed')) %></pre></td>
+      <td><%= date_only(check_child(@ossec[hostname]['ossec'], 'lastrun')) %></td>
+      <td><%= date_only(check_child(@ossec[hostname]['ossec'], 'lastclean')) %></td>
+      <td><pre><%= ossec_files(check_child(@ossec[hostname]['ossec'], 'changed')) %></pre></td>
     </tr>
   <% end %>
 </table>
