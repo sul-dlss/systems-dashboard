@@ -6,6 +6,22 @@ RSpec.describe ApplicationHelper, type: :helper do
       value = %w(test this array)
       expect(helper.asterisk(value)).to eq '*'
     end
+    it "returns an asterisk when given the string true" do
+      value = 'true'
+      expect(helper.asterisk(value)).to eq '*'
+    end
+    it "returns an asterisk when given the boolean true" do
+      value = true
+      expect(helper.asterisk(value)).to eq '*'
+    end
+    it "returns an empty string when given the string false" do
+      value = 'false'
+      expect(helper.asterisk(value)).to eq ''
+    end
+    it "returns an empty string when given the boolean false" do
+      value = false
+      expect(helper.asterisk(value)).to eq ''
+    end
     it "returns an asterisk when given a hash" do
       value = { test: 'this', array: 'here' }
       expect(helper.asterisk(value)).to eq '*'
