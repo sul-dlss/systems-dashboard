@@ -6,6 +6,11 @@ namespace :download do
     require 'puppetdb'
     require 'yaml'
 
+    facts = %w(department technical_team user_advocate project sla_level
+               environment iptables github_url lsbdistdescription
+               apache_installed mysql_installed rvm_installed s_rvm_rubies
+               passenger_installed)
+
     def get_fact_value(hostname, fact_name)
       response = @client.request('facts', ['and',
                                            ['=', 'certname', hostname],
@@ -16,8 +21,6 @@ namespace :download do
     # Default settings.
     @client = PuppetDB::Client.new(server: 'http://sulpuppet-db.stanford.edu:8080')
     cachefile = '/var/lib/systems-dashboard/facts.yaml'
-    facts = %w(department technical_team user_advocate project sla_level
-               environment iptables)
 
     # Get all hostnames.
     hosts = {}

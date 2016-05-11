@@ -190,6 +190,41 @@ example-puppetfacts-iptables:
   category: puppetfacts
   name: iptables
   value: lotsofiptablesinfo
+example-puppetfacts-distribution:
+  server_id: 1
+  category: puppetfacts
+  name: lsbdistdescription
+  value: Red Hat Enterprise Linux Server release 5.5 (testing)
+example-puppetfacts-githuburl:
+  server_id: 1
+  category: puppetfacts
+  name: github_url
+  value: https://github.com/sul-dlss/superspecial.git
+example-puppetfacts-apache:
+  server_id: 1
+  category: puppetfacts
+  name: apache_installed
+  value: 'true'
+example-puppetfacts-passenger:
+  server_id: 1
+  category: puppetfacts
+  name: passenger_installed
+  value: 'true'
+example-puppetfacts-mysql:
+  server_id: 1
+  category: puppetfacts
+  name: mysql_installed
+  value: 'true'
+example-puppetfacts-rvm:
+  server_id: 1
+  category: puppetfacts
+  name: rvm_installed
+  value: 'true'
+example-puppetfacts-rvmrubies:
+  server_id: 1
+  category: puppetfacts
+  name: s_rvm_rubies
+  value: '2.0,2.2'
 test-puppetfacts-department:
   server_id: 2
   category: puppetfacts
@@ -224,7 +259,42 @@ test-puppetfacts-iptables:
   server_id: 2
   category: puppetfacts
   name: iptables
+  value:
+test-puppetfacts-distribution:
+  server_id: 2
+  category: puppetfacts
+  name: lsbdistdescription
+  value: CentOS release 6.7 (testing)
+test-puppetfacts-githuburl:
+  server_id: 2
+  category: puppetfacts
+  name: github_url
   value: 
+test-puppetfacts-apache:
+  server_id: 2
+  category: puppetfacts
+  name: apache_installed
+  value: 'false'
+test-puppetfacts-passenger:
+  server_id: 2
+  category: puppetfacts
+  name: passenger_installed
+  value: 'false'
+test-puppetfacts-mysql:
+  server_id: 2
+  category: puppetfacts
+  name: mysql_installed
+  value: 'false'
+test-puppetfacts-rvm:
+  server_id: 2
+  category: puppetfacts
+  name: rvm_installed
+  value: 'false'
+test-puppetfacts-rvmrubies:
+  server_id: 2
+  category: puppetfacts
+  name: s_rvm_rubies
+  value: 1.9
 
 example-firewall-state:
   server_id: 1

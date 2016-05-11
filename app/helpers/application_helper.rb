@@ -9,6 +9,8 @@ module ApplicationHelper
     return '*' if data.is_a?(Hash) && !data.empty?
     return '*' if data.is_a?(Fixnum) && data == 1
     return '*' if data.is_a?(String) && data == "1"
+    return '*' if data.is_a?(String) && data == "true"
+    return '*' if [true, false].include?(data) && data
 
     ''
   end
