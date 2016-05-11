@@ -8,7 +8,7 @@ RSpec.describe PuppetHelper, type: :helper do
     end
     it "links and shortens a normal github url" do
       github = 'https://github.com/sul-dlss/argo.git'
-      giturl = "<a href='https://github.com/sul-dlss/argo.git' target='_blank'>sul-dlss/argo.git</a>"
+      giturl = "<a href='https://github.com/sul-dlss/argo.git' target='_blank'>sul-dlss/argo</a>"
       expect(helper.github_url(github)).to eq giturl
     end
   end
@@ -42,5 +42,33 @@ RSpec.describe PuppetHelper, type: :helper do
       string = 'test this string'
       expect(helper.separate_commas(string)).to eq string
     end
+  end
+
+  describe '#gemnasium_url' do
+    it "returns '-' for a nil project" do
+      expect(helper.gemnasium_url(nil, nil)).to eq '-'
+    end
+    it "returns '-' for a badly formatted project" do
+      project = 'https://not.github.com/whatever'
+      expect(helper.gemnasium_url(project, nil)).to eq '-'
+    end
+    it "returns '-' for a project not in gemnasium" do
+      project = 'https://github.com/sul-dlss/whatever.git'
+      gemnasium = { 'sul-dlss/not-whatever' => [ 1, 2, 3 ] }
+      expect(helper.gemnasium_url(project, gemnasium)).to eq '-'
+    end
+    it "returns correct url for a good project" do
+      project = 'https://github.com/sul-dlss/whatever.git'
+      gemnasium = { 'sul-dlss/whatever' => [ 1, 2, 3 ] }
+      url = "<a href='https://gemnasium.com/github.com/sul-dlss/whatever/alerts' target='_blank'>3</a>"
+      expect(helper.gemnasium_url(project, gemnasium)).to eq url
+    end
+    it "returns correct url for a good project with no alerts" do
+      project = 'https://github.com/sul-dlss/whatever.git'
+      gemnasium = { 'sul-dlss/whatever' => [] }
+      url = "<a href='https://gemnasium.com/github.com/sul-dlss/whatever' target='_blank'>0</a>"
+      expect(helper.gemnasium_url(project, gemnasium)).to eq url
+    end
+
   end
 end

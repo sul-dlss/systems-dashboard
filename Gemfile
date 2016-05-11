@@ -7,6 +7,8 @@ gem 'sqlite3'
 gem 'pg'
 gem 'activerecord-import'
 
+gem 'rest-client'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
