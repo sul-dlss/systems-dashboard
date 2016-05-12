@@ -1,3 +1,7 @@
+<div id="top_navigation">
+  <%= render_navigation(:level => 1) %>
+</div>
+
 <p>
   <%= form_tag('/', method: 'get') do %>
     <%= label_tag(:show_only_flagged, 'View only flagged servers:') %>

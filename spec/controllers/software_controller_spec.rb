@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe PuppetController, type: :controller do
+RSpec.describe SoftwareController, type: :controller do
   fixtures :servers
   fixtures :details
   require 'yaml'
   describe 'GET #index' do
     context 'displays a list of all servers' do
       before do
-        stub_const('PuppetController::GEMNASIUMFILE', 'spec/data/gemnasium.yaml')
+        stub_const('SoftwareController::GEMNASIUMFILE', 'spec/data/gemnasium.yaml')
         get :index
       end
       it { is_expected.to respond_with :ok }
@@ -26,11 +26,7 @@ RSpec.describe PuppetController, type: :controller do
         expect(response.body).to match(/<td><a href='https:\/\/gemnasium.com\/github.com\/sul-dlss\/superspecial\/alerts' target='_blank'>3<\/a></)
         expect(response.body).to match(/<td>2.0<br \/>2.2</)
 
-        expect(response.body).to match(/<td>dlss</)
-        expect(response.body).to match(/<td>Julian</)
-        expect(response.body).to match(/<td>low</)
         expect(response.body).to match(/<td>RHEL 5.5</)
-        expect(response.body).to match(/<td>testing</)
         expect(response.body).to match(/<td>1.9</)
       end
     end

@@ -1,4 +1,4 @@
-module PuppetHelper
+module SoftwareHelper
   # Shorten a github URL to something to take less space, also converting to
   # a link.
   def github_url(url)

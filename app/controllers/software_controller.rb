@@ -1,4 +1,4 @@
-class PuppetController < ApplicationController
+class SoftwareController < ApplicationController
   require 'yaml'
 
   GEMNASIUMFILE = YAML_DIR + 'gemnasium.yaml'

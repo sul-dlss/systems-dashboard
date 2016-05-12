@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe PuppetHelper, type: :helper do
+RSpec.describe SoftwareHelper, type: :helper do
   # Expands a github URL into a link with short title.
   describe "#github_url" do
     it "returns empty string when given no input" do
@@ -69,6 +69,5 @@ RSpec.describe PuppetHelper, type: :helper do
       url = "<a href='https://gemnasium.com/github.com/sul-dlss/whatever' target='_blank'>0</a>"
       expect(helper.gemnasium_url(project, gemnasium)).to eq url
     end
-
   end
 end
