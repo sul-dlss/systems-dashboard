@@ -9,6 +9,8 @@ gem 'activerecord-import'
 
 gem 'rest-client'
 
+gem 'simple-navigation'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
