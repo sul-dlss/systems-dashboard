@@ -39,5 +39,7 @@ namespace :download do
 
     output = YAML.dump(hosts)
     File.write(cachefile, output)
+
+    Cache::Puppetfacts.new.cache
   end
 end

@@ -89,5 +89,7 @@ namespace :download do
 
     output = YAML.dump(firewalls)
     File.write(cachefile, output)
+
+    Cache::Firewall.new.cache
   end
 end

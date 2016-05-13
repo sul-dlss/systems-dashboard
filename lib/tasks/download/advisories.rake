@@ -21,5 +21,7 @@ namespace :download do
       raise "no output: #{error}"
     end
     File.write(cachefile, output)
+
+    Cache::Advisories.new.cache
   end
 end

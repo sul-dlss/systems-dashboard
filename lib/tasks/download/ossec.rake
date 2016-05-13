@@ -18,6 +18,7 @@ namespace :download do
       raise "no output: #{error}"
     else
       File.write(cachefile, output)
+      Cache::Ossec.new.cache
     end
   end
 end
