@@ -7,7 +7,7 @@ gem 'sqlite3'
 gem 'pg'
 gem 'activerecord-import'
 
-gem 'rest-client'
+gem 'rest-client', '>= 1.8.0'
 
 gem 'simple-navigation'
 
