@@ -2,20 +2,17 @@
 # servers.
 class OssecController < ApplicationController
   def index
-    @ossec = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
+    require 'yaml'
+    records = Server.includes(:details).where('details.category' => 'ossec')
+    @ossec = convert_yaml(records)
   end
 
   def show
     @host = params[:id]
-    unless /\.stanford\.edu$/ =~ @host
-      @host <<'.stanford.edu'
-    end
+    @host << '.stanford.edu' unless /\.stanford\.edu$/ =~ @host
 
-    ossec_all = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
-    if ossec_all.key?(@host)
-      @ossec = ossec_all[@host]
-    else
-      @ossec = []
-    end
+    records = Server.where('hostname' => @host).includes(:details)
+                    .where('details.category' => 'ossec')
+    @ossec = convert_yaml(records)
   end
 end

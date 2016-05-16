@@ -6,4 +6,5 @@ server "#{fetch(:deploy_host)}.stanford.edu", user: fetch(:user),
 
 Capistrano::OneTimeKey.generate_one_time_key!
 
+set :branch, 'master'
 set :rails_env, 'production'

@@ -5,64 +5,75 @@ class SummaryController < ApplicationController
 
   def index
     # Set options for viewing.
-    @options = {}
-    if params['show_only_flagged']
-      @options['show_only_flagged'] = 1
-    end
+    @opt = {}
+    @opt['show_only_flagged'] = 1 if params['show_only_flagged']
 
-    # Load our data from the source files.
-    base = YAML.load_file('/var/lib/systems-dashboard/servers.yaml')
-    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories.yaml')
-    ossec = YAML.load_file('/var/lib/systems-dashboard/ossec.yaml')
+    # Find all data except for the advisory details, as that contains a lot of
+    # data sometimes.  Potentially we could reverse this and look for specific
+    # fields, but there are a lot of fields we care about.
+    records = Server.includes(:details)
+      .where(details: {category: %w(general netdb puppetstatus ossec vmware)})
+    @servers = convert_yaml(records)
 
     # Flags will be marked on any host that has a field or fields that have
     # actionable data.  It will mirror the main servers hash separately.
-    @flags = {}
+    @flags = check_flags(@servers)
+  end
 
-    advisories.keys.each do |host|
-      shorthost = host.sub(/\.stanford\.edu$/, '')
-      next unless base.key?(shorthost)
-      base[shorthost]['advisories'] = advisories[host].keys.count
-    end
-
-    ossec.keys.each do |host|
-      shorthost = host.sub(/\.stanford\.edu$/, '')
-      next unless base.key?(shorthost)
-      base[shorthost]['ossec'] = ossec[host]['changed'].keys.count
-    end
-
-    # Check for any flagged fields.
-    base.keys.each do |host|
-      @flags[host] = {}
-      if flag_positive?(base[host]['ossec'])
-        @flags[host]['ossec'] = 1
+  # Check all hosts for any flagged fields, returning the flags.
+  def check_flags(hosts)
+    flags = {}
+    hosts.keys.each do |host|
+      flags[host] = {}
+      if hosts[host].key?('ossec') && hosts[host]['ossec'].key?('changed')
+        if flag_positive?(hosts[host]['ossec']['changed'].keys.count)
+          fields = %w(ossec changed)
+          flags[host][fields] = 1
+        end
       end
-      if flag_positive?(base[host]['advisories'])
-        @flags[host]['advisories'] = 1
+      if flag_cobbler_only?(hosts[host])
+        fields = %w(general advisory-count)
+        flags[host][fields] = 1
       end
-      if flag_cobbler_only?(base[host])
-        @flags[host]['cobbler'] = 1
+      if hosts[host].key?('general') && flag_positive?(hosts[host]['general']['advisory-count'])
+        fields = %w(general advisory-count)
+        flags[host][fields] = 1
+      end
+      if hosts[host].key?('puppetstatus')
+        if flag_content?(hosts[host]['puppetstatus']['too_quiet'])
+          fields = %w(puppetstatus too_quiet)
+          flags[host][fields] = 1
+        end
+        if flag_content?(hosts[host]['puppetstatus']['failed'])
+          fields = %w(puppetstatus failed)
+          flags[host][fields] = 1
+        end
       end
     end
+    flags
+  end
 
-    @servers = base
+  # Flag for any field that should only be either nil or ''.
+  def flag_content?(value)
+    return false if value.nil?
+    return false if value == ''
+    true
   end
 
   # Flag for any field that should never actually have a count on it.
-  def flag_positive? (count)
+  def flag_positive?(count)
     return false if count.nil?
     return true if count > 0
-    return false
+    false
   end
 
   # Checks to see if a server is set up only in cobbler and in nothing else.
-  def flag_cobbler_only? (server)
+  def flag_cobbler_only?(server)
     return false unless server.key?('cobbler')
     return false if server.key?('netdb')
     return false if server.key?('vmware')
     return false if server.key?('puppetdb')
 
-    return true
+    true
   end
-
 end

@@ -3,17 +3,17 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 jQuery ->
   $("#server_list").dataTable(
-    { "lengthMenu": [[100, -1], [100, "All"]] }
+    { paging: false }
   )
 
   $("#advisories_list").dataTable(
-    { "lengthMenu": [[100, -1], [100, "All"]] }
+    { paging: false }
   )
 
   $("#ossec_list").dataTable(
-    { "lengthMenu": [[100, -1], [100, "All"]] }
+    { paging: false }
   )
 
   $("#ossec_show").dataTable(
-    { "lengthMenu": [[100, -1], [100, "All"]] }
+    { paging: false }
   )

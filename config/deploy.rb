@@ -6,6 +6,8 @@ set :repo_url, 'http://github.com/sul-dlss/systems-dashboard.git'
 
 set :branch, 'master'
 
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+
 #:user
 #:home_dir
 #:repository - try to not include sunetid in this url
@@ -17,7 +19,9 @@ set :branch, 'master'
 # set :log_level, :debug
 
 # Default value for :linked_files is []
-#set :linked_files, fetch(:linked_files, []).push('config/database.yml')
+set :linked_files, fetch(:linked_files, []).push('config/secrets.yml',
+                                                 'config/database.yml',
+                                                 'config/gemnasium.api')
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache',

@@ -1,4 +1,4 @@
-<% if @ossec %>
+<% unless @ossec.nil? || @ossec.empty? %>
 <table id="ossec_show" class="cell-border">
   <tr>
     <td>Host</td>
@@ -8,11 +8,13 @@
   </tr>
   <tr>
     <td><%= shorthost(@host) %></td>
-    <td><%= date_only(@ossec['lastrun']) %></td>
-    <td><%= date_only(@ossec['lastclean']) %></td>
-    <td><pre><%= ossec_files(@ossec['changed']) %></pre></td>
+    <td><%= date_only(@ossec[@host]['ossec']['lastrun']) %></td>
+    <td><%= date_only(@ossec[@host]['ossec']['lastclean']) %></td>
+    <td><pre><%= ossec_files(@ossec[@host]['ossec']['changed']) %></pre></td>
   </tr>
 </table>
+<p>To clear these changes, run the following with your root principal:</p>
+<pre>remctl sul-ossec.stanford.edu ossec clean <%= @host %></pre>
 <% else %>
-  <p>No changed files found for <%= @host %>.</p>
+  <p>No information found for <%= @host %>.</p>
 <% end %>

@@ -4,6 +4,13 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.5.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+gem 'pg'
+gem 'activerecord-import'
+
+gem 'rest-client'
+
+gem 'simple-navigation'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
@@ -15,9 +22,20 @@ gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'whenever', :require => false
+
+gem 'puppetdb-ruby'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'dlss_cops'
+end
+
+group :test do
+  gem 'coveralls', require: false
+  gem 'shoulda-matchers', '~> 3.1'
 end
 
 # Use Capistrano for deployment

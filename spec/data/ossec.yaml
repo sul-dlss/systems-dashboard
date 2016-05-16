@@ -1,0 +1,11 @@
+---
+example.stanford.edu:
+  lastrun: '2016-03-31 17:38:04 -0700'
+  changed:
+    "/etc/sysctl.conf": '2016-03-31 17:38:04 -0700'
+    "/etc/mcollective/facts.yaml": '2016-03-21 11:23:43 -0700'
+  lastclean: '2016-03-18 16:14:30 -0700'
+test.stanford.edu:
+  lastrun: '2016-03-31 17:38:04 -0700'
+  changed:
+  lastclean: '2016-03-18 16:14:30 -0700'

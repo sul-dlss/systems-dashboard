@@ -14,3 +14,36 @@
  *= require dataTables/jquery.dataTables
  *= require_self
  */
+#top_navigation {
+   float: left;
+   width: 100%;
+   background-color: #f4fcf2; }
+#top_navigation ul {
+     height: 25px;
+     margin: 0 30px 20px 0;
+     padding: 0; }
+#top_navigation ul li {
+       display: inline;
+       list-style-type: none;
+       margin: 0;
+       padding: 0; }
+#top_navigation ul li a {
+         float: left;
+         font-size: 10pt;
+         font-weight: normal;
+         margin: 0;
+         padding: 4px 8px 6px;
+         background-color: #D2C295;
+         border-color: #f4fcf2;
+         border-style: solid;
+         border-width: 1px;
+         color: #2f3c4c;
+         text-decoration: none; }
+#top_navigation ul li a:hover {
+           background-color: #8c7a6e; }
+#top_navigation ul li a.selected {
+         background-color: #8C1515;
+         border: 1px solid;
+         border-color: #8C1515;
+         color: #ffffff;
+         font-weight: bold; }

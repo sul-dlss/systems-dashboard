@@ -1,0 +1,6 @@
+example:
+  id: 1
+  hostname: example.stanford.edu
+test:
+  id: 2
+  hostname: test.stanford.edu

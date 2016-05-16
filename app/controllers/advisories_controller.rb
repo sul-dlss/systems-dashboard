@@ -3,15 +3,15 @@ class AdvisoriesController < ApplicationController
 
   def show
     @host = params[:id]
-    unless /\.stanford\.edu$/ =~ @host
-      @host <<'.stanford.edu'
-    end
+    @host << '.stanford.edu' unless /\.stanford\.edu$/ =~ @host
 
-    advisories = YAML.load_file('/var/lib/systems-dashboard/advisories.yaml')
-    if advisories.key?(@host)
-      @advisories = advisories[@host]
+    records = Server.where('hostname' => @host).includes(:details)
+                    .where('details.category' => 'advisories')
+    all_advisories = convert_yaml(records)
+    if records.count == 0 || all_advisories[@host]['advisories']['details'].nil?
+      @advisories = nil
     else
-      @advisories = {}
+      @advisories = all_advisories
     end
   end
 end

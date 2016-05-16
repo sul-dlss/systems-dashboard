@@ -1,0 +1,15 @@
+---
+example.stanford.edu:
+  alive: 1
+  cobbler: 1
+  netdb: []
+  puppetdb: 1
+  vmware:
+    cpus: 8
+    memory: 4
+    status: On
+    template: False
+test.stanford.edu:
+  alive: 1
+  cobbler: 1
+  netdb: []

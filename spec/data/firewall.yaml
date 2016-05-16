@@ -1,0 +1,17 @@
+---
+example.stanford.edu:
+- src_zone:
+  - any
+  dst_zone:
+  - any
+  src_addr:
+  - any
+  dst_addr:
+  - any
+  ports:
+  - ping
+  - ipv6-icmp
+  - icmp
+  - icmp_type8
+  - udp/33434-33534
+  status: allow

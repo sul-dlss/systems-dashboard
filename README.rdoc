@@ -1,28 +1,21 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is used to do reporting about systems in general, and any actionable
+problems (open advisories, orphaned server data, etc) that the systems might
+have in particular.  It is usually installed on a central server.
 
-Things you may want to cover:
+It pulls together data sources via YAML, each of which contains data for all
+servers under a specific domain (general info, advisories, ossec, etc).  Those
+then get combined and used in separate views.  Each of the data sources has a
+related rake task to be run by cron regularly to keep data fresh.
 
-* Ruby version
+The server is set to be deployed by Capistrano to development and production
+servers.
 
-* System dependencies
+Tested under Ruby 2.2.
 
-* Configuration
+Currently there are no database dependencies, but there might be in the future
+to fulfill open product requests.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* whenever is used to create default cron jobs for the data downloads
+* jquery-datatables-rails is used for adding table sorts and searches for data

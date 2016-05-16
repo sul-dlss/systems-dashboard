@@ -1,0 +1,168 @@
+<h1><%= @host %></h1>
+
+<% if @server.nil? %>
+  <p>Could not find any information for this host.</p>
+
+<% else %>
+<h2>System Information</h2>
+<table class="server_show">
+  <tr>
+    <td>NetDB</td>
+    <td><%= asterisk(@server[@host]['netdb']) %></td>
+  </tr>
+  <tr>
+    <td>Resolves</td>
+    <td><%= asterisk(@server[@host]['general']['alive']) %></td>
+  </tr>
+  <tr>
+    <td>Cobbler</td>
+    <td><%= asterisk(@server[@host]['general']['cobbler']) %></td>
+  </tr>
+  <tr>
+    <td>PuppetDB</td>
+    <td><%= asterisk(@server[@host]['general']['puppetdb']) %></td>
+  </tr>
+  <tr>
+    <td>VMWare</td>
+    <td><%= asterisk(@server[@host]['vmware']) %></td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td><%= status(check_child(@server[@host]['vmware'], 'status')) %></td>
+  </tr>
+  <tr>
+    <td>Memory</td>
+    <td><%= check_child(@server[@host]['vmware'], 'memory') %></td>
+  </tr>
+  <tr>
+    <td>CPUs</td>
+    <td><%= check_child(@server[@host]['vmware'], 'cpus') %></td>
+  </tr>
+<% if @server[@host]['netdb'].key?('addresses') && @server[@host]['netdb']['addresses'].count > 0 %>
+  <tr>
+    <td>IPs</td>
+    <td><%= raw(@server[@host]['netdb']['addresses'].join('<br />')) %></td>
+  </tr>
+<% end %>
+<% if @server[@host]['netdb']['aliases'] && @server[@host]['netdb']['aliases'].count > 0 %>
+  <tr>
+    <td>Host Aliases</td>
+    <td><%= raw(@server[@host]['netdb']['aliases'].join('<br />')) %></td>
+  </tr>
+<% end %>
+<% if @server[@host]['netdb'].key?('model') %>
+  <tr>
+    <td>Model (netdb)</td>
+    <td><%= @server[@host]['netdb']['model'] %></td>
+  </tr>
+<% end %>
+<% if @server[@host]['netdb'].key?('os') %>
+  <tr>
+    <td>OS (netdb)</td>
+    <td><%= @server[@host]['netdb']['os'] %></td>
+  </tr>
+<% end %>
+</table>
+
+<h2>Puppet Status</h2>
+<% if @server[@host].key?('puppetstatus') %>
+  <% if @server[@host]['puppetstatus'].key?('failed') || @server[@host]['puppetstatus'].key?('too_quiet') %>
+    <% if @server[@host]['puppetstatus'].key?('failed') %>
+      <p class="error">Last puppet run failed.</p>
+    <% end %>
+    <% if @server[@host]['puppetstatus'].key?('too_quiet') %>
+      <p class="error">Puppet has not run lately, last run at <%= @server[@host]['puppetstatus']['too_quiet'] %>.</p>
+    <% end %>
+  <% else %>
+    <p>Last run successful.</p>
+  <% end %>
+<% else %>
+  <p>No puppet state data found.</p>
+<% end %>
+
+<h2>Puppet Facts</h2>
+<% if @server[@host].key?('puppetfacts') %>
+<table class="server_show">
+  <% @server[@host]['puppetfacts'].keys.sort.each do |factname| %>
+  <% next if factname == 'iptables' %>
+  <tr>
+    <td><%= factname %></td>
+    <td><%= @server[@host]['puppetfacts'][factname] %></td>
+  </tr>
+  <% end %>
+</table>
+<% else %>
+  <p>No puppet facts found.</p>
+<% end %>
+
+<h2>Advisories</h2>
+<% if @server[@host].key?('advisories') && !@server[@host]['advisories'].empty? %>
+<table class="server_show">
+  <tr>
+    <td>Count</td>
+    <td><%= @server[@host]['advisories']['count'] %></td>
+  </tr>
+  <tr>
+    <td>Highest</td>
+    <td><%= cvss_score_to_text(@server[@host]['advisories']['highest']) %></td>
+  </tr>
+</table>
+<% else %>
+  <p>No advisories found for <%= @host %>.</p>
+<% end %>
+
+<h2>OSSEC</h2>
+<% if @server[@host].key?('ossec') && @server[@host]['ossec'] %>
+<table class="server_show">
+  <tr>
+    <td>Last Run</td>
+    <td><%= date_only(@server[@host]['ossec']['lastrun']) %></td>
+  </tr>
+  <tr>
+    <td>Last Clean</td>
+    <td><%= date_only(@server[@host]['ossec']['lastclean']) %></td>
+  </tr>
+  <tr>
+    <td>Changed Files</td>
+    <td><pre><%= ossec_files(@server[@host]['ossec']['changed']) %></pre></td>
+  </tr>
+</table>
+<p>To clear these changes, run the following with your root principal:</p>
+<pre>remctl sul-ossec.stanford.edu ossec clean <%= @host %></pre>
+<% else %>
+  <p>No changed files found for <%= @host %>.</p>
+<% end %>
+
+<h2>Firewall</h2>
+  <% if @server[@host]['firewall'].key?('rules') %>
+<table class="server_show">
+  <thead>
+    <td>Source Zone</td>
+    <td>Source Addresses</td>
+    <td>Destination Zone</td>
+    <td>Destination Addresses</td>
+    <td>Ports</td>
+    <td>Status</td>
+  </thead>
+    <% @server[@host]['firewall']['rules'].each do |f| %>
+  <tr>
+    <td><%= raw(f['src_zone'].join('<br />')) %></td>
+    <td><%= raw(f['src_addr'].join('<br />')) %></td>
+    <td><%= raw(f['dst_zone'].join('<br />')) %></td>
+    <td><%= raw(f['dst_addr'].join('<br />')) %></td>
+    <td><%= raw(f['ports'].join('<br />')) %></td>
+    <td><%= f['status'] %></td>
+  </tr>
+    <% end %>
+</table>
+  <% else %>
+  <p>No firewall information found for this host.</p>
+  <% end %>
+
+  <h2>IPtables</h2>
+  <% if @server[@host]['puppetfacts'].key?('iptables') && @server[@host]['puppetfacts']['iptables']%>
+    <pre><%= @server[@host]['puppetfacts']['iptables'] %></pre>
+  <% else %>
+    <p>No iptables data found from puppet.</p>
+  <% end %>
+<% end %>
