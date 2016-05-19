@@ -59,8 +59,7 @@ namespace :download do
       begin
         host_ip = IPSocket.getaddress(hostname)
       rescue SocketError
-        # TODO: Log instead.
-        STDERR.puts "Could not get IP for #{hostname}"
+        Rails.logger.info("Could not get IP for #{hostname}")
         next
       end
       rules = []
