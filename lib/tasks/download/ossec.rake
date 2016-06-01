@@ -17,7 +17,7 @@ namespace :download do
     end
 
     # Now get the data and save to file.
-    command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + argsd_download.join(' ')
+    command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args_download.join(' ')
     output, error, status = Open3.capture3(command)
     if status != 0
       raise "command failed: #{error}"
