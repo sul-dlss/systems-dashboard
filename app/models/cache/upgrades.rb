@@ -1,12 +1,13 @@
 class Cache
   class Upgrades
-    CACHEFILE = '/etc/server-reports/schedule'.freeze
+    SCHEDULE_FILE = '/etc/server-reports/schedule'.freeze
+    PACKAGES_FILE = '/var/tmp/package-upgrades/packages-by-server.yaml'.freeze
 
     # Load the schedule of when to upgrade servers, turning into a hash with
     # hash key the server name and value the scheduled week (0..4).
     def load_schedule
       schedule = {}
-      File.open(CACHEFILE, 'r') do |f|
+      File.open(SCHEDULE_FILE, 'r') do |f|
         f.each_line do |line|
           m = /^(\d+)\s+(\S+)/.match(line)
           next if m.nil?
@@ -55,6 +56,15 @@ class Cache
 
         date = week_to_date[schedule[hostname]]
         import_details << [server_id, 'upgrades', 'date', date]
+      end
+
+      server_packages = YAML.load_file(PACKAGES_FILE)
+      server_packages.keys.each do |hostname|
+        serverrec = Server.find_or_create_by(hostname: hostname)
+        server_id = serverrec.id
+
+        packages = server_packages[hostname]
+        import_details << [server_id, 'upgrades', 'packages', packages.to_yaml]
       end
 
       delete_types = %w(upgrades)
