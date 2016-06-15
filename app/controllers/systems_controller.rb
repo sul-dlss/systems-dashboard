@@ -1,7 +1,7 @@
 class SystemsController < ApplicationController
   def index
-    records = Server.includes(:details)
-      .where(details: {category: %w(general puppetfacts vmware)})
+    categories = %w(general puppetfacts vmware upgrades)
+    records = Server.includes(:details).where(details: { category: categories })
     @servers = convert_yaml(records)
   end
 end

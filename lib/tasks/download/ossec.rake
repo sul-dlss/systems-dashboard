@@ -7,9 +7,9 @@ namespace :download do
     cachefile = '/var/lib/systems-dashboard/ossec.yaml'
     server = 'sul-ossec.stanford.edu'
     args = %w{ossec status}
-    command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args.join(' ')
 
-    # Actually run the remctl command and handle output, saving to file.
+    # Now get the data and save to file.
+    command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args.join(' ')
     output, error, status = Open3.capture3(command)
     if status != 0
       raise "command failed: #{error}"

@@ -25,6 +25,9 @@ namespace :download do
           end
         rescue Timeout::Error
           success = 0
+        rescue Net::HTTPRetriableError
+          success = 0
+          sleep(10)
         end
         break if success
         count += 1
