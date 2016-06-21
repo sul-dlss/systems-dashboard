@@ -7,18 +7,14 @@ namespace :download do
 
     # Default settings.
     cachefile = '/var/lib/systems-dashboard/puppetstate.yaml'
-    command = '/opt/app/reports/systeam-reporting/puppet-reports --yaml'
+    command = '/opt/app/reports/systeam-reporting/puppetdb-report'
 
     # Actually run the remctl command and handle output, saving to file.
     output, error, status = Open3.capture3(command)
-    if status != 0
-      raise "command failed: #{error}"
-    end
-    if output == ''
-      raise "no output: #{error}"
-    else
-      File.write(cachefile, output)
-      Cache::Puppetstatus.new.cache
-    end
+    raise "command failed: #{error}" if status != 0
+    raise "no output: #{error}"      if output == ''
+
+    File.write(cachefile, output)
+    Cache::Puppetstatus.new.cache
   end
 end
