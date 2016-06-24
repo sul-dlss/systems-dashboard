@@ -119,6 +119,16 @@ test-ossec-lastclean:
   name: lastclean
   value: '2016-03-18 16:14:30 -0700'
 
+example-managed-files:
+  server_id: 1
+  category: managed
+  name: files
+  value: |
+    ---
+      /etc/sysctl.conf:
+        time: 'Wed May 25 23:35:46 -0700 2016'
+        provider: puppet-agent
+
 example-puppetstatus-diamond:
   server_id: 1
   category: puppetstatus
@@ -269,7 +279,7 @@ test-puppetfacts-githuburl:
   server_id: 2
   category: puppetfacts
   name: github_url
-  value: 
+  value:
 test-puppetfacts-apache:
   server_id: 2
   category: puppetfacts
