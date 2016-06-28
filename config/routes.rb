@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :ossec, only: [:index, :show]
   resources :systems, only: [:index]
   resources :software, only: [:index]
+  resources :sources, only: [:index]
   resources :upgrades, only: [:show]
 
   get '/summary/index'

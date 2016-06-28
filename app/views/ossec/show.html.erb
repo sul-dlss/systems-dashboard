@@ -1,20 +1,37 @@
 <% unless @ossec.nil? || @ossec.empty? %>
-<table id="ossec_show" class="cell-border">
+<h1><%= @host %></h1>
+
+<table class="cell-border">
   <tr>
-    <td>Host</td>
     <td>Last Run</td>
     <td>Last Clean</td>
-    <td>Changed Files</td>
   </tr>
   <tr>
-    <td><%= shorthost(@host) %></td>
     <td><%= date_only(@ossec[@host]['ossec']['lastrun']) %></td>
     <td><%= date_only(@ossec[@host]['ossec']['lastclean']) %></td>
-    <td><pre><%= ossec_files(@ossec[@host]['ossec']['changed']) %></pre></td>
   </tr>
+</table>
+  <% if @ossec[@host]['ossec']['changed'].empty? %>
+    <p>No changed files found.</p>
+  <% else %>
+<table id="ossec_show" class="cell-border">
+  <tr>
+    <th>File</th>
+    <th>Changed</th>
+    <th>Changed by?</th>
+  </tr>
+    <% @ossec[@host]['ossec']['changed'].keys.sort.each do |fname| %>
+    <% date = @ossec[@host]['ossec']['changed'][fname] %>
+  <tr>
+    <td><%= fname %></td>
+    <td><%= date %></td>
+    <td><%= ossec_file_provider(@ossec[@host]['managed'], fname, date) %></td>
+  </tr>
+    <% end %>
 </table>
 <p>To clear these changes, run the following with your root principal:</p>
 <pre>remctl sul-ossec.stanford.edu ossec clean <%= @host %></pre>
+  <% end %>
 <% else %>
   <p>No information found for <%= @host %>.</p>
 <% end %>

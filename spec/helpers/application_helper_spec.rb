@@ -110,6 +110,51 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#ossec_file_provider" do
+    it "returns empty string if given no data" do
+      managed = nil
+      changed = '2016-03-31 17:38:04 -0700'
+      provider = helper.ossec_file_provider(managed, '/etc/test.conf', changed)
+      expect(provider).to eq ''
+    end
+    it "returns empty string if no managed files structure" do
+      managed = {}
+      changed = '2016-03-31 17:38:04 -0700'
+      provider = helper.ossec_file_provider(managed, '/etc/test.conf', changed)
+      expect(provider).to eq ''
+    end
+    it "returns empty string if file not managed" do
+      managed = { 'files' => { '/etc/test.other' => {} } }
+      changed = '2016-03-31 17:38:04 -0700'
+      provider = helper.ossec_file_provider(managed, '/etc/test.conf', changed)
+      expect(provider).to eq ''
+    end
+    it "returns empty string if no managed files provider" do
+      managed = { 'files' => { '/etc/test.conf' => { 'time' => '' } } }
+      changed = '2016-03-31 17:38:04 -0700'
+      provider = helper.ossec_file_provider(managed, '/etc/test.conf', changed)
+      expect(provider).to eq ''
+    end
+    it "returns empty string if given old managed file" do
+      managed = { 'files' => { '/etc/test.conf' => {
+        'time'     => 'Wed Jan  6 23:35:46 -0700 2016',
+        'provider' => 'puppet-agent',
+      } } }
+      changed = '2016-03-31 17:38:04 -0700'
+      provider = helper.ossec_file_provider(managed, '/etc/test.conf', changed)
+      expect(provider).to eq ''
+    end
+    it "returns correct managed file provider" do
+      managed = { 'files' => { '/etc/test.conf' => {
+        'time'     => 'Wed Jun  1 23:35:46 -0700 2016',
+        'provider' => 'puppet-agent',
+      } } }
+      changed = '2016-03-31 17:38:04 -0700'
+      provider = helper.ossec_file_provider(managed, '/etc/test.conf', changed)
+      expect(provider).to eq 'puppet-agent'
+    end
+  end
+
   # date_only filters off the time from a time and date string.
   describe "#date_only" do
     it "gives an empty string if given an empty string" do

@@ -14,17 +14,14 @@
   <thead>
     <tr>
       <td>Host</td>
-      <td>NetDB</td>
-      <td>Resolves</td>
-      <td>Cobbler</td>
-      <td>PuppetDB</td>
-      <td>VMWare</td>
       <td>Status</td>
       <td>Puppet Failure</td>
       <td>Puppet Quiet</td>
       <td>Advisories</td>
       <td>Highest Advisory</td>
       <td>OSSEC</td>
+      <td>Next Upgrade</td>
+      <td>Packages</td>
     </tr>
   </thead>
   <tbody>
@@ -33,11 +30,6 @@
       <% next if @servers[hostname]['vmware'].key?('template') && @servers[hostname]['vmware']['template'] == 't' %>
       <tr>
         <td><%= link_to(shorthost(hostname), server_path(shorthost(hostname))) %></td>
-        <td><%= asterisk(@servers[hostname]['netdb']) %></td>
-        <td><%= asterisk(@servers[hostname]['general']['alive']) %></td>
-        <td class="<%= status_flag(@flags, hostname, ['general', 'cobbler']) %>"><%= asterisk(@servers[hostname]['general']['cobbler']) %></td>
-        <td><%= asterisk(@servers[hostname]['general']['puppetdb']) %></td>
-        <td><%= asterisk(@servers[hostname]['vmware']) %></td>
         <td><%= status(check_child(@servers[hostname]['vmware'], 'status')) %></td>
         <td class="<%= status_flag(@flags, hostname, ['puppetstatus', 'failed']) %>">
             <%= asterisk(check_child(@servers[hostname]['puppetstatus'], 'failed')) %>
@@ -63,6 +55,17 @@
             end
           else
             '-'
+          end
+        %></td>
+        <td><%= check_child(@servers[hostname]['upgrades'], 'date') %></td>
+        <td><%= check_child(@servers[hostname]['upgrades'], 'packages')
+          if @servers[hostname]['upgrades'].key?('packages')
+            count = @servers[hostname]['upgrades']['packages'].count
+            if count > 0
+              link_to(count, upgrade_path(shorthost(hostname)))
+            else
+              0
+            end
           end
         %></td>
       </tr>

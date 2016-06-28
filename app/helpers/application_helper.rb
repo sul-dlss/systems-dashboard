@@ -1,5 +1,6 @@
 module ApplicationHelper
   require 'yaml'
+  require 'time'
 
   # Given a piece of data that could be 0, 1, a list, or nil, translate it to an
   # asterisk if 1 or an array and empty string otherwise.
@@ -41,6 +42,21 @@ module ApplicationHelper
 
     return text.join("\n") if text.count > 0
     'No changed files found'
+  end
+
+  # Check to see if an ossec file is managed by something on the system like
+  # puppet or yum, returning the provider if so.
+  def ossec_file_provider(managed, fname, changed_time_str)
+    return '' if managed.nil?
+    return '' unless managed.key?('files')
+    return '' unless managed['files'].key?(fname)
+    return '' unless managed['files'][fname].key?('provider')
+
+    changed_time = Time.parse(changed_time_str)
+    managed_time = Time.parse(managed['files'][fname]['time'])
+    return '' if changed_time > managed_time
+
+    managed['files'][fname]['provider']
   end
 
   # Given a full date and time string, return only the date itself, for things

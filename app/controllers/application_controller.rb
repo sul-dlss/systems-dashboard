@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
                   'firewall'   => [ 'rules' ],
                   'advisories' => [ 'details' ],
                   'upgrades'   => [ 'packages' ],
+                  'managed'    => [ 'files' ],
                 }.freeze
   INT_FIELDS  = { 'ossec'      => [ 'count' ],
                   'general'    => [ 'advisory-count' ],
@@ -46,7 +47,7 @@ class ApplicationController < ActionController::Base
       # hosts that don't have data.
       serverdata[hostname] = {}
       fields = %w(general firewall netdb puppetfacts puppetstatus advisories
-                  vmware ossec upgrades)
+                  vmware ossec upgrades managed)
       fields.each do |root|
         serverdata[hostname][root] = {}
       end

@@ -11,8 +11,8 @@ class SummaryController < ApplicationController
     # Find all data except for the advisory details, as that contains a lot of
     # data sometimes.  Potentially we could reverse this and look for specific
     # fields, but there are a lot of fields we care about.
-    records = Server.includes(:details)
-      .where(details: {category: %w(general netdb puppetstatus ossec vmware)})
+    categories = %w(general puppetstatus ossec vmware upgrades)
+    records = Server.includes(:details).where(details: { category: categories })
     @servers = convert_yaml(records)
 
     # Flags will be marked on any host that has a field or fields that have
@@ -31,23 +31,19 @@ class SummaryController < ApplicationController
           flags[host][fields] = 1
         end
       end
-      if flag_cobbler_only?(hosts[host])
-        fields = %w(general advisory-count)
-        flags[host][fields] = 1
-      end
       if hosts[host].key?('general') && flag_positive?(hosts[host]['general']['advisory-count'])
         fields = %w(general advisory-count)
         flags[host][fields] = 1
       end
-      if hosts[host].key?('puppetstatus')
-        if flag_content?(hosts[host]['puppetstatus']['too_quiet'])
-          fields = %w(puppetstatus too_quiet)
-          flags[host][fields] = 1
-        end
-        if flag_content?(hosts[host]['puppetstatus']['failed'])
-          fields = %w(puppetstatus failed)
-          flags[host][fields] = 1
-        end
+
+      next unless hosts[host].key?('puppetstatus')
+      if flag_content?(hosts[host]['puppetstatus']['too_quiet'])
+        fields = %w(puppetstatus too_quiet)
+        flags[host][fields] = 1
+      end
+      if flag_content?(hosts[host]['puppetstatus']['failed'])
+        fields = %w(puppetstatus failed)
+        flags[host][fields] = 1
       end
     end
     flags
@@ -65,15 +61,5 @@ class SummaryController < ApplicationController
     return false if count.nil?
     return true if count > 0
     false
-  end
-
-  # Checks to see if a server is set up only in cobbler and in nothing else.
-  def flag_cobbler_only?(server)
-    return false unless server.key?('cobbler')
-    return false if server.key?('netdb')
-    return false if server.key?('vmware')
-    return false if server.key?('puppetdb')
-
-    true
   end
 end
