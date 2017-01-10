@@ -1,5 +1,5 @@
 class Cache
-  class Puppetstatus
+  class Puppetstatus < Cache
     CACHEFILE = '/var/lib/systems-dashboard/puppetstate.yaml'.freeze
 
     def cache
@@ -12,7 +12,8 @@ class Cache
 
       import_details = []
       puppetstatus.keys.each do |hostname|
-        serverrec = Server.find_or_create_by(hostname: hostname)
+        canonical = canonical_host(hostname)
+        serverrec = Server.find_or_create_by(hostname: canonical)
         server_id = serverrec.id
 
         puppetstatus[hostname].keys.each do |type|

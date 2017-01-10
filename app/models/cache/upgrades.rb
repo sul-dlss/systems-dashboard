@@ -1,5 +1,5 @@
 class Cache
-  class Upgrades
+  class Upgrades < Cache
     SCHEDULE_FILE = '/etc/server-reports/schedule'.freeze
     PACKAGES_FILE = '/var/tmp/package-upgrades/packages-by-server.yaml'.freeze
 
@@ -51,7 +51,8 @@ class Cache
 
       import_details = []
       schedule.keys.each do |hostname|
-        serverrec = Server.find_or_create_by(hostname: hostname)
+        canonical = canonical_host(hostname)
+        serverrec = Server.find_or_create_by(hostname: canonical)
         server_id = serverrec.id
 
         date = week_to_date[schedule[hostname]]
