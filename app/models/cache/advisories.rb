@@ -1,5 +1,5 @@
 class Cache
-  class Advisories
+  class Advisories < Cache
     CACHEFILE = '/var/lib/systems-dashboard/advisories.yaml'.freeze
 
     def cache
@@ -15,9 +15,11 @@ class Cache
       summary = {}
       import_details = []
       servers.keys.each do |host|
-        serverdata = YAML.dump(servers[host])
-        serverrec = Server.find_or_create_by(hostname: host)
+        canonical = canonical_host(host)
+        serverrec = Server.find_or_create_by(hostname: canonical)
         server_id = serverrec.id
+
+        serverdata = YAML.dump(servers[host])
         import_details << [server_id, 'advisories', 'details', serverdata]
 
         # Calculate the summary count and highest patch severity for the server.

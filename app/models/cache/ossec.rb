@@ -1,5 +1,5 @@
 class Cache
-  class Ossec
+  class Ossec < Cache
     CACHEFILE = '/var/lib/systems-dashboard/ossec.yaml'.freeze
 
     def cache
@@ -12,7 +12,8 @@ class Cache
 
       import_details = []
       ossec.keys.each do |hostname|
-        serverrec = Server.find_or_create_by(hostname: hostname)
+        canonical = canonical_host(hostname)
+        serverrec = Server.find_or_create_by(hostname: canonical)
         server_id = serverrec.id
 
         ossec[hostname].keys.each do |type|

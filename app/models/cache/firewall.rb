@@ -1,5 +1,5 @@
 class Cache
-  class Firewall
+  class Firewall < Cache
     CACHEFILE = '/var/lib/systems-dashboard/firewall.yaml'.freeze
 
     def cache
@@ -11,7 +11,8 @@ class Cache
       import_details = []
       firewalls = YAML.load_file(CACHEFILE)
       firewalls.keys.each do |hostname|
-        serverrec = Server.find_or_create_by(hostname: hostname)
+        canonical = canonical_host(hostname)
+        serverrec = Server.find_or_create_by(hostname: canonical)
         server_id = serverrec.id
 
         value = firewalls[hostname].to_yaml

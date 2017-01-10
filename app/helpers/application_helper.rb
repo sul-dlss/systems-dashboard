@@ -24,11 +24,10 @@ module ApplicationHelper
     parent[child]
   end
 
-  # Change the power status boolean into an on or off string.  At some point
-  # the yaml parser helpfully changes it from On/Off into this instead.
+  # Change the power status boolean into an on or off string.
   def status(status_boolean)
     return '' if status_boolean == ''
-    return 'On' if status_boolean
+    return 'On' if status_boolean == 't'
     'Off'
   end
 

@@ -1,5 +1,5 @@
 class Cache
-  class Managedfiles
+  class Managedfiles < Cache
     SERVER_FILES = '/var/cache/managed-files/*.yaml'.freeze
 
     def cache
@@ -12,7 +12,9 @@ class Cache
         m = /^.+\/(.+)\.yaml$/.match(yaml_file)
         next if m.nil?
         hostname = m[1]
-        serverrec = Server.find_or_create_by(hostname: hostname)
+
+        canonical = canonical_host(hostname)
+        serverrec = Server.find_or_create_by(hostname: canonical)
         server_id = serverrec.id
 
         # We could just load the file contents directly rather than parsing the
