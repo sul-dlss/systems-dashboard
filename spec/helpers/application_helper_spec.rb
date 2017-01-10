@@ -70,16 +70,13 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.status('')).to eq ''
     end
     it "returns On if given a true boolean" do
-      expect(helper.status(true)).to eq 'On'
+      expect(helper.status('t')).to eq 'On'
     end
     it "returns Off if given a false boolean" do
-      expect(helper.status(false)).to eq 'Off'
+      expect(helper.status('f')).to eq 'Off'
     end
-    it "returns On if given a true value" do
-      expect(helper.status(1)).to eq 'On'
-    end
-    it "returns On if given any value" do
-      expect(helper.status(0)).to eq 'On'
+    it "returns Off if given any other value" do
+      expect(helper.status('blah')).to eq 'Off'
     end
   end
 
