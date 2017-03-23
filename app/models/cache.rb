@@ -24,9 +24,11 @@ class Cache
   # Given a hostname, find if it is an alias to another hostname and return
   # that hostname if so.
   def canonical_host(hostname)
-    load_aliases if @aliases.empty?
+    hostname += '.stanford.edu' unless hostname =~ /\./
 
+    load_aliases if @aliases.empty?
     return @aliases[hostname] if @aliases.key?(hostname)
+
     hostname
   end
 end
