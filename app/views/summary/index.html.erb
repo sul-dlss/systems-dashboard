@@ -27,6 +27,7 @@
   <tbody>
     <% @servers.keys.sort.each do |hostname| %>
       <% next if @opt['show_only_flagged'] == 1 && @flags[hostname].empty? %>
+      <% next if expired_host(@servers[hostname]) %>
       <% next if @servers[hostname]['vmware'].key?('template') && @servers[hostname]['vmware']['template'] == 't' %>
       <tr>
         <td><%= link_to(shorthost(hostname), server_path(shorthost(hostname))) %></td>
