@@ -1,3 +1,6 @@
+# config valid only for current version of Capistrano
+lock '3.6.0'
+
 set :application, 'systems-dashboard'
 set :repo_url, 'http://github.com/sul-dlss/systems-dashboard.git'
 
