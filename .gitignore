@@ -18,3 +18,6 @@
 
 # The YAML working files shouldn't be with the release.
 /lib/assets/*.yaml
+
+# Ignore coveralls
+/coverage

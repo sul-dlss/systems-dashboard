@@ -1,4 +1,6 @@
-== README
+[![Build Status](https://travis-ci.org/sul-dlss/systems-dashboard.svg?branch=master)](https://travis-ci.org/sul-dlss/systems-dashboard) | [![Coverage Status](https://coveralls.io/repos/github/sul-dlss/systems-dashboard/badge.svg?branch=master)](https://coveralls.io/github/sul-dlss/systems-dashboard?branch=master) | [![Dependency Status](https://gemnasium.com/sul-dlss/systems-dashboard.svg)](https://gemnasium.com/sul-dlss/systems-dashboard)
+
+# README
 
 This is used to do reporting about systems in general, and any actionable
 problems (open advisories, orphaned server data, etc) that the systems might
@@ -17,5 +19,5 @@ Tested under Ruby 2.2.
 Currently there are no database dependencies, but there might be in the future
 to fulfill open product requests.
 
-* whenever is used to create default cron jobs for the data downloads
-* jquery-datatables-rails is used for adding table sorts and searches for data
+- whenever is used to create default cron jobs for the data downloads
+- jquery-datatables-rails is used for adding table sorts and searches for data
