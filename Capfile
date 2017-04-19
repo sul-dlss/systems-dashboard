@@ -4,6 +4,10 @@ require 'capistrano/setup'
 # Include default deployment tasks
 require 'capistrano/deploy'
 
+# silence capistrano > 3.8.0 deprecation warnings
+require 'capistrano/scm/git'
+install_plugin Capistrano::SCM::Git
+
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
