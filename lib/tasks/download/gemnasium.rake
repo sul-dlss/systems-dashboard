@@ -21,7 +21,9 @@ namespace :download do
         success = 1
         begin
           Timeout::timeout(30) do
-            data = JSON.parse(RestClient.get url)
+            data = JSON.parse(RestClient.get url, :method => :get,
+                                             :ssl_verion => :TLSv1,
+                                             :ssl_ciphers => ['RC4-SHA'])
           end
         rescue Timeout::Error
           success = 0
@@ -37,7 +39,10 @@ namespace :download do
 
     # First get the IDs for every project we own.
     slugs = []
-    projects = JSON.parse(RestClient.get API + '/projects')
+    url = API + '/projects'
+    projects = JSON.parse(RestClient.get url, :method => :get,
+                                         :ssl_verion => :TLSv1,
+                                         :ssl_ciphers => ['RC4-SHA'])
     projects['owned'].each do |project|
       next unless project['monitored']
       slugs.push(project['slug'])
