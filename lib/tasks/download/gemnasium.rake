@@ -27,7 +27,7 @@ namespace :download do
           end
         rescue Timeout::Error
           success = 0
-        rescue Net::HTTPRetriableError
+        rescue Net::HTTPRetriableError, OpenSSL::SSL::SSLError
           success = 0
           sleep(10)
         end
