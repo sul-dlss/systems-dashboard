@@ -4,7 +4,7 @@ lock '3.8.1'
 set :application, 'systems-dashboard'
 set :repo_url, 'http://github.com/sul-dlss/systems-dashboard.git'
 
-set :branch, 'master'
+set :branch, ENV.fetch('BRANCH', 'master')
 
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
