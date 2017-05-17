@@ -27,7 +27,8 @@ namespace :download do
           end
         rescue Timeout::Error
           success = 0
-        rescue Net::HTTPRetriableError, OpenSSL::SSL::SSLError
+        # Gemnasium gives occasional SSL cert errors.  If we get one, retry.
+        rescue Net::HTTPRetriableError, OpenSSL::SSL::SSLError, RestClient::SSLCertificateNotVerified
           success = 0
           sleep(10)
         end
