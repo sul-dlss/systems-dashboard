@@ -10,7 +10,6 @@
       <td>Distribution</td>
       <td>Environment</td>
       <td>Github</td>
-      <td>Gemnasium<br />Alerts</td>
       <td>Apache?</td>
       <td>Passenger?</td>
       <td>MySQL?</td>
@@ -27,7 +26,6 @@
         <td><%= check_child(@servers[hostname]['puppetfacts'], 'environment') %></td>
 
         <td><%= raw(github_url(check_child(@servers[hostname]['puppetfacts'], 'github_url'))) %></td>
-        <td><%= raw(gemnasium_url(@servers[hostname]['puppetfacts']['github_url'], @gemnasium)) %></td>
         <td><%= asterisk(@servers[hostname]['puppetfacts']['apache_installed']) %></td>
         <td><%= asterisk(@servers[hostname]['puppetfacts']['passenger_installed']) %></td>
         <td><%= asterisk(@servers[hostname]['puppetfacts']['mysql_installed']) %></td>

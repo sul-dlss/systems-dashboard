@@ -1,8 +1,6 @@
 class SoftwareController < ApplicationController
   require 'yaml'
 
-  GEMNASIUMFILE = YAML_DIR + 'gemnasium.yaml'
-
   def index
     # Set options for viewing.
     @opt = {}
@@ -14,7 +12,5 @@ class SoftwareController < ApplicationController
     records = Server.includes(:details)
       .where(details: {category: %w(general puppetfacts)})
     @servers = convert_yaml(records)
-
-    @gemnasium = YAML.load_file(GEMNASIUMFILE)
   end
 end

@@ -27,11 +27,6 @@ every '*/10 * * * *' do
   rake 'download:puppetstatus'
 end
 
-# Gemnasium API lookups take a bit longer to do, so only run hourly.
-every :hour do
-  rake 'download:gemnasium'
-end
-
 # The advisories don't actually get updated more than once a day, but
 # grabbing the file is low-op and this way we don't have to care as much about
 # when that update happens.
