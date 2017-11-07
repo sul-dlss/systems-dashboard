@@ -139,7 +139,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     parser (2.4.0.0)
       ast (~> 2.2)
-    pg (0.21.0)
+    pg (0.20.0)
     powerpack (0.1.1)
     puppetdb-ruby (1.1.1)
       httparty
@@ -284,7 +284,7 @@ DEPENDENCIES
   jquery-datatables-rails (~> 3.3.0)
   jquery-rails
   nokogiri (>= 1.6.8)
-  pg
+  pg (~> 0.20.0)
   puppetdb-ruby
   rails (= 4.2.7.1)
   rest-client (>= 1.8.0)

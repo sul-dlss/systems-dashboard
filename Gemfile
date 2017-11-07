@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.7.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
-gem 'pg'
+gem 'pg', '~> 0.20.0'
 gem 'activerecord-import'
 
 gem 'rest-client', '>= 1.8.0'
