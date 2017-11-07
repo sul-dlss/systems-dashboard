@@ -26,3 +26,4 @@ module SoftwareHelper
     return '' if comma_list.nil? || comma_list == ''
     comma_list.split(',').join('<br />')
   end
+end
