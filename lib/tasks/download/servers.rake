@@ -5,7 +5,7 @@ namespace :download do
 
     # Default settings.
     cachefile = '/var/lib/systems-dashboard/servers.yaml'
-    command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /opt/app/reports/systeam-reporting/server-status --yaml'
+    command = '/usr/bin/k5start -qUf /etc/keytabs/service.sul-reports.keytab -- /opt/app/reports/systeam-reporting/server-status --yaml'
 
     # Actually run the remctl command and handle output, saving to file.
     output, error, status = Open3.capture3(command)

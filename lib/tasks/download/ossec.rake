@@ -9,7 +9,7 @@ namespace :download do
     args = %w{ossec status}
 
     # Now get the data and save to file.
-    command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args.join(' ')
+    command = '/usr/bin/k5start -qUf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args.join(' ')
     output, error, status = Open3.capture3(command)
     if status != 0
       raise "command failed: #{error}"
