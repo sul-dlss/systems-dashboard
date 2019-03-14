@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7.1'
+gem 'rails', '4.2.11.1'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.0'
-gem 'pg', '~> 0.20.0'
+gem 'pg', '~> 0.20'
 gem 'activerecord-import'
 
 gem 'rest-client', '>= 1.8.0'
