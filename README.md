@@ -14,7 +14,7 @@ related rake task to be run by cron regularly to keep data fresh.
 The server is set to be deployed by Capistrano to development and production
 servers.
 
-Tested under Ruby 2.2.
+Tested under Ruby 2.4.
 
 Currently there are no database dependencies, but there might be in the future
 to fulfill open product requests.
