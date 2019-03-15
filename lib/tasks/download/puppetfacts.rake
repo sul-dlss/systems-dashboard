@@ -19,7 +19,7 @@ namespace :download do
     end
 
     # Default settings.
-    @client = PuppetDB::Client.new(server: 'http://sulpuppet4-db.stanford.edu:8080')
+    @client = PuppetDB::Client.new({:server => 'http://sulpuppet4-db.stanford.edu:8080'})
     cachefile = '/var/lib/systems-dashboard/facts.yaml'
 
     # Get all hostnames.
