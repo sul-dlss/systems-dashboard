@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.11.1'
 
+# Can remove this after ruby 2.4*
+gem 'no_proxy_fix'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.0'
 gem 'pg', '0.20'

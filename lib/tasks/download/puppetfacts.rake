@@ -5,6 +5,7 @@ namespace :download do
   task puppetfacts: :environment do
     require 'puppetdb'
     require 'yaml'
+    require 'no_proxy_fix'
 
     facts = %w(department technical_team user_advocate project sla_level
                environment iptables github_url lsbdistdescription
@@ -38,7 +39,7 @@ namespace :download do
     end
 
     output = YAML.dump(hosts)
-    
+
 #    File.write(cachefile, output)
 
 #    Cache::Puppetfacts.new.cache
