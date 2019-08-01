@@ -7,8 +7,8 @@ problems (open advisories, orphaned server data, etc) that the systems might
 have in particular.  It is usually installed on a central server.
 
 It pulls together data sources via YAML, each of which contains data for all
-servers under a specific domain (general info, advisories, ossec, etc).  Those
-then get combined and used in separate views.  Each of the data sources has a
+servers under a specific domain (general info, advisories, etc).  Those then
+get combined and used in separate views.  Each of the data sources has a
 related rake task to be run by cron regularly to keep data fresh.
 
 The server is set to be deployed by Capistrano to development and production

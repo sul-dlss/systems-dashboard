@@ -85,40 +85,6 @@ test-netdb-model:
   name: model
   value: 'TRS80 Coco2'
 
-example-ossec-lastrun:
-  server_id: 1
-  category: ossec
-  name: lastrun
-  value: '2016-03-31 17:38:04 -0700'
-example-ossec-changed:
-  server_id: 1
-  category: ossec
-  name: changed
-  value: |
-    ---
-    "/etc/sysctl.conf": '2016-03-31 17:38:04 -0700'
-    "/etc/mcollective/facts.yaml": '2016-03-21 11:23:43 -0700'
-example-ossec-lastclean:
-  server_id: 1
-  category: ossec
-  name: lastclean
-  value: '2016-03-18 16:14:30 -0700'
-test-ossec-lastrun:
-  server_id: 2
-  category: ossec
-  name: lastrun
-  value: '2016-03-31 17:38:04 -0700'
-test-ossec-changed:
-  server_id: 2
-  category: ossec
-  name: changed
-  value:
-test-ossec-lastclean:
-  server_id: 2
-  category: ossec
-  name: lastclean
-  value: '2016-03-18 16:14:30 -0700'
-
 example-managed-files:
   server_id: 1
   category: managed

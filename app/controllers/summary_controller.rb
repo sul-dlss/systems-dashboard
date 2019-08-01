@@ -11,7 +11,7 @@ class SummaryController < ApplicationController
     # Find all data except for the advisory details, as that contains a lot of
     # data sometimes.  Potentially we could reverse this and look for specific
     # fields, but there are a lot of fields we care about.
-    categories = %w(general puppetstatus ossec vmware upgrades)
+    categories = %w(general puppetstatus vmware upgrades)
     records = Server.includes(:details).where(details: { category: categories })
     @servers = convert_yaml(records)
 
@@ -25,12 +25,6 @@ class SummaryController < ApplicationController
     flags = {}
     hosts.keys.each do |host|
       flags[host] = {}
-      if hosts[host].key?('ossec') && hosts[host]['ossec'].key?('changed')
-        if flag_positive?(hosts[host]['ossec']['changed'].keys.count)
-          fields = %w(ossec changed)
-          flags[host][fields] = 1
-        end
-      end
       if hosts[host].key?('general') && flag_positive?(hosts[host]['general']['advisory-count'])
         fields = %w(general advisory-count)
         flags[host][fields] = 1

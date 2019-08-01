@@ -19,7 +19,6 @@
       <td>Puppet Quiet</td>
       <td>Advisories</td>
       <td>Highest Advisory</td>
-      <td>OSSEC</td>
       <td>Next Upgrade</td>
       <td>Packages</td>
     </tr>
@@ -46,18 +45,6 @@
           end
         %></td>
         <td><%= cvss_score_to_text(check_child(@servers[hostname]['general'], 'advisory-highest')) %></td>
-        <td class="<%= status_flag(@flags, hostname, ['ossec', 'changed']) %>"><%=
-          if @servers[hostname].key?('ossec') && @servers[hostname]['ossec'].key?('changed')
-            count = @servers[hostname]['ossec']['changed'].count
-            if count > 0
-              link_to(count, ossec_path(shorthost(hostname)))
-            else
-              count
-            end
-          else
-            '-'
-          end
-        %></td>
         <td><%= check_child(@servers[hostname]['upgrades'], 'date') %></td>
         <td><%= check_child(@servers[hostname]['upgrades'], 'packages')
           if @servers[hostname]['upgrades'].key?('packages')

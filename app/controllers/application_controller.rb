@@ -4,14 +4,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   YAML_DIR = '/var/lib/systems-dashboard/'.freeze
-  YAML_FIELDS = { 'ossec'      => [ 'changed' ],
-                  'netdb'      => [ 'aliases', 'addresses' ],
+  YAML_FIELDS = { 'netdb'      => [ 'aliases', 'addresses' ],
                   'advisories' => [ 'details' ],
                   'upgrades'   => [ 'packages' ],
                   'managed'    => [ 'files' ],
                 }.freeze
-  INT_FIELDS  = { 'ossec'      => [ 'count' ],
-                  'general'    => [ 'advisory-count' ],
+  INT_FIELDS  = { 'general'    => [ 'advisory-count' ],
                 }.freeze
   NUM_FIELDS  = { 'general'    => [ 'advisory-highest' ],
                 }.freeze
@@ -46,7 +44,7 @@ class ApplicationController < ActionController::Base
       # hosts that don't have data.
       serverdata[hostname] = {}
       fields = %w(general netdb puppetfacts puppetstatus advisories
-                  vmware ossec upgrades managed)
+                  vmware upgrades managed)
       fields.each do |root|
         serverdata[hostname][root] = {}
       end

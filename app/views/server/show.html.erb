@@ -111,28 +111,6 @@
   <p>No advisories found for <%= @host %>.</p>
 <% end %>
 
-<h2>OSSEC</h2>
-<% if @server[@host].key?('ossec') && @server[@host]['ossec'] %>
-<table class="server_show">
-  <tr>
-    <td>Last Run</td>
-    <td><%= date_only(@server[@host]['ossec']['lastrun']) %></td>
-  </tr>
-  <tr>
-    <td>Last Clean</td>
-    <td><%= date_only(@server[@host]['ossec']['lastclean']) %></td>
-  </tr>
-  <tr>
-    <td>Changed Files</td>
-    <td><pre><%= ossec_files(@server[@host]['ossec']['changed']) %></pre></td>
-  </tr>
-</table>
-<p>To clear these changes, run the following with your root principal:</p>
-<pre>remctl sul-ossec.stanford.edu ossec clean <%= @host %></pre>
-<% else %>
-  <p>No changed files found for <%= @host %>.</p>
-<% end %>
-
   <h2>IPtables</h2>
   <% if @server[@host]['puppetfacts'].key?('iptables') && @server[@host]['puppetfacts']['iptables']%>
     <pre><%= @server[@host]['puppetfacts']['iptables'] %></pre>

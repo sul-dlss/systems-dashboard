@@ -9,7 +9,7 @@ class SourcesController < ApplicationController
     # Find all data except for the advisory details, as that contains a lot of
     # data sometimes.  Potentially we could reverse this and look for specific
     # fields, but there are a lot of fields we care about.
-    categories = %w(general netdb puppetstatus ossec vmware)
+    categories = %w(general netdb puppetstatus vmware)
     records = Server.includes(:details).where(details: { category: categories })
     @servers = convert_yaml(records)
 

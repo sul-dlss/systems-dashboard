@@ -8,7 +8,6 @@ RSpec.describe SummaryHelper, type: :helper do
     it "returns true when given server with only upgrades data" do
       server = {}
       server['vmware'] = {}
-      server['ossec'] = {}
       server['upgrades'] = {}
       server['upgrades']['date'] = 'yes'
       expect(helper.expired_host(server)).to eq true
@@ -16,7 +15,6 @@ RSpec.describe SummaryHelper, type: :helper do
     it "returns false when given server with only upgrades data" do
       server = {}
       server['vmware'] = {}
-      server['ossec'] = {}
       server['upgrades'] = {}
       server['upgrades']['date'] = 'yes'
       server['vmware']['template'] = 'sure'

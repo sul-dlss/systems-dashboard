@@ -9,11 +9,3 @@ jQuery ->
   $("#advisories_list").dataTable(
     { paging: false }
   )
-
-  $("#ossec_list").dataTable(
-    { paging: false }
-  )
-
-  $("#ossec_show").dataTable(
-    { paging: false }
-  )

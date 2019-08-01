@@ -16,11 +16,6 @@ every '*/10 * * * *' do
   rake 'download:upgrades'
 end
 
-# The ossec update process can take a while, so only every 30m.
-every '*/30 * * * *' do
-  rake 'download:ossec'
-end
-
 # Puppet facts and state are fairly low resource.
 every '*/10 * * * *' do
   rake 'download:puppetfacts'
