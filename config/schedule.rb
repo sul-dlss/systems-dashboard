@@ -33,10 +33,3 @@ end
 every :hour do
   rake 'download:advisories'
 end
-
-# Similarly, firewall rules are only updated weekly at best (they have to be
-# downloaded and updated in puppet), but we want to make sure they're
-# regenerated without thinking about it much.
-every :hour do
-  rake 'download:firewall'
-end

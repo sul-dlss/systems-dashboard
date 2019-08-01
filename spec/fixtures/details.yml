@@ -306,28 +306,6 @@ test-puppetfacts-rvmrubies:
   name: s_rvm_rubies
   value: 1.9
 
-example-firewall-state:
-  server_id: 1
-  category: firewall
-  name: rules
-  value: |
-    ---
-      - src_zone:
-        - any
-        dst_zone:
-          - any
-        src_addr:
-          - any
-        dst_addr:
-          - any
-        ports:
-          - ping
-          - ipv6-icmp
-          - icmp
-          - icmp_type8
-          - udp/33434-33534
-        status: allow
-
 example-advisories-count:
   server_id: 1
   category: general
