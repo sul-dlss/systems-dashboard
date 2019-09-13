@@ -20,7 +20,6 @@
       <td>Cobbler</td>
       <td>PuppetDB</td>
       <td>Advisories</td>
-      <td>OSSEC</td>
       <td>Problems?</td>
     </tr>
   </thead>
@@ -37,7 +36,6 @@
         <td><%= asterisk(@servers[hostname]['general']['puppetdb']) %></td>
         <td><%= @servers[hostname]['general']['advisory-count']
                 @servers[hostname]['general']['advisory-count'] %></td>
-        <td><%= asterisk(@servers[hostname]['ossec']) %></td>
         <td><%= @flags[hostname]['text'] %></td>
     <% end %>
   </tbody>

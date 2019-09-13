@@ -111,54 +111,6 @@
   <p>No advisories found for <%= @host %>.</p>
 <% end %>
 
-<h2>OSSEC</h2>
-<% if @server[@host].key?('ossec') && @server[@host]['ossec'] %>
-<table class="server_show">
-  <tr>
-    <td>Last Run</td>
-    <td><%= date_only(@server[@host]['ossec']['lastrun']) %></td>
-  </tr>
-  <tr>
-    <td>Last Clean</td>
-    <td><%= date_only(@server[@host]['ossec']['lastclean']) %></td>
-  </tr>
-  <tr>
-    <td>Changed Files</td>
-    <td><pre><%= ossec_files(@server[@host]['ossec']['changed']) %></pre></td>
-  </tr>
-</table>
-<p>To clear these changes, run the following with your root principal:</p>
-<pre>remctl sul-ossec.stanford.edu ossec clean <%= @host %></pre>
-<% else %>
-  <p>No changed files found for <%= @host %>.</p>
-<% end %>
-
-<h2>Firewall</h2>
-  <% if @server[@host]['firewall'].key?('rules') %>
-<table class="server_show">
-  <thead>
-    <td>Source Zone</td>
-    <td>Source Addresses</td>
-    <td>Destination Zone</td>
-    <td>Destination Addresses</td>
-    <td>Ports</td>
-    <td>Status</td>
-  </thead>
-    <% @server[@host]['firewall']['rules'].each do |f| %>
-  <tr>
-    <td><%= raw(f['src_zone'].join('<br />')) %></td>
-    <td><%= raw(f['src_addr'].join('<br />')) %></td>
-    <td><%= raw(f['dst_zone'].join('<br />')) %></td>
-    <td><%= raw(f['dst_addr'].join('<br />')) %></td>
-    <td><%= raw(f['ports'].join('<br />')) %></td>
-    <td><%= f['status'] %></td>
-  </tr>
-    <% end %>
-</table>
-  <% else %>
-  <p>No firewall information found for this host.</p>
-  <% end %>
-
   <h2>IPtables</h2>
   <% if @server[@host]['puppetfacts'].key?('iptables') && @server[@host]['puppetfacts']['iptables']%>
     <pre><%= @server[@host]['puppetfacts']['iptables'] %></pre>

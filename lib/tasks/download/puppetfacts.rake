@@ -5,6 +5,7 @@ namespace :download do
   task puppetfacts: :environment do
     require 'puppetdb'
     require 'yaml'
+    require 'no_proxy_fix'
 
     facts = %w(department technical_team user_advocate project sla_level
                environment iptables github_url lsbdistdescription
@@ -19,7 +20,7 @@ namespace :download do
     end
 
     # Default settings.
-    @client = PuppetDB::Client.new(server: 'http://sulpuppet-db.stanford.edu:8080')
+    @client = PuppetDB::Client.new({:server => 'http://sulpuppet4-db.stanford.edu:8080'})
     cachefile = '/var/lib/systems-dashboard/facts.yaml'
 
     # Get all hostnames.
@@ -38,8 +39,9 @@ namespace :download do
     end
 
     output = YAML.dump(hosts)
-    File.write(cachefile, output)
 
-    Cache::Puppetfacts.new.cache
+#    File.write(cachefile, output)
+
+#    Cache::Puppetfacts.new.cache
   end
 end

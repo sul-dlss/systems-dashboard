@@ -16,20 +16,10 @@ every '*/10 * * * *' do
   rake 'download:upgrades'
 end
 
-# The ossec update process can take a while, so only every 30m.
-every '*/30 * * * *' do
-  rake 'download:ossec'
-end
-
 # Puppet facts and state are fairly low resource.
 every '*/10 * * * *' do
   rake 'download:puppetfacts'
   rake 'download:puppetstatus'
-end
-
-# Gemnasium API lookups take a bit longer to do, so only run hourly.
-every :hour do
-  rake 'download:gemnasium'
 end
 
 # The advisories don't actually get updated more than once a day, but
@@ -37,11 +27,4 @@ end
 # when that update happens.
 every :hour do
   rake 'download:advisories'
-end
-
-# Similarly, firewall rules are only updated weekly at best (they have to be
-# downloaded and updated in puppet), but we want to make sure they're
-# regenerated without thinking about it much.
-every :hour do
-  rake 'download:firewall'
 end

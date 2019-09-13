@@ -1,18 +1,22 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.2'
+gem 'rails', '4.2.11.1'
+
+# Can remove this after ruby 2.4*
+gem 'no_proxy_fix'
+
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-gem 'pg'
-gem 'activerecord-import'
+gem 'sqlite3', '~> 1.3.0'
+gem 'pg', '0.20'
+gem 'activerecord-import', '~> 1.0'
 
 gem 'rest-client', '>= 1.8.0'
 
 gem 'simple-navigation'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -26,6 +30,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'whenever', :require => false
 
 gem 'puppetdb-ruby'
+gem 'httparty', '~> 0.15.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

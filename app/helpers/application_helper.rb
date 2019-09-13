@@ -8,7 +8,7 @@ module ApplicationHelper
     return '' if data.nil?
     return '*' if data.is_a?(Array) && !data.empty?
     return '*' if data.is_a?(Hash) && !data.empty?
-    return '*' if data.is_a?(Fixnum) && data == 1
+    return '*' if data.is_a?(Integer) && data == 1
     return '*' if data.is_a?(String) && data == "1"
     return '*' if data.is_a?(String) && data == "true"
     return '*' if [true, false].include?(data) && data
@@ -29,33 +29,6 @@ module ApplicationHelper
     return '' if status_boolean == ''
     return 'On' if status_boolean == 't'
     'Off'
-  end
-
-  # Format the ossec files listing hash into text suited for display.
-  def ossec_files(changed_files)
-    return 'No changed files found' unless changed_files.is_a?(Hash)
-    text = []
-    changed_files.keys.sort.each do |fname|
-      text << fname + ': ' + changed_files[fname]
-    end
-
-    return text.join("\n") if text.count > 0
-    'No changed files found'
-  end
-
-  # Check to see if an ossec file is managed by something on the system like
-  # puppet or yum, returning the provider if so.
-  def ossec_file_provider(managed, fname, changed_time_str)
-    return '' if managed.nil?
-    return '' unless managed.key?('files')
-    return '' unless managed['files'].key?(fname)
-    return '' unless managed['files'][fname].key?('provider')
-
-    changed_time = Time.parse(changed_time_str)
-    managed_time = Time.parse(managed['files'][fname]['time'])
-    return '' if changed_time > managed_time
-
-    managed['files'][fname]['provider']
   end
 
   # Given a full date and time string, return only the date itself, for things
@@ -93,10 +66,10 @@ module ApplicationHelper
     'normal'
   end
 
-  # Given an ossec severity rating (0..10), convert it into a text display for
+  # Given an severity rating (0..10), convert it into a text display for
   # users that includes the numeric plus text.
   def cvss_score_to_text(score)
-    return '' unless score.is_a?(Fixnum) || score.is_a?(Float)
+    return '' unless score.is_a?(Integer) || score.is_a?(Float)
     if score == 0
       return ''
     elsif score < 4.0
@@ -110,9 +83,9 @@ module ApplicationHelper
     end
   end
 
-  # Given a textual severity rating, turn it into an OSSEC score.
+  # Given a textual severity rating, turn it into an numeric score.
   def cvss_text_to_score(level)
-    return level if level.is_a?(Fixnum) || level.is_a?(Float)
+    return level if level.is_a?(Integer) || level.is_a?(Float)
 
     severity_ordering = { 'Critical'  => 9.0,
                           'Important' => 7.0,

@@ -30,11 +30,6 @@ RSpec.describe ServerController, type: :controller do
         expect(response.body).to match(/Last puppet run failed/)
         expect(response.body).to match(/Puppet has not run lately, last run at /)
         expect(response.body).to match(/<td>environment<\/td>\s+<td>production</)
-        expect(response.body).to match(/2016-03-31/)
-        expect(response.body).to match(/\/etc\/sysctl\.conf: 2016-03-31 17:38:04 -0700/)
-        expect(response.body).to match(/\/etc\/mcollective\/facts\.yaml: 2016-03-21 11:23:43 -0700/)
-        expect(response.body).to match(/remctl sul-ossec.stanford.edu ossec clean example.stanford.edu/)
-        expect(response.body).to match(/ping/)
         expect(response.body).to match(/lotsofiptablesinfo/)
       end
     end
@@ -68,8 +63,6 @@ RSpec.describe ServerController, type: :controller do
         expect(response.body).to match(/<td>sla_level<\/td>\s+<td>low</)
         expect(response.body).to match(/<td>technical_team<\/td>\s+<td>dlss</)
         expect(response.body).to match(/<td>user_advocate<\/td>\s+<td>Julian</)
-        expect(response.body).to match(/No changed files found/)
-        expect(response.body).to match(/No firewall information found for this host/)
         expect(response.body).to match(/No iptables data found from puppet./)
       end
     end
