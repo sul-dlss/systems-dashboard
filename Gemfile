@@ -26,6 +26,9 @@ gem 'jquery-rails'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sprockets', '>= 4.0.0.beta8'
+gem 'rubocop', '>= 0.49.0'
+gem 'rails-html-sanitizer', '>= 1.0.4'
 
 gem 'whenever', :require => false
 
