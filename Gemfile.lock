@@ -284,13 +284,16 @@ DEPENDENCIES
   coveralls
   dlss-capistrano
   dlss_cops
+  ffi (>= 1.9.24)
   httparty (~> 0.15.0)
   jquery-datatables-rails (~> 3.3.0)
   jquery-rails
+  loofah (>= 2.3.1)
   no_proxy_fix
-  nokogiri (>= 1.6.8)
+  nokogiri (>= 1.10.5)
   pg (= 0.20)
   puppetdb-ruby
+  rack (~> 1.6.11)
   rails (= 4.2.11.1)
   rails-html-sanitizer (>= 1.0.4)
   rest-client (>= 1.8.0)

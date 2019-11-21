@@ -21,14 +21,19 @@ gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 
-gem 'nokogiri', '>= 1.6.8'
 gem 'jquery-rails'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+# Pulled in by other things, pinned for security advisories.
 gem 'sprockets', '>= 4.0.0.beta8'
 gem 'rubocop', '>= 0.49.0'
 gem 'rails-html-sanitizer', '>= 1.0.4'
+gem 'ffi', '>= 1.9.24'
+gem 'loofah', '>= 2.3.1'
+gem 'nokogiri', '>= 1.10.5'
+gem 'rack', '~> 1.6.11'
 
 gem 'whenever', :require => false
 
