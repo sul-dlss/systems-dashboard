@@ -11,7 +11,7 @@ namespace :download do
     cachefile = '/var/lib/systems-dashboard/advisories.yaml'
     server = 'sulreports.stanford.edu'
     args = %w{advisories report:feeder}
-    command = '/usr/bin/k5start -qUtf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args.join(' ')
+    command = '/usr/bin/k5start -qUf /etc/keytabs/service.sul-reports.keytab -- /usr/bin/remctl ' + server + ' ' + args.join(' ')
 
     # Run the remctl and handle output problems.
     output, error, status = Open3.capture3(command)
