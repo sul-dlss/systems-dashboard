@@ -4,5 +4,5 @@ server 'sulreports-dev.stanford.edu', user: 'reporting',
 
 Capistrano::OneTimeKey.generate_one_time_key!
 
-set :branch, 'jonrober'
+set :branch, 'master'
 set :rails_env, 'development'
