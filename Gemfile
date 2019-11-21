@@ -27,7 +27,7 @@ gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Pulled in by other things, pinned for security advisories.
-gem 'sprockets', '>= 4.0.0.beta8'
+gem 'sprockets', '>= 3.7.2'
 gem 'rubocop', '>= 0.49.0'
 gem 'rails-html-sanitizer', '>= 1.0.4'
 gem 'ffi', '>= 1.9.24'
