@@ -29,7 +29,7 @@ RSpec.describe SummaryController, type: :controller do
       context 'displays only flagged servers' do
         before do
           stub_const('ApplicationController::YAML_DIR', 'spec/data/')
-          get :index, show_only_flagged: 1
+          get :index, params: { show_only_flagged: 1 }
         end
         it { is_expected.to respond_with :ok }
         it { is_expected.to render_with_layout :application }

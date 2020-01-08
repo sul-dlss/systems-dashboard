@@ -1,4 +1,4 @@
-class CreateDetails < ActiveRecord::Migration
+class CreateDetails < ActiveRecord::Migration[4.2]
   def change
     create_table :details do |t|
       t.integer :server_id

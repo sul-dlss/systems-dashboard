@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.11.1'
+gem 'rails', '5.2.4.1'
 
 # Can remove this after ruby 2.4*
 gem 'no_proxy_fix'
@@ -19,7 +19,7 @@ gem 'simple-navigation'
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2.2'
 
 gem 'jquery-rails'
 gem 'jquery-datatables-rails', '~> 3.3.0'
@@ -33,12 +33,12 @@ gem 'rails-html-sanitizer', '>= 1.0.4'
 gem 'ffi', '>= 1.9.24'
 gem 'loofah', '>= 2.3.1'
 gem 'nokogiri', '>= 1.10.5'
-gem 'rack', '~> 1.6.11'
+gem 'rack', '~> 2.0', '>= 2.0.8'
 
 gem 'whenever', :require => false
 
 gem 'puppetdb-ruby'
-gem 'httparty', '~> 0.15.0'
+gem 'httparty', '~> 0.17.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -50,6 +50,7 @@ end
 group :test do
   gem 'coveralls', require: false
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'rails-controller-testing'
 end
 
 # Use Capistrano for deployment

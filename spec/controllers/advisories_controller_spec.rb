@@ -7,7 +7,7 @@ RSpec.describe AdvisoriesController, type: :controller do
     context 'displays the main page with all items correctly' do
       before do
         stub_const('ApplicationController::YAML_DIR', 'spec/data/')
-        get :show, id: 'example.stanford.edu'
+        get :show, params: { id: 'example.stanford.edu' }
       end
       it { is_expected.to respond_with :ok }
       it { is_expected.to render_with_layout :application }
@@ -26,7 +26,7 @@ RSpec.describe AdvisoriesController, type: :controller do
     context 'displays error at server with no advisories' do
       before do
         stub_const('ApplicationController::YAML_DIR', 'spec/data/')
-        get :show, id: 'test.stanford.edu'
+        get :show, params: { id: 'test.stanford.edu' }
       end
       it { is_expected.to respond_with :ok }
       it { is_expected.to render_with_layout :application }
@@ -39,7 +39,7 @@ RSpec.describe AdvisoriesController, type: :controller do
     context 'displays error at invalid server' do
       before do
         stub_const('ApplicationController::YAML_DIR', 'spec/data/')
-        get :show, id: 'doesnotexist.stanford.edu'
+        get :show, params: { id: 'doesnotexist.stanford.edu' }
       end
       it { is_expected.to respond_with :ok }
       it { is_expected.to render_with_layout :application }

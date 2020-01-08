@@ -1,5 +1,5 @@
 <% unless @advisories.nil? || @advisories.empty? %>
-<h1><%= @host %></h2>
+<h1><%= @host %></h1>
 <table id="advisories_list" class="display">
   <tr>
     <td>Package</td>
@@ -9,17 +9,19 @@
     <td>Synopsis</td>
     <td>References</td>
   </tr>
-  <% @advisories[@host]['advisories']['details'].keys.sort.each do |package| %>
-    <% @advisories[@host]['advisories']['details'][package].keys.sort.each do |version| %>
-      <% @advisories[@host]['advisories']['details'][package][version].each do |adv| %>
-        <tr>
-          <td><%= package %></td>
-          <td><%= adv['name'] %></td>
-          <td><%= cvss_score_to_text(adv['severity']) %></td>
-          <td><%= adv['kind'] %></td>
-          <td><%= adv['synopsis'] %></td>
-          <td><%= raw(parse_links(adv['references'])) %></td>
-        </tr>
+  <% unless @advisories[@host].nil? || @advisories[@host]['advisories']['details'].nil? %>
+    <% @advisories[@host]['advisories']['details'].keys.sort.each do |package| %>
+      <% @advisories[@host]['advisories']['details'][package].keys.sort.each do |version| %>
+        <% @advisories[@host]['advisories']['details'][package][version].each do |adv| %>
+          <tr>
+            <td><%= package %></td>
+            <td><%= adv['name'] %></td>
+            <td><%= cvss_score_to_text(adv['severity']) %></td>
+            <td><%= adv['kind'] %></td>
+            <td><%= adv['synopsis'] %></td>
+            <td><%= raw(parse_links(adv['references'])) %></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
