@@ -47,9 +47,9 @@ class Cache
                            summary[host]['highest']]
       end
 
-      Detail.delete_all(category: 'advisories')
-      Detail.delete_all(category: 'general',
-                        name: %w(advisory-count advisory-highest))
+      Detail.delete(category: 'advisories')
+      Detail.delete(category: 'general',
+                    name: %w(advisory-count advisory-highest))
       columns = %w(server_id category name value)
       Detail.import(columns, import_details)
     end
