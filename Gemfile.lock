@@ -33,7 +33,7 @@ GEM
       activemodel (= 5.2.4.1)
       activesupport (= 5.2.4.1)
       arel (>= 9.0)
-    activerecord-import (1.0.4)
+    activerecord-import (1.0.3)
       activerecord (>= 3.2)
     activestorage (5.2.4.1)
       actionpack (= 5.2.4.1)
@@ -296,7 +296,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-import (~> 1.0)
+  activerecord-import (= 1.0.3)
   byebug
   capistrano (~> 3.0)
   capistrano-bundler

@@ -9,7 +9,7 @@ gem 'no_proxy_fix'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.0'
 gem 'pg', '0.20'
-gem 'activerecord-import', '~> 1.0'
+gem 'activerecord-import', '1.0.3'
 
 gem 'rest-client', '>= 1.8.0'
 
