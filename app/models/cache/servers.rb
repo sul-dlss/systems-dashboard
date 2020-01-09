@@ -43,8 +43,8 @@ class Cache
       # Clear existing fields.  General ends up getting a few fields from
       # the advisories, so we only remove specific fields.
       delete_types = %w(netdb vmware)
-      Detail.delete(category: delete_types)
-      Detail.delete(category: 'general', name: %w(alive cobbler puppetdb))
+      Detail.where(category: delete_types).delete_all
+      Detail.where(category: 'general', name: %w(alive cobbler puppetdb)).delete_all
       columns = %w(server_id category name value)
       Detail.import(columns, import_details)
     end

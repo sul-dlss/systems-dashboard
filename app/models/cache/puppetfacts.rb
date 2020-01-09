@@ -23,7 +23,7 @@ class Cache
       end
 
       delete_types = %w(puppetfacts)
-      Detail.delete(category: delete_types)
+      Detail.where(category: delete_types).delete_all
       columns = %w(server_id category name value)
       Detail.import(columns, import_details)
     end
