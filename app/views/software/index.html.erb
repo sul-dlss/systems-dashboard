@@ -30,7 +30,7 @@
         <td><%= asterisk(@servers[hostname]['puppetfacts']['passenger_installed']) %></td>
         <td><%= asterisk(@servers[hostname]['puppetfacts']['mysql_installed']) %></td>
         <td><%= asterisk(@servers[hostname]['puppetfacts']['rvm_installed']) %></td>
-        <td><%= raw(separate_commas(@servers[hostname]['puppetfacts']['s_rvm_rubies'])) %></td>
+        <td><%= raw(separate_commas(@servers[hostname]['puppetfacts']['rvm_version'])) %></td>
       </tr>
     <% end %>
   </tbody>

@@ -9,7 +9,7 @@ namespace :download do
 
     facts = %w(department technical_team user_advocate project sla_level
                environment iptables github_url lsbdistdescription
-               apache_installed mysql_installed rvm_installed s_rvm_rubies
+               apache_installed mysql_installed rvm_installed rvm_version
                passenger_installed)
 
     def get_fact_value(hostname, fact_name)

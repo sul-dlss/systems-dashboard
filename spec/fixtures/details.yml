@@ -199,7 +199,7 @@ example-puppetfacts-rvm:
 example-puppetfacts-rvmrubies:
   server_id: 1
   category: puppetfacts
-  name: s_rvm_rubies
+  name: rvm_version
   value: '2.0,2.2'
 test-puppetfacts-department:
   server_id: 2
@@ -269,7 +269,7 @@ test-puppetfacts-rvm:
 test-puppetfacts-rvmrubies:
   server_id: 2
   category: puppetfacts
-  name: s_rvm_rubies
+  name: rvm_version
   value: 1.9
 
 example-advisories-count:
