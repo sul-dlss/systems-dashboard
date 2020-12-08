@@ -11,6 +11,7 @@ module ApplicationHelper
     return '*' if data.is_a?(Integer) && data == 1
     return '*' if data.is_a?(String) && data == "1"
     return '*' if data.is_a?(String) && data == "true"
+    return '*' if data.is_a?(String) && data == "t"
     return '*' if [true, false].include?(data) && data
 
     ''
