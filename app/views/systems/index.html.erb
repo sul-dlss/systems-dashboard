@@ -11,7 +11,7 @@
       <td>Technical Team</td>
       <td>Advocate</td>
       <td>SLA Level</td>
-      <td>Environment</td>
+      <td>Minsec Level</td>
       <td>Project</td>
       <td>Memory</td>
       <td>CPUs</td>
@@ -25,7 +25,7 @@
         <td><%= check_child(@servers[hostname]['puppetfacts'], 'technical_team') %></td>
         <td><%= check_child(@servers[hostname]['puppetfacts'], 'user_advocate') %></td>
         <td><%= check_child(@servers[hostname]['puppetfacts'], 'sla_level') %></td>
-        <td><%= check_child(@servers[hostname]['puppetfacts'], 'environment') %></td>
+        <td><%= check_child(@servers[hostname]['puppetfacts'], 'minsec_level') %></td>
         <td><%= check_child(@servers[hostname]['puppetfacts'], 'project') %></td>
         <td><%= check_child(@servers[hostname]['vmware'], 'memory') %></td>
         <td><%= check_child(@servers[hostname]['vmware'], 'cpus') %></td>
