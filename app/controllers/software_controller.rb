@@ -6,9 +6,7 @@ class SoftwareController < ApplicationController
     @opt = {}
     @opt['show_only_flagged'] = 1 if params['show_only_flagged']
 
-    # Find all data except for the advisory details, as that contains a lot of
-    # data sometimes.  Potentially we could reverse this and look for specific
-    # fields, but there are a lot of fields we care about.
+    # Find all relevant data categories.
     records = Server.includes(:details)
       .where(details: {category: %w(general puppetfacts)})
     @servers = convert_yaml(records)

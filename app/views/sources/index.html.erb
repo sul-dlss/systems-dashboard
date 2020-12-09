@@ -19,7 +19,6 @@
       <td>VMWare</td>
       <td>Cobbler</td>
       <td>PuppetDB</td>
-      <td>Advisories</td>
       <td>Problems?</td>
     </tr>
   </thead>
@@ -34,8 +33,6 @@
         <td><%= asterisk(@servers[hostname]['vmware']) %></td>
         <td class="<%= status_flag(@flags, hostname, ['general', 'cobbler']) %>"><%= asterisk(@servers[hostname]['general']['cobbler']) %></td>
         <td><%= asterisk(@servers[hostname]['general']['puppetdb']) %></td>
-        <td><%= @servers[hostname]['general']['advisory-count']
-                @servers[hostname]['general']['advisory-count'] %></td>
         <td><%= @flags[hostname]['text'] %></td>
     <% end %>
   </tbody>

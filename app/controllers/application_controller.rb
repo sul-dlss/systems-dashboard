@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
 
   YAML_DIR = '/var/lib/systems-dashboard/'.freeze
   YAML_FIELDS = { 'netdb'      => [ 'aliases', 'addresses' ],
-                  'advisories' => [ 'details' ],
-                  'upgrades'   => [ 'packages' ],
                   'managed'    => [ 'files' ],
                 }.freeze
   INT_FIELDS  = { 'general'    => [ 'advisory-count' ],
@@ -43,8 +41,7 @@ class ApplicationController < ActionController::Base
       # Initialize our root fields so that there won't be any surprises from
       # hosts that don't have data.
       serverdata[hostname] = {}
-      fields = %w(general netdb puppetfacts puppetstatus advisories
-                  vmware upgrades managed)
+      fields = %w(general netdb puppetfacts puppetstatus vmware managed)
       fields.each do |root|
         serverdata[hostname][root] = {}
       end

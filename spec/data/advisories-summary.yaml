@@ -1,7 +1,0 @@
----
-example.stanford.edu:
-  count: 1
-  highest: 9.3
-test.stanford.edu:
-  count: 0
-  highest:

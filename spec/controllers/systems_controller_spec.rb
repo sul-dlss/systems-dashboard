@@ -19,8 +19,6 @@ RSpec.describe SystemsController, type: :controller do
         expect(response.body).to match(/<td><a href="\/server\/test">test</)
 
         # For the first host, several fields that should show.
-        expect(response.body).to match(/<td>production</)
-
         expect(response.body).to match(/<td>dlss</)
         expect(response.body).to match(/<td>Julian</)
         expect(response.body).to match(/<td>low</)

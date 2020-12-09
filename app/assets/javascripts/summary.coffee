@@ -5,7 +5,3 @@ jQuery ->
   $("#server_list").dataTable(
     { paging: false }
   )
-
-  $("#advisories_list").dataTable(
-    { paging: false }
-  )

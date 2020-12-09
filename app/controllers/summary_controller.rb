@@ -8,10 +8,8 @@ class SummaryController < ApplicationController
     @opt = {}
     @opt['show_only_flagged'] = 1 if params['show_only_flagged']
 
-    # Find all data except for the advisory details, as that contains a lot of
-    # data sometimes.  Potentially we could reverse this and look for specific
-    # fields, but there are a lot of fields we care about.
-    categories = %w(general puppetstatus vmware upgrades)
+    # Find all data for the catagories we care about.
+    categories = %w(general puppetstatus vmware)
     records = Server.includes(:details).where(details: { category: categories })
     @servers = convert_yaml(records)
 
@@ -25,10 +23,6 @@ class SummaryController < ApplicationController
     flags = {}
     hosts.keys.each do |host|
       flags[host] = {}
-      if hosts[host].key?('general') && flag_positive?(hosts[host]['general']['advisory-count'])
-        fields = %w(general advisory-count)
-        flags[host][fields] = 1
-      end
 
       next unless hosts[host].key?('puppetstatus')
       if flag_content?(hosts[host]['puppetstatus']['too_quiet'])

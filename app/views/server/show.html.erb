@@ -95,22 +95,6 @@
   <p>No puppet facts found.</p>
 <% end %>
 
-<h2>Advisories</h2>
-<% if @server[@host].key?('advisories') && !@server[@host]['advisories'].empty? %>
-<table class="server_show">
-  <tr>
-    <td>Count</td>
-    <td><%= @server[@host]['advisories']['count'] %></td>
-  </tr>
-  <tr>
-    <td>Highest</td>
-    <td><%= cvss_score_to_text(@server[@host]['advisories']['highest']) %></td>
-  </tr>
-</table>
-<% else %>
-  <p>No advisories found for <%= @host %>.</p>
-<% end %>
-
   <h2>IPtables</h2>
   <% if @server[@host]['puppetfacts'].key?('iptables') && @server[@host]['puppetfacts']['iptables']%>
     <pre><%= @server[@host]['puppetfacts']['iptables'] %></pre>

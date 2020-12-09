@@ -17,10 +17,6 @@
       <td>Status</td>
       <td>Puppet Failure</td>
       <td>Puppet Quiet</td>
-      <td>Advisories</td>
-      <td>Highest Advisory</td>
-      <td>Next Upgrade</td>
-      <td>Packages</td>
     </tr>
   </thead>
   <tbody>
@@ -37,25 +33,6 @@
         <td class="<%= status_flag(@flags, hostname, ['puppetstatus', 'too_quiet']) %>">
             <%= check_child(@servers[hostname]['puppetstatus'], 'too_quiet') %>
         </td>
-        <td class="<%= status_flag(@flags, hostname, ['general', 'advisory-count']) %>"><%=
-          if @servers[hostname]['general'].key?('advisory-count') && @servers[hostname]['general']['advisory-count'] > 0
-            link_to(@servers[hostname]['general']['advisory-count'], advisory_path(shorthost(hostname)))
-          else
-            '-'
-          end
-        %></td>
-        <td><%= cvss_score_to_text(check_child(@servers[hostname]['general'], 'advisory-highest')) %></td>
-        <td><%= check_child(@servers[hostname]['upgrades'], 'date') %></td>
-        <td><%= check_child(@servers[hostname]['upgrades'], 'packages')
-          if @servers[hostname]['upgrades'].key?('packages')
-            count = @servers[hostname]['upgrades']['packages'].count
-            if count > 0
-              link_to(count, upgrade_path(shorthost(hostname)))
-            else
-              0
-            end
-          end
-        %></td>
       </tr>
     <% end %>
   </tbody>

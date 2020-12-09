@@ -21,9 +21,6 @@ RSpec.describe SummaryController, type: :controller do
 
         # For the first host, several fields that should show.
         expect(response.body).to match(/<td class="flagged">\s+\*\s+</)
-        expect(response.body).to match(/<td class="flagged">\s+2016-04-11 /)
-        expect(response.body).to match(/<td class="flagged"><a href="\/advisories\/example">1<\/a><\/td>/)
-        expect(response.body).to match(/<td>9.3 - Critical<\/td>/)
       end
 
       context 'displays only flagged servers' do
@@ -39,10 +36,6 @@ RSpec.describe SummaryController, type: :controller do
           # Only one host.
           expect(response.body).to match(/<td><a href="\/server\/example">example</)
           expect(response.body).not_to match(/<td><a href="\/server\/test">test</)
-
-          # And the flagged data for it again.
-          expect(response.body).to match(/<td class="flagged"><a href="\/advisories\/example">1<\/a><\/td>/)
-          expect(response.body).to match(/<td>9.3 - Critical<\/td>/)
         end
       end
     end
