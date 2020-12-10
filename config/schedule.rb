@@ -16,3 +16,8 @@ every '*/10 * * * *' do
   rake 'download:puppetfacts'
   rake 'download:puppetstatus'
 end
+
+# Nessus runs at 6:30 PM.  Grab new things in the morning after it's done.
+every '0 6 * * *' do
+  rake 'download:nessus'
+end
