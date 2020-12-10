@@ -9,4 +9,3 @@ Data source
 Misc
 * Default cron jobs should include nessus
 * VMware specific page to add network and disks too?
-* server-status upstream script should stop filtering out windows
