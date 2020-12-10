@@ -17,6 +17,7 @@
       <td>Status</td>
       <td>Puppet Failure</td>
       <td>Puppet Quiet</td>
+      <td>Nessus Med/High/Crit</td>
     </tr>
   </thead>
   <tbody>
@@ -32,6 +33,15 @@
         </td>
         <td class="<%= status_flag(@flags, hostname, ['puppetstatus', 'too_quiet']) %>">
             <%= check_child(@servers[hostname]['puppetstatus'], 'too_quiet') %>
+        </td>
+        <td class="<%= status_flag(@flags, hostname, ['nessus', 'total']) %>">
+          <% if child_set(@servers[hostname]['nessus'], 'total') %>
+          <a href="<%= @servers[hostname]['nessus']['url'] %>" target="_blank">
+            <%= @servers[hostname]['nessus']['medium'] %> -
+            <%= @servers[hostname]['nessus']['high'] %> -
+            <%= @servers[hostname]['nessus']['critical'] %>
+          </a>
+          <% end %>
         </td>
       </tr>
     <% end %>

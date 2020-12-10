@@ -9,7 +9,7 @@ class SummaryController < ApplicationController
     @opt['show_only_flagged'] = 1 if params['show_only_flagged']
 
     # Find all data for the catagories we care about.
-    categories = %w(general puppetstatus vmware)
+    categories = %w(general puppetstatus vmware nessus)
     records = Server.includes(:details).where(details: { category: categories })
     @servers = convert_yaml(records)
 
@@ -24,15 +24,24 @@ class SummaryController < ApplicationController
     hosts.keys.each do |host|
       flags[host] = {}
 
-      next unless hosts[host].key?('puppetstatus')
-      if flag_content?(hosts[host]['puppetstatus']['too_quiet'])
-        fields = %w(puppetstatus too_quiet)
-        flags[host][fields] = 1
+      if hosts[host].key?('puppetstatus')
+        if flag_content?(hosts[host]['puppetstatus']['too_quiet'])
+          fields = %w(puppetstatus too_quiet)
+          flags[host][fields] = 1
+        end
+        if flag_content?(hosts[host]['puppetstatus']['failed'])
+          fields = %w(puppetstatus failed)
+          flags[host][fields] = 1
+        end
       end
-      if flag_content?(hosts[host]['puppetstatus']['failed'])
-        fields = %w(puppetstatus failed)
-        flags[host][fields] = 1
+
+      if hosts[host].key?('nessus')
+        if flag_positive?(hosts[host]['nessus']['total'])
+          fields = %w(nessus total)
+          flags[host][fields] = 1
+        end
       end
+
     end
     flags
   end

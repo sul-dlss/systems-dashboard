@@ -7,10 +7,9 @@ class ApplicationController < ActionController::Base
   YAML_FIELDS = { 'netdb'      => [ 'aliases', 'addresses' ],
                   'managed'    => [ 'files' ],
                 }.freeze
-  INT_FIELDS  = { 'general'    => [ 'advisory-count' ],
+  INT_FIELDS  = { 'nessus'     => [ 'total' ] 
                 }.freeze
-  NUM_FIELDS  = { 'general'    => [ 'advisory-highest' ],
-                }.freeze
+  NUM_FIELDS  = { }.freeze
 
   require 'yaml'
 
@@ -41,7 +40,7 @@ class ApplicationController < ActionController::Base
       # Initialize our root fields so that there won't be any surprises from
       # hosts that don't have data.
       serverdata[hostname] = {}
-      fields = %w(general netdb puppetfacts puppetstatus vmware managed)
+      fields = %w(general netdb puppetfacts puppetstatus vmware managed nessus)
       fields.each do |root|
         serverdata[hostname][root] = {}
       end

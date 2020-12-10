@@ -25,6 +25,17 @@ module ApplicationHelper
     parent[child]
   end
 
+  # For hash entries that may or may not exist, such as vmware settings, we
+  # use this to tell if the value is set at all.
+  def child_set(parent, child)
+    return nil if parent.nil?
+    return nil if parent[child].nil?
+    return nil if parent[child] == ''
+    return nil if parent[child] == "0"
+    return nil if parent[child] == 0
+    parent[child]
+  end
+
   # Change the power status boolean into an on or off string.
   def status(status_boolean)
     return '' if status_boolean == ''
