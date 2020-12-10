@@ -95,7 +95,7 @@
   <p>No puppet facts found.</p>
 <% end %>
 
-  <h2>IPtables</h2>
+<h2>IPtables</h2>
   <% if @server[@host]['puppetfacts'].key?('iptables') && @server[@host]['puppetfacts']['iptables']%>
     <pre><%= @server[@host]['puppetfacts']['iptables'] %></pre>
   <% else %>

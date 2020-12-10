@@ -8,13 +8,8 @@
     <tr>
       <td>Host</td>
       <td>Distribution</td>
-      <td>Environment</td>
+      <td>Kernel</td>
       <td>Github</td>
-      <td>Apache?</td>
-      <td>Passenger?</td>
-      <td>MySQL?</td>
-      <td>RVM?</td>
-      <td>RVM Rubies</td>
     </tr>
   </thead>
   <tbody>
@@ -22,15 +17,20 @@
       <% next if @opt['show_only_flagged'] == 1 && @flags[hostname].empty? %>
       <tr>
         <td><%= link_to(shorthost(hostname), server_path(shorthost(hostname))) %></td>
-        <td><%= release(check_child(@servers[hostname]['puppetfacts'], 'lsbdistdescription')) %></td>
-        <td><%= check_child(@servers[hostname]['puppetfacts'], 'environment') %></td>
+        <td>
+          <% if check_child(@servers[hostname]['puppetfacts'], 'operatingsystem') == 'windows' %>
+            Windows <%= @servers[hostname]['puppetfacts']['operatingsystemrelease'] %>
+          <% else %>
+            <%= release(check_child(@servers[hostname]['puppetfacts'], 'lsbdistdescription')) %>
+          <% end %>
+        </td>
+        <td>
+          <% if check_child(@servers[hostname]['puppetfacts'], 'operatingsystem') != 'windows' %>
+            <%= check_child(@servers[hostname]['puppetfacts'], 'kernelversion') %>
+          <% end %>
+        </td>
 
         <td><%= raw(github_url(check_child(@servers[hostname]['puppetfacts'], 'github_url'))) %></td>
-        <td><%= asterisk(@servers[hostname]['puppetfacts']['apache_installed']) %></td>
-        <td><%= asterisk(@servers[hostname]['puppetfacts']['passenger_installed']) %></td>
-        <td><%= asterisk(@servers[hostname]['puppetfacts']['mysql_installed']) %></td>
-        <td><%= asterisk(@servers[hostname]['puppetfacts']['rvm_installed']) %></td>
-        <td><%= raw(separate_commas(@servers[hostname]['puppetfacts']['rvm_version'])) %></td>
       </tr>
     <% end %>
   </tbody>

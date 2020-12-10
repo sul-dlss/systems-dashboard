@@ -1,0 +1,12 @@
+Server page
+* Add VMWare disk count and sizes
+* Add Network interfaces
+* Add list of vault tokens
+
+Data source
+* Terraform (Rob working on script)
+
+Misc
+* Default cron jobs should include nessus
+* VMware specific page to add network and disks too?
+* server-status upstream script should stop filtering out windows
