@@ -32,11 +32,15 @@ class Cache
         host_data[hostname]['id'] = host['host_id']
       end
 
-      # Then take the last seen and put it into an array for loading.
+      # Then take the last seen and put it into an array for loading.  Unlike
+      # most data pulls, we're going to skip anything that doesn't already have
+      # a server record.  Nessus can send us data for multiple things we don't
+      # care about, so use that as a filter.
       import_details = []
       host_data.each_key do |hostname|
         canonical = canonical_host(hostname)
-        serverrec = Server.find_or_create_by(hostname: canonical)
+        serverrec = Server.find_by(hostname: canonical)
+        next if serverrec.nil?
         server_id = serverrec.id
 
         url = "https://dlss-sagittarius.stanford.edu/#/scans/reports/66/hosts/#{host_data[hostname]['id']}/vulnerabilities"

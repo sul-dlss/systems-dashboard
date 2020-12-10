@@ -8,9 +8,8 @@ namespace :download do
     require 'no_proxy_fix'
 
     facts = %w(department technical_team user_advocate project sla_level
-               environment iptables github_url lsbdistdescription
-               apache_installed mysql_installed rvm_installed rvm_version
-               passenger_installed minsec_level)
+               environment iptables github_url lsbdistdescription minsec_level
+               operations_concerns_url kernelversion)
 
     def get_fact_value(hostname, fact_name)
       response = @client.request('facts', ['and',
@@ -41,6 +40,6 @@ namespace :download do
     output = YAML.dump(hosts)
     File.write(cachefile, output)
 
-#    Cache::Puppetfacts.new.cache
+    Cache::Puppetfacts.new.cache
   end
 end

@@ -14,10 +14,12 @@
   <thead>
     <tr>
       <td>Host</td>
-      <td>Status</td>
       <td>Puppet Failure</td>
       <td>Puppet Quiet</td>
-      <td>Nessus Med/High/Crit</td>
+      <td>Puppetboard</td>
+      <td>Nagios</td>
+      <td>DevOpsDocs</td>
+      <td>Nessus Crit/High/Medium</td>
     </tr>
   </thead>
   <tbody>
@@ -27,19 +29,41 @@
       <% next if @servers[hostname]['vmware'].key?('template') && @servers[hostname]['vmware']['template'] == 't' %>
       <tr>
         <td><%= link_to(shorthost(hostname), server_path(shorthost(hostname))) %></td>
-        <td><%= status(check_child(@servers[hostname]['vmware'], 'status')) %></td>
         <td class="<%= status_flag(@flags, hostname, ['puppetstatus', 'failed']) %>">
             <%= asterisk(check_child(@servers[hostname]['puppetstatus'], 'failed')) %>
         </td>
         <td class="<%= status_flag(@flags, hostname, ['puppetstatus', 'too_quiet']) %>">
             <%= check_child(@servers[hostname]['puppetstatus'], 'too_quiet') %>
         </td>
+        <td>
+          <% # Making the assumption that if something has no basic puppet fact, it's not in puppet. %>
+          <% if child_set(@servers[hostname]['puppetfacts'], 'environment') %>
+            <a href="https://sulpuppet-board.stanford.edu/node/<%= hostname %>" target="_blank">
+                Puppet Details
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% # Making the assumption that if something has no basic puppet fact, it's not configured for nagios. %>
+          <% if child_set(@servers[hostname]['puppetfacts'], 'environment') %>
+            <a href="https://sul-nagios-stage.stanford.edu/nagios/cgi-bin/status.cgi?host=<%= shorthost(hostname) %>" target="_blank">
+                Nagios
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if child_set(@servers[hostname]['puppetfacts'], 'operations_concerns_url') %>
+            <a href="<%= @servers[hostname]['puppetfacts']['operations_concerns_url'] %>" target="_blank">
+                DevOpsDocs
+            </a>
+          <% end %>
+        </td>
         <td class="<%= status_flag(@flags, hostname, ['nessus', 'total']) %>">
           <% if child_set(@servers[hostname]['nessus'], 'total') %>
           <a href="<%= @servers[hostname]['nessus']['url'] %>" target="_blank">
-            <%= @servers[hostname]['nessus']['medium'] %> -
-            <%= @servers[hostname]['nessus']['high'] %> -
-            <%= @servers[hostname]['nessus']['critical'] %>
+            <%= @servers[hostname]['nessus']['critical'] %> /
+            <%= @servers[hostname]['nessus']['high'] %> /
+            <%= @servers[hostname]['nessus']['medium'] %>
           </a>
           <% end %>
         </td>

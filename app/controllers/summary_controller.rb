@@ -9,7 +9,7 @@ class SummaryController < ApplicationController
     @opt['show_only_flagged'] = 1 if params['show_only_flagged']
 
     # Find all data for the catagories we care about.
-    categories = %w(general puppetstatus vmware nessus)
+    categories = %w(general puppetstatus puppetfacts vmware nessus)
     records = Server.includes(:details).where(details: { category: categories })
     @servers = convert_yaml(records)
 
