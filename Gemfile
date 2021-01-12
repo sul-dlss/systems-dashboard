@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.4.3'
+gem 'rails', '5.2.4.4'
 
 # Can remove this after ruby 2.4*
 gem 'no_proxy_fix'
@@ -24,7 +24,6 @@ gem 'coffee-rails', '~> 4.2.2'
 gem 'jquery-rails'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'turbolinks'
-gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Pulled in by other things, pinned for security advisories.
 gem 'sprockets', '>= 3.7.2'
