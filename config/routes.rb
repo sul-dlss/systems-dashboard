@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :systems, only: [:index]
   resources :software, only: [:index]
   resources :sources, only: [:index]
+  resources :details, only: [:index]
 
   get '/summary/index'
   root 'summary#index'

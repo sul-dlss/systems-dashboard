@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.4.1'
+gem 'rails', '5.2.4.3'
 
 # Can remove this after ruby 2.4*
 gem 'no_proxy_fix'
@@ -32,8 +32,9 @@ gem 'rubocop', '>= 0.49.0'
 gem 'rails-html-sanitizer', '>= 1.0.4'
 gem 'ffi', '>= 1.9.24'
 gem 'loofah', '>= 2.3.1'
-gem 'nokogiri', '>= 1.10.5'
-gem 'rack', '~> 2.0', '>= 2.0.8'
+gem 'nokogiri', '>= 1.10.8'
+gem 'rack', '~> 2.0', '>= 2.1.3'
+gem 'websocket-extensions', '>= 0.1.5'
 
 gem 'whenever', :require => false
 

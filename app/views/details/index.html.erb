@@ -16,8 +16,8 @@
     <% @servers.keys.sort.each do |hostname| %>
       <tr>
         <td><%= link_to(shorthost(hostname), server_path(shorthost(hostname))) %></td>
-        <td><%= check_child(@servers[hostname]['vmware'], 'memory') %></td>
-        <td><%= check_child(@servers[hostname]['vmware'], 'cpus') %></td>
+        <td><%= check_child(@servers[hostname]['vmware'], 'disks') %></td>
+        <td><%= check_child(@servers[hostname]['vmware'], 'networks') %></td>
         <td></td>
       </tr>
     <% end %>
