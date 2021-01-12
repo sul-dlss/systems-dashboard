@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   YAML_DIR = '/var/lib/systems-dashboard/'.freeze
-  YAML_FIELDS = { 'netdb'      => [ 'aliases', 'addresses' ],
+  YAML_FIELDS = { 'netdb'      => [ 'aliases', 'addresses', 'networks', 'disks' ],
                   'managed'    => [ 'files' ],
                 }.freeze
   INT_FIELDS  = { 'nessus'     => [ 'total' ]

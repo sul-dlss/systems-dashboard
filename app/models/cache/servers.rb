@@ -30,7 +30,7 @@ class Cache
           elsif type == 'netdb' || type == 'vmware'
             servers[hostname][type].keys.each do |subtype|
               value = servers[hostname][type][subtype]
-              if subtype == 'aliases' || subtype == 'addresses' || subtype == 'custom'
+              if subtype == 'aliases' || subtype == 'addresses' || subtype == 'networks' || subtype == 'disks' || subtype == 'custom'
                 value = value.to_yaml
               end
 
