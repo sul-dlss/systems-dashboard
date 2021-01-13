@@ -38,6 +38,18 @@
     <td>CPUs</td>
     <td><%= check_child(@server[@host]['vmware'], 'cpus') %></td>
   </tr>
+<% if @server[@host]['vmware'].key?('disks') && @server[@host]['vmware']['disks'].count > 0 %>
+  <tr>
+    <td>Disks (vmware)</td>
+    <td><%= raw(@server[@host]['vmware']['disks'].join('<br />')) %></td>
+  </tr>
+<% end %>
+<% if @server[@host]['vmware'].key?('networks') && @server[@host]['vmware']['networks'].count > 0 %>
+  <tr>
+    <td>Networks (vmware)</td>
+    <td><%= raw(@server[@host]['vmware']['networks'].join('<br />')) %></td>
+  </tr>
+<% end %>
 <% if @server[@host]['netdb'].key?('addresses') && @server[@host]['netdb']['addresses'].count > 0 %>
   <tr>
     <td>IPs</td>
@@ -95,10 +107,18 @@
   <p>No puppet facts found.</p>
 <% end %>
 
-<h2>IPtables</h2>
-  <% if @server[@host]['puppetfacts'].key?('iptables') && @server[@host]['puppetfacts']['iptables']%>
-    <pre><%= @server[@host]['puppetfacts']['iptables'] %></pre>
-  <% else %>
-    <p>No iptables data found from puppet.</p>
-  <% end %>
+<h2>Vault</h2>
+<% if @server[@host]['vault'].key?('secrets') && @server[@host]['vault']['secrets']%>
+  <%= raw(@server[@host]['vault']['secrets'].join('<br />')) %>
+<% else %>
+  <p>No private data explicitly for this server in vault.</p>
 <% end %>
+
+<h2>IPtables</h2>
+<% if @server[@host]['puppetfacts'].key?('iptables') && @server[@host]['puppetfacts']['iptables']%>
+  <pre><%= @server[@host]['puppetfacts']['iptables'] %></pre>
+<% else %>
+  <p>No iptables data found from puppet.</p>
+<% end %>
+
+<% end # if @server nil %>

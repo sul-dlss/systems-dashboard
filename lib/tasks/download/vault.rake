@@ -2,6 +2,6 @@
 namespace :download do
   desc 'Download vault data'
   task vault: :environment do
-    Cache::Vault.new.cache
+    Cache::Vaultsecrets.new.cache
   end
 end

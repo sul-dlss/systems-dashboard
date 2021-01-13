@@ -1,10 +1,2 @@
-Server page
-* Add VMWare disk count and sizes
-* Add Network interfaces
-* Add list of vault tokens
-
 Data source
 * Terraform (Rob working on script)
-
-Misc
-* VMware specific page to add network and disks too?

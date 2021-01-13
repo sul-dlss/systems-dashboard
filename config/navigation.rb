@@ -5,6 +5,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :main, 'Status', root_path
     primary.item :systems, 'Systems Information', systems_path
     primary.item :software, 'Software', software_index_path
+    primary.item :details, 'Details', details_path
     primary.item :sources, 'Data Sources', sources_path
   end
 end

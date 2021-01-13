@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
       # hosts that don't have data.
       serverdata[hostname] = {}
       fields = %w(general netdb puppetfacts puppetstatus vmware managed nessus
-                  advisories upgrades)
+                  advisories upgrades vault)
       fields.each do |root|
         serverdata[hostname][root] = {}
       end
