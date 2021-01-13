@@ -13,12 +13,24 @@
     </tr>
   </thead>
   <tbody>
-    <% @servers.keys.sort.each do |hostname| %>
+    <% @servers.keys.sort.each do |host| %>
       <tr>
-        <td><%= link_to(shorthost(hostname), server_path(shorthost(hostname))) %></td>
-        <td><%= check_child(@servers[hostname]['vmware'], 'disks') %></td>
-        <td><%= check_child(@servers[hostname]['vmware'], 'networks') %></td>
-        <td></td>
+        <td valign="top"><%= link_to(shorthost(host), server_path(shorthost(host))) %></td>
+        <td valign="top"><%=
+            if @servers[host]['vmware'].key?('disks')
+              raw(@servers[host]['vmware']['disks'].join('<br />'))
+            end
+        %></td>
+        <td valign="top"><%=
+          if @servers[host]['vmware'].key?('networks')
+            raw(@servers[host]['vmware']['networks'].join('<br />'))
+          end
+        %></td>
+        <td valign="top"><%=
+          if @servers[host]['vault'].key?('secrets')
+            raw(@servers[host]['vault']['secrets'].join('<br />'))
+          end
+        %></td>
       </tr>
     <% end %>
   </tbody>

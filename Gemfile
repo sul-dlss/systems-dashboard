@@ -6,6 +6,8 @@ gem 'rails', '5.2.4.4'
 # Can remove this after ruby 2.4*
 gem 'no_proxy_fix'
 
+gem 'vault', '~> 0.15.0'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.0'
 gem 'pg', '0.20'
