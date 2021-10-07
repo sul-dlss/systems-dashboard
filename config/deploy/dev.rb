@@ -7,5 +7,5 @@ server 'sulreports-dev.stanford.edu',
 Capistrano::OneTimeKey.generate_one_time_key!
 
 set :branch, 'main'
-set :rails_env, 'development'
+set :rails_env, 'production'
 set :log_level, :debug
